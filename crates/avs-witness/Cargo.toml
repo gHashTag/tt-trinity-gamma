@@ -1,0 +1,12 @@
+[package]
+name = "avs-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "Wave-36 AVS-48 witness: 48-island voltage stack, charge-recycling, η≥0.93"
+
+[lib]
+path = "src/lib.rs"
+
+[dev-dependencies]
