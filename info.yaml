@@ -12,12 +12,19 @@ project:
     arranged as 2 clusters × 4 banks × 4 tiles, each cluster being
     a trinity_quad_mesh (= 4× trinity_mesh_2x2). Packet routing:
     lane[3]=cluster, lane[2:1]=bank, dst[27:26]=tile.
-    Carries the FULL Mid SUPER-CROWN module set (18 modules):
+    Carries the FULL Mid SUPER-CROWN module set + 6 PhD-anchored
+    monitor singletons = 24 SUPER-CROWN modules total:
     phi_anchor_post, lucas_rom×7 (POST chain), vsa_matmul_8x8 / 16x16,
     bitnet_encoder, bpb_counter, blake3_anchor, multi_tile_receipt,
     crc32_receipt, alu9_decoder, ring27_memory, hwrng_lfsr,
     phi_pll_div, wb_status_reg, wishbone_full, trinity_master_fsm,
-    trinity_mesh_2x2, gf16_dot4. On reset the chip drives the
+    trinity_mesh_2x2, gf16_dot4, plus 6 PhD-anchored monitors:
+    cassini_post (L-S23, second φ²+φ⁻²=3 Qed proof),
+    plrm_counter (L-S22, SCH-1 LCM(29,47)=1363 mutual exclusion),
+    bpb_lower_bound_guard (L-S33, THM-25-3 bpb_non_negative Qed),
+    nca_entropy_monitor (L-S24, INV-4 12 H ∈ [1.5,2.8] nats),
+    strobe_seed_guard (L-S28, INV-2-ext seed mod F9=34 ∈ [8,11] forbidden),
+    phi_distance_oracle (L-S32, phi_distance_nonneg, 360-entry Q1.15 LUT). On reset the chip drives the
     canonical dot4(1.0, 2.0, 3.0, 4.0) = 0x47C0 on {uio_out, uo_out}
     — byte-identical to Nano (tt-trinity-nano) and Mid
     (tt-trinity-gf16). That equality is the cross-die anchor of
@@ -65,6 +72,12 @@ project:
     - "phi_pll_div.v"
     - "wb_status_reg.v"
     - "wishbone_full.v"
+    - "cassini_post.v"
+    - "plrm_counter.v"
+    - "bpb_lower_bound_guard.v"
+    - "nca_entropy_monitor.v"
+    - "strobe_seed_guard.v"
+    - "phi_distance_oracle.v"
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"

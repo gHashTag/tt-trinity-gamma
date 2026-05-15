@@ -9,3 +9,5 @@ __pycache__/
 *.pyc
 test/tb.out
 test/tb.vcd
+sim/*.out
+sim/*.vcd
