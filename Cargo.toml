@@ -13,5 +13,6 @@ members = [
     "crates/spec-exit-witness",
     "crates/dfs-witness",
     "crates/sparse-witness",
+    "crates/stoch-round-witness",
 ]
 resolver = "2"
