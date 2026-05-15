@@ -74,15 +74,15 @@ module gf16_add (
         else begin
             if (a_larger) begin
                 big_exp    = {1'b0, exp_a};
-                big_fm     = {1'b1, mant_a};
+                big_fm     = {2'b01, mant_a};
                 big_sign   = sign_a;
-                small_fm   = {1'b1, mant_b};
+                small_fm   = {2'b01, mant_b};
                 small_sign = sign_b;
             end else begin
                 big_exp    = {1'b0, exp_b};
-                big_fm     = {1'b1, mant_b};
+                big_fm     = {2'b01, mant_b};
                 big_sign   = sign_b;
-                small_fm   = {1'b1, mant_a};
+                small_fm   = {2'b01, mant_a};
                 small_sign = sign_a;
             end
 
