@@ -11,3 +11,5 @@ test/tb.out
 test/tb.vcd
 sim/*.out
 sim/*.vcd
+target/
+Cargo.lock

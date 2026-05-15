@@ -10,6 +10,12 @@
 //
 // R5-HONEST: all numeric constants are PRE-SILICON ESTIMATEs based on the
 // BitNet b1.58 2B4T paper (arXiv:2504.12285) until silicon verdict 2026-10-15.
+//
+// Wave-33 extension (gHashTag/trinity-fpga#114): module `w33_oracle` ingests
+// Lane T iverilog probe artefacts (tt-trinity-holo PR #33 @ 0fc8f80b) and
+// re-runs the W-102-A bound against measured data.
+
+pub mod w33_oracle;
 
 /// Minimum acceptable sparsity ratio for BitNet b1.58-3B workloads.
 ///
