@@ -7,9 +7,11 @@
 
 #![deny(unsafe_code)]
 
-pub const OP_SPEC_EXIT: u8 = 0xE7;
+/// OP_SPEC_EXIT — Speculative early-exit opcode.
+/// Relocated 0xE7 → 0xEB per ICA-W40-001 (trinity-fpga#148) to free 0xE7 for OP_DFS_GATE (W40).
+pub const OP_SPEC_EXIT: u8 = 0xEB;
 pub const OP_CHAIN_LO: u8 = 0xD0;
-pub const OP_CHAIN_HI: u8 = 0xE7;
+pub const OP_CHAIN_HI: u8 = 0xEB;
 pub const PHI_INV: f64 = 0.6180339887498949;
 pub const PHI: f64 = 1.6180339887498949;
 pub const N_RESERVOIR: usize = 27;
@@ -218,8 +220,8 @@ mod tests {
     #[test]
     fn test_opcode_chain_bounds() {
         assert_eq!(OP_CHAIN_LO, 0xD0);
-        assert_eq!(OP_CHAIN_HI, 0xE7);
-        assert_eq!(OP_SPEC_EXIT, 0xE7);
+        assert_eq!(OP_CHAIN_HI, 0xEB);
+        assert_eq!(OP_SPEC_EXIT, 0xEB);
         assert!(OP_SPEC_EXIT >= OP_CHAIN_LO && OP_SPEC_EXIT <= OP_CHAIN_HI);
     }
 
