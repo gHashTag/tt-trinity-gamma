@@ -21,5 +21,13 @@
   "RUN_CTS": 1,
   "FP_PDN_MULTILAYER": 0,
   "MAGIC_DEF_LABELS": 0,
-  "MAGIC_WRITE_LEF_PINONLY": 1
+  "MAGIC_WRITE_LEF_PINONLY": 1,
+  "//": "=== L-DPC22 Lane L (OpenROAD CGT) — S-14 squeeze vector ===",
+  "//1": "Clock gating reduces dynamic power on idle MAX-TRUE clusters (cluster A or B can sleep when lane[3] selects only one).",
+  "SYNTH_CLOCK_GATING": 1,
+  "//2": "Buffer/resizer driving strength tuning for 50→125 MHz STA closure attempt",
+  "PL_RESIZER_BUFFER_INPUT_PORTS": 1,
+  "PL_RESIZER_BUFFER_OUTPUT_PORTS": 1,
+  "//3": "Hold fix strategy — prefer hold buffers over setup margin to keep fmax headroom",
+  "PL_RESIZER_TIMING_OPTIMIZATIONS": 1
 }
