@@ -47,3 +47,26 @@ fn test_meets_target() {
 fn test_trinity_voltage() {
     assert!(trinity_voltage_check());
 }
+
+// ICA-W38-001 rectification tests
+
+#[test]
+fn test_op_subth_clk_eq_0xE5() {
+    assert_eq!(OP_SUBTH_CLK, 0xE5, "ICA-W38-001: SUBTH_CLK must be 0xE5 (W36 AVS holds 0xE4)");
+}
+
+#[test]
+fn test_op_avs_reconf_preserved_0xE4() {
+    assert_eq!(OP_AVS_RECONF, 0xE4, "W36 AVS_RECONF byte must remain 0xE4");
+}
+
+#[test]
+fn test_opcode_distinctness_r_si_1() {
+    assert_ne!(OP_SUBTH_CLK, OP_AVS_RECONF, "R-SI-1: sacred opcodes must be distinct");
+}
+
+#[test]
+fn test_subth_does_not_equal_w37_old_byte() {
+    // W37 originally claimed 0xE4. After ICA-W38-001 it must no longer equal that byte.
+    assert_ne!(OP_SUBTH_CLK, 0xE4, "ICA-W38-001 rectified: SUBTH_CLK must NOT equal 0xE4");
+}

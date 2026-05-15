@@ -2,6 +2,13 @@
 //! Anchor: phi^2 + phi^-2 = 3.
 #![deny(unsafe_code)]
 
+/// OP_SUBTH_CLK sacred opcode byte = 0xE5 (ICA-W38-001 rectify, was 0xE4).
+/// W36 OP_AVS_RECONF holds 0xE4 by merge precedence; W38 moves SUBTH_CLK to 0xE5.
+pub const OP_SUBTH_CLK: u8 = 0xE5;
+
+/// W36 OP_AVS_RECONF sacred opcode byte = 0xE4 (preserved, ICA-W38-001 boundary).
+pub const OP_AVS_RECONF: u8 = 0xE4;
+
 pub const V_ISLAND: f64 = 0.30;
 pub const V_ISLAND_W36: f64 = 0.45;
 pub const V_THRESH_NOMINAL: f64 = 0.40;
