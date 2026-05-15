@@ -1,0 +1,12 @@
+[package]
+name = "lut-npu-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "Wave-35 LUT-NPU witness: 41-entry Z₃-compressed ternary dot-product LUT"
+
+[dependencies]
+
+[lib]
+path = "src/lib.rs"

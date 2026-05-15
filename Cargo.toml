@@ -4,5 +4,6 @@ members = [
     "crates/tri1-tenet-witnesses",
     "crates/tri1-tom-witnesses",
     "crates/tri1-lut-npu-witnesses",
+    "crates/lut-npu-witness",
 ]
 resolver = "2"
