@@ -1,5 +1,17 @@
 # Tiny Tapeout project information — TRI-1 MAX-TRUE FLAGSHIP
 # https://tinytapeout.com/specs/info_yaml/
+#
+# L-DPC22-K S-13 DUAL-LIB ZONING HINT (feat/v15/k-dual-lib)
+# Primary standard-cell library: sky130_fd_sc_hd
+# Leakage-reduction target library: sky130_fd_sc_hdll
+# Low-activity blocks targeted for hdll zoning:
+#   lucas_rom* (POST chain x7), crc32_receipt, blake3_anchor, gf16_mul
+# Expected static leakage saving: ~30% (5-10x lower per-cell leakage on hdll
+# vs hd variant; mixed-mode zoning expected to reduce ~30% at block level).
+# See docs/L-DPC22-K-DUAL-LIB.md for full specification.
+# Reference: https://skywater-pdk.readthedocs.io/en/main/contents/libraries/foundry-provided.html
+# G-13 gate: mixed hd+hdll closes timing if WNS>=0; rollback to pure hd if WNS<0.
+# R-SI-1 verified: Lane K is config/docs only - zero changes to src/*.v
 yaml_version: 6
 
 project:
@@ -32,6 +44,10 @@ project:
     R-SI-1: zero NEW `*` operators (legacy gf16_mul grandfathered per
     TRI_NET_SHUTTLE_TRIAD.md Rule 2 / tt-trinity-gf16#4).
     Anchor: phi^2 + phi^-2 = 3. DOI: 10.5281/zenodo.19227877.
+    S-13 dual-lib: sky130_fd_sc_hd primary + sky130_fd_sc_hdll zoning
+    intent for low-activity blocks (lucas_rom*, crc32_receipt,
+    blake3_anchor, gf16_mul). Target: -30% static leakage.
+    See docs/L-DPC22-K-DUAL-LIB.md. L-DPC22 Lane K feat/v15/k-dual-lib.
   language:     "Verilog"
   clock_hz:     50000000
 
