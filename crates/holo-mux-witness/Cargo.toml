@@ -1,0 +1,10 @@
+[package]
+name = "holo-mux-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "Wave-39 Lane DD'' HOLO-MUX 1x4 witness — OP_HOLO_MUX_X4=0xE6 sacred opcode"
+
+[lib]
+path = "src/lib.rs"
