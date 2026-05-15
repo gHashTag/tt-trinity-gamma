@@ -1,0 +1,20 @@
+name: R-SI-1 no-star check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  no_star:
+    name: R-SI-1 — no new * operators in RTL
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run check_no_star.sh
+        run: |
+          chmod +x tools/check_no_star.sh
+          bash tools/check_no_star.sh src/
+        # Exit 1 from the script propagates as workflow failure.
+        # PASS prints "R-SI-1 PASS: no new * operators found." and exits 0.
