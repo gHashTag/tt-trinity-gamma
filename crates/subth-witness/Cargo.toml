@@ -1,0 +1,10 @@
+[package]
+name = "subth-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "Wave-37 Sub-Threshold weak-inversion PE witness"
+
+[lib]
+path = "src/lib.rs"
