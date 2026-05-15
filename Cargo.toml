@@ -1,5 +1,6 @@
 [workspace]
 members = [
     "crates/tri1-lever-stack-witnesses",
+    "crates/tri1-tenet-witnesses",
 ]
 resolver = "2"
