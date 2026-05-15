@@ -8,12 +8,12 @@
 #![deny(unsafe_code)]
 
 /// OP_NULL_PE — TRI-27 ISA opcode for the reversible dendritic NULLOR.
-pub const OP_NULL_PE: u8 = 0xE5;
+pub const OP_NULL_PE: u8 = 0xE6;
 
 /// Predecessor opcode chain head (W37 region).
 pub const OP_CHAIN_LO: u8 = 0xD0;
 /// Predecessor opcode chain tail (W38 NULLOR).
-pub const OP_CHAIN_HI: u8 = 0xE5;
+pub const OP_CHAIN_HI: u8 = 0xE6;
 
 /// Island supply voltage (V).
 pub const V_SUPPLY_V: f64 = 0.30;
@@ -333,7 +333,7 @@ mod tests {
 
     #[test]
     fn test_opcode_chain_bounds() {
-        assert_eq!(OP_NULL_PE, 0xE5);
+        assert_eq!(OP_NULL_PE, 0xE6);
         assert!(OP_CHAIN_LO <= OP_NULL_PE);
         assert_eq!(OP_CHAIN_HI, OP_NULL_PE);
     }
