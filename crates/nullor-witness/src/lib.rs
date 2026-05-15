@@ -8,12 +8,13 @@
 #![deny(unsafe_code)]
 
 /// OP_NULL_PE — TRI-27 ISA opcode for the reversible dendritic NULLOR.
-pub const OP_NULL_PE: u8 = 0xE6;
+/// Relocated 0xE6 → 0xEA per ICA-W40-001 (trinity-fpga#148) to free 0xE6 for OP_HOLO_MUX_X4 (W39).
+pub const OP_NULL_PE: u8 = 0xEA;
 
 /// Predecessor opcode chain head (W37 region).
 pub const OP_CHAIN_LO: u8 = 0xD0;
-/// Predecessor opcode chain tail (W38 NULLOR).
-pub const OP_CHAIN_HI: u8 = 0xE6;
+/// Predecessor opcode chain tail (W38 NULLOR, post-relocation).
+pub const OP_CHAIN_HI: u8 = 0xEA;
 
 /// Island supply voltage (V).
 pub const V_SUPPLY_V: f64 = 0.30;
@@ -333,7 +334,7 @@ mod tests {
 
     #[test]
     fn test_opcode_chain_bounds() {
-        assert_eq!(OP_NULL_PE, 0xE6);
+        assert_eq!(OP_NULL_PE, 0xEA);
         assert!(OP_CHAIN_LO <= OP_NULL_PE);
         assert_eq!(OP_CHAIN_HI, OP_NULL_PE);
     }
