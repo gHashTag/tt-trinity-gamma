@@ -12,5 +12,6 @@ members = [
     "crates/holo-mux-witness",
     "crates/spec-exit-witness",
     "crates/dfs-witness",
+    "crates/sparse-witness",
 ]
 resolver = "2"

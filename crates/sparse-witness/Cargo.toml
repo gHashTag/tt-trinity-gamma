@@ -1,0 +1,7 @@
+[package]
+name = "sparse-witness"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+license = "Apache-2.0"
+description = "Wave-41 Lane GG'' — SPARSE-ACTIVATION GATING witness for OP_SPARSE_SKIP=0xE8"
