@@ -1,6 +1,6 @@
 {
   "PL_TARGET_DENSITY_PCT": 45,
-  "CLOCK_PERIOD": 20,
+  "CLOCK_PERIOD": 8,
   "PL_RESIZER_HOLD_SLACK_MARGIN": 0.1,
   "GRT_RESIZER_HOLD_SLACK_MARGIN": 0.05,
   "RUN_LINTER": 1,
@@ -22,7 +22,7 @@
   "FP_PDN_MULTILAYER": 0,
   "MAGIC_DEF_LABELS": 0,
   "MAGIC_WRITE_LEF_PINONLY": 1,
-  "//k": "=== L-DPC22 Lane K (dual-lib hd+hdll) \u2014 S-13 squeeze vector (REVISED v2) ===",
+  "//k": "=== L-DPC22 Lane K (dual-lib hd+hdll) — S-13 squeeze vector (REVISED v2) ===",
   "//k1": "Original SYNTH_LIBS_BASE/SYNTH_EXCLUSION_CELL_LIST not valid in OpenLane2",
   "//k2": "Fallback: increase density target to push synth toward smaller faster cells",
   "//k3": "Combined with CTS root buffer and tighter placement timing",
@@ -32,7 +32,12 @@
   "PL_RESIZER_BUFFER_INPUT_PORTS": 1,
   "PL_RESIZER_BUFFER_OUTPUT_PORTS": 1,
   "PL_RESIZER_TIMING_OPTIMIZATIONS": 1,
-  "//l": "=== L-DPC22 Lane L (OpenROAD CGT) \u2014 S-14 squeeze vector merged on top of K v2 ===",
+  "//l": "=== L-DPC22 Lane L (OpenROAD CGT) — S-14 squeeze vector merged on top of K v2 ===",
   "//l1": "Clock gating reduces dynamic power on idle MAX-TRUE clusters",
-  "//l3": "Hold fix strategy \u2014 prefer hold buffers over setup margin"
+  "//l3": "Hold fix strategy — prefer hold buffers over setup margin",
+  "//m": "=== L-DPC22 Lane M (PLL 50→125 MHz) — S-2 squeeze vector ===",
+  "//m1": "CLOCK_PERIOD reduced 20ns (50 MHz) → 8ns (125 MHz) for 2.5× throughput attempt",
+  "//m2": "Aggressive STA target. If timing fails, fall back to 12.5ns (80 MHz)",
+  "//m3": "Combined with Lane L resizer/CGT tuning required for closure",
+  "PL_TARGET_DENSITY_PCT_TIMING_DRIVEN": 1
 }
