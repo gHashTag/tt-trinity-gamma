@@ -1,0 +1,13 @@
+[package]
+name = "tri1-avs-witnesses"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "R7 Rust falsification witness W-105-A for L-DPC33 Wave-36 AVS 48-island voltage stacking (BitNet b1.58-3B island utilisation ≥ 0.80)"
+repository = "https://github.com/gHashTag/tt-trinity-max-true"
+keywords = ["falsification", "witness", "AVS", "bitnet", "voltage-stacking"]
+
+[lib]
+name = "tri1_avs_witnesses"
+path = "src/lib.rs"
