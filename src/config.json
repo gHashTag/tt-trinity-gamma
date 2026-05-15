@@ -22,10 +22,17 @@
   "FP_PDN_MULTILAYER": 0,
   "MAGIC_DEF_LABELS": 0,
   "MAGIC_WRITE_LEF_PINONLY": 1,
-  "//k": "=== L-DPC22 Lane K (dual-lib hd+hdll) — S-13 squeeze vector (REVISED v2) ===",
+  "//k": "=== L-DPC22 Lane K (dual-lib hd+hdll) \u2014 S-13 squeeze vector (REVISED v2) ===",
   "//k1": "Original SYNTH_LIBS_BASE/SYNTH_EXCLUSION_CELL_LIST not valid in OpenLane2",
   "//k2": "Fallback: increase density target to push synth toward smaller faster cells",
   "//k3": "Combined with CTS root buffer and tighter placement timing",
   "PL_TARGET_DENSITY_PCT_TIMING_OPT": 1,
-  "//k-duallib": "L-DPC22-K hdll zoning intent: low-activity blocks lucas_rom*, crc32_receipt, blake3_anchor, gf16_mul targeted for sky130_fd_sc_hdll in future multi-pass OpenLane2 flow (5-10x lower leakage per cell vs hd). Current flow: sky130_fd_sc_hd only. Activate via STD_CELL_LIBRARY_OPT when TT-EDA supports it. G-13: WNS>=0 required. See docs/L-DPC22-K-DUAL-LIB.md"
+  "//k-duallib": "L-DPC22-K hdll zoning intent: low-activity blocks lucas_rom*, crc32_receipt, blake3_anchor, gf16_mul targeted for sky130_fd_sc_hdll in future multi-pass OpenLane2 flow (5-10x lower leakage per cell vs hd). Current flow: sky130_fd_sc_hd only. Activate via STD_CELL_LIBRARY_OPT when TT-EDA supports it. G-13: WNS>=0 required. See docs/L-DPC22-K-DUAL-LIB.md",
+  "SYNTH_CLOCK_GATING": 1,
+  "PL_RESIZER_BUFFER_INPUT_PORTS": 1,
+  "PL_RESIZER_BUFFER_OUTPUT_PORTS": 1,
+  "PL_RESIZER_TIMING_OPTIMIZATIONS": 1,
+  "//l": "=== L-DPC22 Lane L (OpenROAD CGT) \u2014 S-14 squeeze vector merged on top of K v2 ===",
+  "//l1": "Clock gating reduces dynamic power on idle MAX-TRUE clusters",
+  "//l3": "Hold fix strategy \u2014 prefer hold buffers over setup margin"
 }
