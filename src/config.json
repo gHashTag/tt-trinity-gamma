@@ -1,6 +1,6 @@
 {
   "PL_TARGET_DENSITY_PCT": 45,
-  "CLOCK_PERIOD": 8,
+  "CLOCK_PERIOD": 12.5,
   "PL_RESIZER_HOLD_SLACK_MARGIN": 0.1,
   "GRT_RESIZER_HOLD_SLACK_MARGIN": 0.05,
   "RUN_LINTER": 1,
@@ -36,8 +36,9 @@
   "//l1": "Clock gating reduces dynamic power on idle MAX-TRUE clusters",
   "//l3": "Hold fix strategy — prefer hold buffers over setup margin",
   "//m": "=== L-DPC22 Lane M (PLL 50→125 MHz) — S-2 squeeze vector ===",
-  "//m1": "CLOCK_PERIOD reduced 20ns (50 MHz) → 8ns (125 MHz) for 2.5× throughput attempt",
-  "//m2": "Aggressive STA target. If timing fails, fall back to 12.5ns (80 MHz)",
+  "//m1": "R5-HONEST: 8ns (125 MHz) failed harden — STA could not close. Falling back to 12.5ns (80 MHz)",
+  "//m2": "Fallback ladder step 1/3: 12.5ns (80 MHz) — 1.6× baseline",
+  "//m-ica": "ICA-MAX-TRUE-007: PR#4 v1 GDS FAIL @ 8ns, harden failed. Fix: 12.5ns fallback",
   "//m3": "Combined with Lane L resizer/CGT tuning required for closure",
   "PL_TARGET_DENSITY_PCT_TIMING_DRIVEN": 1
 }
