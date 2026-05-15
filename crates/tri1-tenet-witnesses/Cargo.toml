@@ -1,0 +1,13 @@
+[package]
+name = "tri1-tenet-witnesses"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "R7 Rust falsification witness W-102-A for L-DPC26 Wave-29 TENET sparsity-aware LUT (BitNet b1.58-3B sparsity ratio ≥ 25%)"
+repository = "https://github.com/gHashTag/tt-trinity-max-true"
+keywords = ["falsification", "witness", "TENET", "sparsity", "BitNet"]
+
+[lib]
+name = "tri1_tenet_witnesses"
+path = "src/lib.rs"
