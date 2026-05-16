@@ -1,0 +1,8 @@
+[package]
+name = "node-shrink-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "W41 IHP 22FDX Node Shrink witness (W-104-G freeze 2026-12-15)"
+
+[dependencies]
