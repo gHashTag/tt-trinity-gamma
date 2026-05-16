@@ -1,0 +1,14 @@
+[package]
+name = "adiab-rc-witness"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+license = "Apache-2.0"
+description = "Wave-46 Lane NN'' — ADIABATIC CHARGE RECOVERY witness for OP_ADIAB_RC=0xF0 (final slot in sacred bank 0xD0..0xF0)"
+
+[lib]
+path = "src/lib.rs"
+
+[[test]]
+name = "opcode"
+path = "tests/opcode.rs"

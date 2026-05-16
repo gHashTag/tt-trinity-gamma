@@ -18,6 +18,7 @@ members = [
     "crates/sparsity-witness",
     "crates/fbb-active-witness",
     "crates/wl-boost-witness",
+    "crates/adiab-rc-witness",
     "crates/node-shrink-witness",
     "crates/moe-router-witness",
 ]
