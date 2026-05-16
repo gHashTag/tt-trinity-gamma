@@ -1,0 +1,14 @@
+[package]
+name = "cap-boost-witness"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+license = "Apache-2.0"
+description = "Wave-49 Lane VV'' — Capacitive Decoupling Burst witness for OP_CAP_BOOST=0xF3 (third slot in EXTENDED sacred bank 0xD0..0xFF). Third lever of triple-decker dynamic-power envelope: W47 RBB (0xF1) + W48 FBB-ACTIVE (0xF2) + W49 CAP-BOOST (0xF3). γ³ = phi^-9 capacitive burst on supply rail."
+
+[lib]
+path = "src/lib.rs"
+
+[[test]]
+name = "opcode"
+path = "tests/opcode.rs"
