@@ -1,0 +1,8 @@
+[package]
+name = "moe-router-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "W42 MoE Sparse Routing witness (W-105-G freeze 2026-12-31, NO new L1 opcode)"
+
+[dependencies]

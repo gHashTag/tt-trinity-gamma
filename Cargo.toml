@@ -19,5 +19,6 @@ members = [
     "crates/fbb-active-witness",
     "crates/wl-boost-witness",
     "crates/node-shrink-witness",
+    "crates/moe-router-witness",
 ]
 resolver = "2"
