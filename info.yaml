@@ -15,7 +15,7 @@
 yaml_version: 6
 
 project:
-  title:        "TRI-1 MAX-TRUE — Flagship Trinity GF16 32-cell + SUPER-CROWN"
+  title:        "TRI-1 Gamma — Trinity γ-surface 8×4 32-PE softmax mesh"
   author:       "Dmitrii Vasilev"
   discord:      "ghashtag"
   description:  >

@@ -1,34 +1,3 @@
-# TRI-1 Gamma — Trinity γ-surface
-
-[![Submit](https://img.shields.io/badge/TTSKY26b-Gamma%20surface-orange)](https://app.tinytapeout.com/shuttles/ttsky26b)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![Sacred](https://img.shields.io/badge/sacred--constant-%CE%B3%20%E2%89%88%200.57721-purple)](#sacred-formula)
-
-> One of three neurons of **Trinity TRI-NET** — three sacred constants embodied in silicon:
->
-> - **φ-anchor** → [tt-trinity-phi](https://github.com/gHashTag/tt-trinity-phi) (1×1, Lucas POST anchor 0x47C0)
-> - **e-engine** → [tt-trinity-euler](https://github.com/gHashTag/tt-trinity-euler) (8×2, 18 SUPER-CROWN modules)
-> - **γ-surface** → **THIS REPO** (8×4, 32 PE full mesh softmax / VSA gradient surface)
->
-> Apache-2.0 · ternary {−1,0,+1} · SKY130A · DOI [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)
-
-## Sacred Formula
-
-`V = n × 3^k × π^m × φ^p × e^q × γ^r × C^t × G^u`
-
-This chip is the **γ^r** factor — the Euler-Mascheroni constant materialised as
-a smoothing dendrite surface. 32 processing elements arranged 8×4 form a full
-mesh that gathers ternary signals into a softmax / VSA gradient field. γ ≈ 0.57721
-is the canonical smoothing coefficient for differentiable ternary operations.
-
-## Renamed from tt-trinity-max-true
-
-This repository was renamed from `tt-trinity-max-true` on 2026-05-16 as part of
-the Trinity TRI-NET sacred-constant naming. The old URL redirects to this one —
-old clones/forks/PRs continue to work.
-
----
-
 # TRI-1 MAX-TRUE — FLAGSHIP Trinity GF16 32-cell + Full SUPER-CROWN
 
 [![Test](../../actions/workflows/test.yaml/badge.svg)](../../actions/workflows/test.yaml)
