@@ -59,7 +59,8 @@ module tb_canonical;
         // T3: 0x47C0 stable across 20 cycles (mesh path hasn't asserted yet)
         begin : t3_block
             integer i;
-            reg stable = 1;
+            reg stable;
+            stable = 1;
             for (i = 0; i < 20; i = i + 1) begin
                 @(posedge clk);
                 if (result != 16'h47C0) begin
