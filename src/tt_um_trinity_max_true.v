@@ -525,6 +525,49 @@ module tt_um_trinity_max_true (
     // uio[1] is RX bit (input); all others output.
     assign uio_oe  = 8'b1111_1101;
 
+    // =================================================================
+    // CLARA Gap-7: composition_kernel observer
+    // Wired as a passive observer — reads phi_dist and crc_final[0] as
+    // receipt_ok.  All CLARA ports (load_clause, fact_load, start) are
+    // driven low so the engine idles by default.  The observer exposes
+    // force_unknown_flag and proof_trace_serial on internal wires for
+    // future uio visibility.  Submodule depends on PR #58/#60/#62.
+    // TODO(merge-gap3/4/5): connect ui_in control bits once PRs merged.
+    // R-SI-1 clean.  DOI 10.5281/zenodo.19227877
+    // =================================================================
+    wire [15:0] ck_final_facts;
+    wire [1:0]  ck_proof_trace;
+    wire        ck_force_unknown;
+    wire        ck_converged;
+    wire [3:0]  ck_iter_count;
+    wire        ck_overflow;
+    wire [2:0]  ck_reason;
+
+    composition_kernel u_clara_gap7 (
+        .clk               (clk),
+        .rst_n             (rst_n),
+        // CLARA data ports tied off (observer mode — no active inference)
+        .load_clause       (1'b0),
+        .clause_idx        (4'h0),
+        .clause_head       (4'h0),
+        .clause_body       (16'hFFFF),
+        .clause_valid      (1'b0),
+        .fact_load         (1'b0),
+        .fact_idx          (4'h0),
+        .start             (1'b0),
+        // Restrained by live phi_dist from phi_distance_oracle
+        .phi_drift         (phi_dist),
+        .receipt_ok        (crc_final[0]),
+        // Composed outputs
+        .final_facts       (ck_final_facts),
+        .proof_trace_serial(ck_proof_trace),
+        .force_unknown_flag(ck_force_unknown),
+        .converged_out     (ck_converged),
+        .iter_count_out    (ck_iter_count),
+        .overflow_out      (ck_overflow),
+        .restraint_reason  (ck_reason)
+    );
+
     // Silence lint
     wire _unused = &{1'b0, mesh_dbg_tile0, ena, uio_in,
                      mesh_rcpt_checksum, mesh_rcpt_job_id,
@@ -546,6 +589,9 @@ module tt_um_trinity_max_true (
                      nca_in_band, nca_popcount,
                      seed_safe, seed_replaced,
                      phi_dist[14:0],
+                     ck_final_facts, ck_proof_trace,
+                     ck_force_unknown, ck_converged,
+                     ck_iter_count, ck_overflow, ck_reason,
                      ui_in[7:4], 1'b0};
 
 endmodule
