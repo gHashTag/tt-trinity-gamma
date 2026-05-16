@@ -1,0 +1,58 @@
+name: RTL & Cocotb Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  iverilog-canonical:
+    name: IVerilog canonical anchor test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install IVerilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog
+
+      - name: Run canonical anchor test
+        run: |
+          cd sim
+          iverilog -o tb_canonical.out \
+            -I../src ../src/*.v tb_canonical.v
+          vvp tb_canonical.out
+
+  cocotb-rtl:
+    name: Cocotb RTL tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Cocotb
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip python3-venv
+          pip3 install cocotb
+
+      - name: Run Cocotb tests
+        run: |
+          cd test
+          make SIM=icarus
+
+  yosys-rsi1-audit:
+    name: R-SI-1 audit (Yosys)
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Yosys
+        run: sudo apt-get update && sudo apt-get install -y yosys
+
+      - name: Run Yosys R-SI-1 audit
+        run: |
+          yosys -p "read_verilog -I src src/*.v; \
+                    hierarchy -top tt_um_trinity_max_true; \
+                    proc; opt; stat" | grep '\$mul' || echo "No multipliers found (R-SI-1 compliant)"

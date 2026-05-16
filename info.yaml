@@ -1,4 +1,4 @@
-# Tiny Tapeout project information — TRI-1 MAX-TRUE FLAGSHIP
+# Tiny Tapeout project information — TRI-1 MAX-TRUE NEUROMORPHIC FLAGSHIP
 # https://tinytapeout.com/specs/info_yaml/
 #
 # L-DPC22-K S-13 DUAL-LIB ZONING HINT (feat/v15/k-dual-lib)
@@ -15,53 +15,54 @@
 yaml_version: 6
 
 project:
-  title:        "TRI-1 Gamma — Trinity γ-surface 5×4 20-PE softmax mesh"
+  title:        "TRI-1 Gamma — MAX-TRUE NEUROMORPHIC FLAGSHIP 32-tile 8-column"
   author:       "Dmitrii Vasilev"
   discord:      "ghashtag"
   description:  >
-    FLAGSHIP SKU of the TRI-1 Triad (Nano / Mid / MAX-TRUE), W15-TT-E
-    submission (TTSKY26b). 20 honest GF16(2^4) ternary MAC cells
-    arranged on 5x4 = 20 TT tiles as 1 quad_mesh (4 banks × 4 tiles = 16 PE)
-    + 1 mesh_2x2 (1 bank × 4 tiles = 4 PE). Packet routing:
-    lane[3]=cluster (0=quad, 1=mesh_2x2), lane[2:1]=bank, dst[27:26]=tile.
-    Carries the FULL Mid SUPER-CROWN module set + 6 PhD-anchored
-    monitor singletons = 24 SUPER-CROWN modules total:
-    phi_anchor_post, lucas_rom×7 (POST chain), vsa_matmul_8x8 / 16x16,
-    bitnet_encoder, bpb_counter, blake3_anchor, multi_tile_receipt,
-    crc32_receipt, alu9_decoder, ring27_memory, hwrng_lfsr,
+    MAX-TRUE NEUROMORPHIC FLAGSHIP SKU of the TRI-1 Triad (TTSKY26b).
+    32 tiles = 8x4 TT footprint. Architecture: 8 cortical columns
+    (cortical_column.v — LIF leaky-integrate-and-fire dynamics with 8-bit
+    membrane potential, BitNet b1.58 ternary MLP hidden layer, GF16 dot4
+    input projection, sparse PE accumulator; ~500 cells/column = ~4100 total)
+    + 20-PE GF16 mesh (1x trinity_quad_mesh 16 PE + 1x trinity_mesh_2x2 4 PE)
+    + 24 SUPER-CROWN modules (phi_anchor_post, lucas_rom x7, vsa_matmul_8x8,
+    vsa_matmul_16x16, bitnet_encoder, bpb_counter, blake3_anchor,
+    multi_tile_receipt, crc32_receipt, alu9_decoder, ring27_memory, hwrng_lfsr,
     phi_pll_div, wb_status_reg, wishbone_full, trinity_master_fsm,
     trinity_mesh_2x2, gf16_dot4, plus 6 PhD-anchored monitors:
-    cassini_post (L-S23, second φ²+φ⁻²=3 Qed proof),
-    plrm_counter (L-S22, SCH-1 LCM(29,47)=1363 mutual exclusion),
-    bpb_lower_bound_guard (L-S33, THM-25-3 bpb_non_negative Qed),
-    nca_entropy_monitor (L-S24, INV-4 12 H ∈ [1.5,2.8] nats),
-    strobe_seed_guard (L-S28, INV-2-ext seed mod F9=34 ∈ [8,11] forbidden),
-    phi_distance_oracle (L-S32, phi_distance_nonneg, 360-entry Q1.15 LUT). On reset the chip drives the
-    canonical dot4(1.0, 2.0, 3.0, 4.0) = 0x47C0 on {uio_out, uo_out}
-    — byte-identical to Nano (tt-trinity-nano) and Mid
-    (tt-trinity-gf16). That equality is the cross-die anchor of
-    TG-TRIAD-X (PhD Theorem 36.1, docs/phd/chapters/flos_70.tex).
-    R-SI-1: zero NEW `*` operators (legacy gf16_mul grandfathered per
+    cassini_post, plrm_counter, bpb_lower_bound_guard, nca_entropy_monitor,
+    strobe_seed_guard, phi_distance_oracle)
+    + D2D holo mesh 4-port N/E/S/W router (d2d_holo_mesh.v — adapted from
+    tt-trinity-holo TTSKY26c lineage; uio[3:0]=TX, uio[7:4]=RX inputs;
+    LAYER-FROZEN gate on w_tx per PhD Theorem 36.1 R18)
+    + full Crown47 ROM (crown47_rom + crown47_rom_8bit)
+    + TRI NET friend/foe handshake (GAMMA anchor 8'h93)
+    + FHRR holo_lut_pe (VSA binding, Glava 32).
+    TG-TRIAD-X canonical anchor 0x47C0 on {uio_out,uo_out} at reset
+    (PhD Theorem 36.1, docs/phd/chapters/flos_70.tex).
+    R-SI-1: zero NEW * operators (legacy gf16_mul grandfathered per
     TRI_NET_SHUTTLE_TRIAD.md Rule 2 / tt-trinity-gf16#4).
     Anchor: phi^2 + phi^-2 = 3. DOI: 10.5281/zenodo.19227877.
-    S-13 dual-lib: sky130_fd_sc_hd primary + sky130_fd_sc_hdll zoning
-    intent for low-activity blocks (lucas_rom*, crc32_receipt,
-    blake3_anchor, gf16_mul). Target: -30% static leakage.
-    See docs/L-DPC22-K-DUAL-LIB.md. L-DPC22 Lane K feat/v15/k-dual-lib.
+    tt-trinity-holo D2D lineage (TTSKY26c, 1x2, r_marker_rom.v).
+    S-13 dual-lib: sky130_fd_sc_hd primary + sky130_fd_sc_hdll for
+    low-activity blocks. See docs/L-DPC22-K-DUAL-LIB.md.
   language:     "Verilog"
   clock_hz:     50000000
 
-  # FLAGSHIP footprint = 5×4 TT tiles = 20 TT tiles = 0.44 mm² Sky130A.
-  # 20 honest GF16 PE = 1× trinity_quad_mesh (16 PE) + 1× trinity_mesh_2x2 (4 PE).
-  # Fitted to TTSKY26b single-design ceiling (max 20 tiles per project).
-  # Valid sky130A tile sizes: 1x1,1x2,2x2,3x2,3x4,4x2,4x4,5x4,6x2,6x4,8x2,8x4.
+  # 8x4 TT tiles = 32 tiles = 0.704 mm2 Sky130A (MAX footprint).
+  # Cell budget at 60% util ceiling = ~48000 cells.
+  # Estimated: ~4100 (neuromorphic) + ~30000 (existing) = ~34100 total.
+  # Valid sky130A tile sizes: 1x1,1x2,2x2,3x2,4x2,6x2,8x2,4x4,6x4,8x4.
   # See https://github.com/TinyTapeout/tt-support-tools/blob/main/tech/sky130A/tile_sizes.yaml
-  tiles:        "5x4"
+  tiles:        "8x4"
 
   top_module:   "tt_um_trinity_max_true"
 
   source_files:
     - "tt_um_trinity_max_true.v"
+    - "cortical_column.v"
+    - "trinity_cortex_8col.v"
+    - "d2d_holo_mesh.v"
     - "trinity_max_true_20pe.v"
     - "trinity_quad_mesh.v"
     - "trinity_mesh_2x2.v"
@@ -72,8 +73,10 @@ project:
     - "gf16_add.v"
     - "gf16_dot4.v"
     - "gf16_dot8.v"
+    - "gf16_dot4_sparse.v"
     - "gf16_popcount.v"
     - "gf16_popcount16.v"
+    - "gf16_mesh_2x2_top.v"
     - "phi_anchor_post.v"
     - "lucas_rom.v"
     - "vsa_matmul_8x8.v"
@@ -99,6 +102,7 @@ project:
     - "holo_lut_pe.v"
     - "crown47_rom.v"
     - "crown47_rom_8bit.v"
+    - "datalog_engine_mini.v"  # Gap-3 CLARA Datalog forward-chain engine (16 clauses, O(n))
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"
@@ -107,7 +111,7 @@ pinout:
   ui[3]: "lucas_idx[2]"
   ui[4]: "unused"
   ui[5]: "unused"
-  ui[6]: "unused"
+  ui[6]: "crown_addr[6:0] MSB (with ui[5:0])"
   ui[7]: "unused"
   uo[0]: "result[0] (canonical 0x47C0 default; mesh result_lo[0] after FSM)"
   uo[1]: "result[1]"
@@ -117,11 +121,11 @@ pinout:
   uo[5]: "result[5]"
   uo[6]: "result[6]"
   uo[7]: "result[7]"
-  uio[0]: "result[8] | status_byte[0] when load_mode && post_done"
-  uio[1]: "result[9] | status_byte[1]"
-  uio[2]: "result[10] | status_byte[2]"
-  uio[3]: "result[11] | status_byte[3]"
-  uio[4]: "result[12] | status_byte[4]"
-  uio[5]: "result[13] | status_byte[5]"
-  uio[6]: "result[14] | status_byte[6]"
-  uio[7]: "result[15] | status_byte[7]"
+  uio[0]: "D2D n_tx — North TX (output): spike_count[3] activity bit"
+  uio[1]: "D2D e_tx — East TX (output): spike_count[0] activity bit"
+  uio[2]: "D2D s_tx — South TX (output): GF16 route tag bit"
+  uio[3]: "D2D w_tx — West TX SYNC strobe (output, LAYER-FROZEN gated per PhD Thm 36.1 R18)"
+  uio[4]: "D2D n_rx — North RX (input from peer die)"
+  uio[5]: "D2D e_rx — East RX (input from peer die)"
+  uio[6]: "D2D s_rx — South RX (input from peer die)"
+  uio[7]: "D2D w_rx (input from peer die) / crown_mode enable when high + load_mode=0"
