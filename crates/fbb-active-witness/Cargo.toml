@@ -1,0 +1,14 @@
+[package]
+name = "fbb-active-witness"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+license = "Apache-2.0"
+description = "Wave-44 Lane JJ'' — FORWARD BODY BIAS witness for OP_FBB=0xEE"
+
+[lib]
+path = "src/lib.rs"
+
+[[test]]
+name = "opcode"
+path = "tests/opcode.rs"

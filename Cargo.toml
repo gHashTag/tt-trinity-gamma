@@ -16,5 +16,6 @@ members = [
     "crates/stoch-round-witness",
     "crates/drowsy-ret-witness",
     "crates/sparsity-witness",
+    "crates/fbb-active-witness",
 ]
 resolver = "2"
