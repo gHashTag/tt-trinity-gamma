@@ -102,6 +102,43 @@ module tt_um_trinity_max_true (
     );
 
     // =================================================================
+    // USB3 FIFO bridge (FT60x 245-sync shim, observability instance)
+    // Exposes 4 LSBs of the bridge FIFO bus on uio[3:0] for streaming I/O.
+    // FT60x pins are not on TT, so RXF#/TXE# are tied to safe constants
+    // and ft_data is an internal wire (tri-state when idle, driven by the
+    // bridge during do_write). host_out_pkt is the result packet stream
+    // already produced by the master FSM / mesh dual fabric.
+    // =================================================================
+    wire        usb3_ft_rd_n;
+    wire        usb3_ft_wr_n;
+    wire        usb3_ft_oe_n;
+    wire [31:0] usb3_ft_data;
+    wire [31:0] usb3_host_in_pkt;
+    wire        usb3_host_in_valid;
+    wire        usb3_host_out_ready;
+
+    trinity_usb3_fifo_bridge u_usb3 (
+        .clk             (clk),
+        .rst_n           (rst_n),
+        .ft_rxf_n        (1'b1),               // no external host data on TT
+        .ft_txe_n        (~host_out_valid),    // FT space available iff result valid
+        .ft_rd_n         (usb3_ft_rd_n),
+        .ft_wr_n         (usb3_ft_wr_n),
+        .ft_oe_n         (usb3_ft_oe_n),
+        .ft_data         (usb3_ft_data),
+        .host_in_pkt     (usb3_host_in_pkt),
+        .host_in_valid   (usb3_host_in_valid),
+        .host_in_ready   (1'b1),               // sink ready
+        .host_out_pkt    (host_out_pkt),       // observe existing result stream
+        .host_out_valid  (host_out_valid),
+        .host_out_ready  (usb3_host_out_ready)
+    );
+
+    // 4-bit streaming nibble derived from the bridge bus + handshake state.
+    wire [3:0] usb3_stream_nibble = usb3_ft_data[3:0]
+                                   ^ {usb3_ft_oe_n, usb3_ft_rd_n, usb3_ft_wr_n, usb3_host_out_ready};
+
+    // =================================================================
     // SUPER-CROWN (preserved verbatim from Mid SUPER-CROWN, single instances)
     // =================================================================
 
@@ -483,11 +520,17 @@ module tt_um_trinity_max_true (
     wire [15:0] final_result = mesh_result_valid ? mesh_result : dot_out;
 
     assign uo_out  = final_result[7:0]  | input_echo[7:0];
-    assign uio_out = (ui_in[0] && post_done) ? status_byte : (final_result[15:8] | input_echo[15:8]);
+
+    // uio[7:4] keeps the legacy status/result mux; uio[3:0] streams the USB3
+    // FIFO bridge nibble so the FT60x bus is observable at top level.
+    wire [7:0] uio_legacy =
+        (ui_in[0] && post_done) ? status_byte : (final_result[15:8] | input_echo[15:8]);
+    assign uio_out = {uio_legacy[7:4], usb3_stream_nibble};
     assign uio_oe  = 8'hFF;
 
     // Silence lint
     wire _unused = &{1'b0, mesh_dbg_tile0, ena, uio_in,
+                     usb3_ft_data[31:4], usb3_host_in_pkt, usb3_host_in_valid,
                      mesh_rcpt_checksum, mesh_rcpt_job_id,
                      mesh_rcpt_tile_id, mesh_rcpt_valid,
                      lucas_val, vsa_done, vsa_c,
