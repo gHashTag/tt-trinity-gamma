@@ -497,10 +497,29 @@ module tt_um_trinity_max_true (
         .handshake_valid (ff_valid)
     );
 
-    wire [7:0] uio_legacy =
-        (ui_in[0] && post_done) ? status_byte : (final_result[15:8] | input_echo[15:8]);
+    // ==================================================================
+    // CROWN47 ROM — Crown of TRI NET (Crown42 + 5 Tegmark-31 fillers).
+    // 47 Trinity constants in 24-bit pseudo-float (Vasilev-Pellis v22.12).
+    // Activated by uio_in[7]=1 with load_mode=0 (preserves T4 {0x47C0}).
+    //   ui_in[6:0]   = crown_addr (0..46)
+    //   uio_in[6:5]  = byte_sel (0=mant_lo 1=mant_hi 2=exp 3=tier_flag)
+    // Anchor phi^2+phi^-2=3 . DOI 10.5281/zenodo.19227877  R-SI-1 clean.
+    // ==================================================================
+    wire        crown_mode = uio_in[7] && !ui_in[0];
+    wire [7:0]  crown_byte_raw;
+    crown47_rom_8bit u_crown47 (
+        .addr     (ui_in[6:0]),
+        .byte_sel (uio_in[6:5]),
+        .byte_out (crown_byte_raw)
+    );
 
-    assign uo_out  = final_result[7:0]  | input_echo[7:0];
+    wire [7:0] uio_legacy =
+        crown_mode              ? 8'h00 :
+        (ui_in[0] && post_done) ? status_byte :
+                                   (final_result[15:8] | input_echo[15:8]);
+
+    assign uo_out  = crown_mode ? crown_byte_raw
+                                : (final_result[7:0]  | input_echo[7:0]);
     // uio[7:4] keeps legacy mux; uio[3:0] carries TRI NET friend/foe.
     assign uio_out = {uio_legacy[7:4], ff_valid, ff_friend, 1'b0, ff_tx};
     // uio[1] is RX bit (input); all others output.
