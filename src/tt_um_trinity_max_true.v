@@ -482,9 +482,28 @@ module tt_um_trinity_max_true (
     // =================================================================
     wire [15:0] final_result = mesh_result_valid ? mesh_result : dot_out;
 
+    // =================================================================
+    // TRI NET friend/foe handshake (MY_ANCHOR = gamma = 8'h93)
+    // uio[0]=tx_bit (OUT), uio[1]=rx_bit (IN), uio[2]=friend, uio[3]=valid
+    // =================================================================
+    wire ff_tx, ff_friend, ff_valid;
+    trinity_friend_foe #(.MY_ANCHOR(8'h93)) u_friend_foe (
+        .clk             (clk),
+        .rst_n           (rst_n),
+        .rx_bit          (uio_in[1]),
+        .tx_bit          (ff_tx),
+        .friend_detected (ff_friend),
+        .handshake_valid (ff_valid)
+    );
+
+    wire [7:0] uio_legacy =
+        (ui_in[0] && post_done) ? status_byte : (final_result[15:8] | input_echo[15:8]);
+
     assign uo_out  = final_result[7:0]  | input_echo[7:0];
-    assign uio_out = (ui_in[0] && post_done) ? status_byte : (final_result[15:8] | input_echo[15:8]);
-    assign uio_oe  = 8'hFF;
+    // uio[7:4] keeps legacy mux; uio[3:0] carries TRI NET friend/foe.
+    assign uio_out = {uio_legacy[7:4], ff_valid, ff_friend, 1'b0, ff_tx};
+    // uio[1] is RX bit (input); all others output.
+    assign uio_oe  = 8'b1111_1101;
 
     // Silence lint
     wire _unused = &{1'b0, mesh_dbg_tile0, ena, uio_in,

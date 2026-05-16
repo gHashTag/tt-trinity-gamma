@@ -88,6 +88,7 @@ project:
     - "phi_pll_div.v"
     - "wb_status_reg.v"
     - "wishbone_full.v"
+    - "trinity_friend_foe.v"
     - "cassini_post.v"
     - "plrm_counter.v"
     - "bpb_lower_bound_guard.v"
