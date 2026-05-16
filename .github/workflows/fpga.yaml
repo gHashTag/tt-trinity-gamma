@@ -1,0 +1,71 @@
+name: FPGA Synthesis & Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'info.yaml'
+
+jobs:
+  yosys-synthesis:
+    name: Yosys synthesis check
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Yosys
+        run: sudo apt-get update && sudo apt-get install -y yosys
+
+      - name: Run synthesis
+        run: |
+          yosys -p "read_verilog -I src src/*.v; \
+                    hierarchy -top tt_um_trinity_max_true; \
+                    proc; opt; \
+                    synth -top tt_um_trinity_max_true; \
+                    stat"
+
+  verilator-lint:
+    name: Verilator lint
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator
+
+      - name: Run Verilator lint
+        run: |
+          verilator --lint-only -Wall -Wno-fatal \
+            -Isrc \
+            -y src \
+            src/tt_um_trinity_max_true.v
+
+  resources-audit:
+    name: Resource utilization audit
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Yosys
+        run: sudo apt-get update && sudo apt-get install -y yosys
+
+      - name: Generate resource report
+        run: |
+          yosys -p "read_verilog -I src src/*.v; \
+                    hierarchy -top tt_um_trinity_max_true; \
+                    proc; opt; \
+                    synth -top tt_um_trinity_max_true; \
+                    stat -top tt_um_trinity_max_true" \
+                    > resources_report.txt
+          cat resources_report.txt
+
+      - name: Upload resource report
+        uses: actions/upload-artifact@v4
+        with:
+          name: resources-report
+          path: resources_report.txt
