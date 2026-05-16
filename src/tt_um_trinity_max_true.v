@@ -478,6 +478,46 @@ module tt_um_trinity_max_true (
         cassini_ok & plrm_ok & bpb_guard_ok &
         nca_ok & strobe_ok & phi_oracle_ok;
 
+
+    // =================================================================
+    // CLARA Gap-4: restraint_ctrl — hard-wired K_UNKNOWN controller
+    // DARPA CLARA TA1.4 bounded rationality, t27 spec: restraint.t27
+    // Triggers force_unknown when:
+    //   phi_drift > 164 (0.5% Q1.15), step_count > 10, receipt_ok==0
+    // Observability: force_unknown wired to uio[4] debug bit (read-only).
+    // halt_mac not yet gated to MAC clock — safe first integration.
+    // DOI 10.5281/zenodo.19227877
+    // =================================================================
+
+    // Step counter: counts accepted FSM packets (host_in_valid && host_in_ready)
+    // Resets with rst_n. trip condition: > 10 accepted packets.
+    reg [3:0] fsm_step_count;
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n)
+            fsm_step_count <= 4'd0;
+        else if (host_in_valid && host_in_ready && fsm_step_count != 4'd15)
+            fsm_step_count <= fsm_step_count + 4'd1;
+    end
+
+    // receipt_ok: high when at least one valid receipt has been received
+    wire restraint_rcpt_ok = mesh_rcpt_valid | rcpt_valid_d;
+
+    // restraint_ctrl instance
+    wire restraint_force_unknown;
+    wire restraint_halt_mac;
+    wire [2:0] restraint_reason;
+    restraint_ctrl u_restraint (
+        .clk           (clk),
+        .rst_n         (rst_n),
+        .phi_drift     (phi_dist),
+        .step_count    (fsm_step_count),
+        .receipt_ok    (restraint_rcpt_ok),
+        .current_state (2'b01),
+        .force_unknown (restraint_force_unknown),
+        .halt_mac      (restraint_halt_mac),
+        .reason        (restraint_reason)
+    );
+
     // =================================================================
     // Output mux: legacy 0x47C0 path → mesh result once produced.
     // =================================================================
@@ -521,12 +561,14 @@ module tt_um_trinity_max_true (
     assign uo_out  = crown_mode ? crown_byte_raw
                                 : (final_result[7:0]  | input_echo[7:0]);
     // uio[7:4] keeps legacy mux; uio[3:0] carries TRI NET friend/foe.
-    assign uio_out = {uio_legacy[7:4], ff_valid, ff_friend, 1'b0, ff_tx};
-    // uio[1] is RX bit (input); all others output.
+    // uio[4] = restraint_force_unknown (CLARA Gap-4 debug observability)
+    assign uio_out = {uio_legacy[7:5], restraint_force_unknown, ff_valid, ff_friend, 1'b0, ff_tx};
+    // uio[1] is RX bit (input); uio[4] = restraint debug; all others output.
     assign uio_oe  = 8'b1111_1101;
 
     // Silence lint
     wire _unused = &{1'b0, mesh_dbg_tile0, ena, uio_in,
+                     restraint_halt_mac, restraint_reason,
                      mesh_rcpt_checksum, mesh_rcpt_job_id,
                      mesh_rcpt_tile_id, mesh_rcpt_valid,
                      lucas_val, vsa_done, vsa_c,
