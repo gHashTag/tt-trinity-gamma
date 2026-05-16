@@ -43,6 +43,10 @@ project:
     TG-TRIAD-X (PhD Theorem 36.1, docs/phd/chapters/flos_70.tex).
     R-SI-1: zero NEW `*` operators (legacy gf16_mul grandfathered per
     TRI_NET_SHUTTLE_TRIAD.md Rule 2 / tt-trinity-gf16#4).
+    Gap-1 CLARA Red Team filter (5 categories): fuel_deception,
+    action_exhaustion, timeline_manipulation, resource_poisoning,
+    proof_trace_overflow — ~250 cells, DARPA TA1, observability
+    via uio[2] (filter_block). CLARA-RED-TEAM.md spec compliant.
     Anchor: phi^2 + phi^-2 = 3. DOI: 10.5281/zenodo.19227877.
     S-13 dual-lib: sky130_fd_sc_hd primary + sky130_fd_sc_hdll zoning
     intent for low-activity blocks (lucas_rom*, crc32_receipt,
@@ -99,6 +103,7 @@ project:
     - "holo_lut_pe.v"
     - "crown47_rom.v"
     - "crown47_rom_8bit.v"
+    - "redteam_filter.v"
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"
