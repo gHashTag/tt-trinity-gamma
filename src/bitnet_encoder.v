@@ -49,12 +49,13 @@ module bitnet_encoder (
         integer i;
         reg [1:0] xe, we;
         reg signed [15:0] acc;
+        reg [15:0] temp;
         begin
             acc = 0;
             for (i = 0; i < 64; i = i + 1) begin
                 // Verilog-2005 compatible: extract 2 bits using shift and mask
-            temp = x >> (i * 2);
-            xe = temp[1:0];
+                temp = x >> (i * 2);
+                xe = temp[1:0];
                 we = w_gen(neuron_base + i[5:0]);
                 if (!xe[1] && !we[1]) begin
                     if (xe[0] == we[0]) acc = acc + 1;
@@ -103,7 +104,7 @@ module bitnet_encoder (
                                 else if (|h1[k]) dot = dot + 1;
                             end
                             y_acc[j] <= dot;
-// Verilog-2005 compatible: assign byte by byte
+                            // Verilog-2005 compatible: assign byte by byte
                             case (j)
                                 3'd0: y_out[7:0]   <= dot[7:0];
                                 3'd1: y_out[15:8]  <= dot[7:0];
