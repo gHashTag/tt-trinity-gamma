@@ -1,0 +1,171 @@
+DIGEST c448fc084a58ea950aca965fb983dce6
+Fworker_pool_composite
+R558:574 Stdlib.QArith.QArith <> <> lib
+R592:605 Stdlib.Lists.List <> <> lib
+R623:637 Stdlib.Arith.Arith <> <> lib
+def 777:792 <> trinity_identity
+R796:796 Stdlib.QArith.QArith_base <> Q rec
+R802:802 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+def 841:855 <> igla_target_bpb
+R859:859 Stdlib.QArith.QArith_base <> Q rec
+R865:865 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+def 933:954 <> victory_seeds_required
+R958:960 Corelib.Init.Datatypes <> nat ind
+def 1016:1031 <> gf16_min_d_model
+R1035:1037 Corelib.Init.Datatypes <> nat ind
+def 1160:1183 <> asha_prune_threshold_min
+R1187:1187 Stdlib.QArith.QArith_base <> Q rec
+R1193:1193 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+def 1296:1306 <> valid_rungs
+R1310:1313 Corelib.Init.Datatypes <> list ind
+R1315:1315 Stdlib.QArith.QArith_base <> Q rec
+R1322:1322 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1331:1335 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1327:1329 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R1336:1336 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1345:1349 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1341:1343 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R1350:1350 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1359:1363 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1355:1357 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R1364:1364 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1374:1378 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1370:1372 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R1379:1381 Corelib.Init.Datatypes <> nil constr
+def 1444:1466 <> max_workers_per_machine
+R1470:1472 Corelib.Init.Datatypes <> nat ind
+def 1547:1549 <> InQ
+R1556:1556 Stdlib.QArith.QArith_base <> Q rec
+binder 1552:1552 <> x:1
+R1565:1568 Corelib.Init.Datatypes <> list ind
+R1570:1570 Stdlib.QArith.QArith_base <> Q rec
+binder 1560:1561 <> xs:2
+R1575:1578 Corelib.Init.Datatypes <> bool ind
+R1591:1592 worker_pool_composite <> xs:2 var
+R1603:1605 Corelib.Init.Datatypes <> nil constr
+R1610:1614 Corelib.Init.Datatypes <> false constr
+R1621:1624 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1634:1641 Stdlib.QArith.QArith_base <> Qeq_bool def
+R1643:1643 worker_pool_composite <> x:1 var
+R1662:1664 worker_pool_composite <> InQ:3 def
+R1666:1666 worker_pool_composite <> x:1 var
+R1652:1655 Corelib.Init.Datatypes <> true constr
+def 1931:1940 <> inv2_holds
+R1955:1955 Stdlib.QArith.QArith_base <> Q rec
+binder 1943:1951 <> threshold:5
+R1960:1963 Corelib.Init.Datatypes <> bool ind
+R1970:1977 Stdlib.QArith.QArith_base <> Qle_bool def
+R1979:2002 worker_pool_composite <> asha_prune_threshold_min def
+R2004:2012 worker_pool_composite <> threshold:5 var
+prf 2024:2049 <> inv2_falsification_witness
+R2077:2079 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2055:2064 worker_pool_composite <> inv2_holds def
+R2070:2072 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R2080:2084 Corelib.Init.Datatypes <> false constr
+R2103:2112 worker_pool_composite <> inv2_holds def
+def 2355:2364 <> inv3_holds
+R2377:2379 Corelib.Init.Datatypes <> nat ind
+binder 2367:2373 <> d_model:6
+R2384:2387 Corelib.Init.Datatypes <> bool ind
+R2394:2396 Stdlib.Arith.Compare_dec <> leb abbrev
+R2398:2413 worker_pool_composite <> gf16_min_d_model def
+R2415:2421 worker_pool_composite <> d_model:6 var
+prf 2433:2458 <> inv3_falsification_witness
+R2478:2480 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2464:2473 worker_pool_composite <> inv3_holds def
+R2481:2485 Corelib.Init.Datatypes <> false constr
+R2504:2513 worker_pool_composite <> inv3_holds def
+def 2771:2781 <> inv12_holds
+R2791:2791 Stdlib.QArith.QArith_base <> Q rec
+binder 2784:2787 <> rung:7
+R2796:2799 Corelib.Init.Datatypes <> bool ind
+R2806:2808 worker_pool_composite <> InQ def
+R2810:2813 worker_pool_composite <> rung:7 var
+R2815:2825 worker_pool_composite <> valid_rungs def
+prf 2837:2863 <> inv12_falsification_witness
+R2891:2893 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2869:2879 worker_pool_composite <> inv12_holds def
+R2886:2888 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R2894:2898 Corelib.Init.Datatypes <> false constr
+R2917:2927 worker_pool_composite <> inv12_holds def
+R2939:2941 worker_pool_composite <> InQ def
+def 3099:3123 <> composite_invariant_holds
+R3145:3145 Stdlib.QArith.QArith_base <> Q rec
+binder 3128:3141 <> asha_threshold:8
+R3161:3163 Corelib.Init.Datatypes <> nat ind
+binder 3151:3157 <> d_model:9
+R3176:3176 Stdlib.QArith.QArith_base <> Q rec
+binder 3169:3172 <> rung:10
+R3181:3184 Corelib.Init.Datatypes <> bool ind
+R3191:3194 Corelib.Init.Datatypes <> andb def
+R3232:3235 Corelib.Init.Datatypes <> andb def
+R3272:3282 worker_pool_composite <> inv12_holds def
+R3284:3287 worker_pool_composite <> rung:10 var
+R3238:3247 worker_pool_composite <> inv3_holds def
+R3249:3255 worker_pool_composite <> d_model:9 var
+R3197:3206 worker_pool_composite <> inv2_holds def
+R3208:3221 worker_pool_composite <> asha_threshold:8 var
+prf 3359:3379 <> witness_composite_inv
+R3437:3439 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3385:3409 worker_pool_composite <> composite_invariant_holds def
+R3415:3417 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R3432:3434 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R3440:3444 Corelib.Init.Datatypes <> false constr
+R3463:3487 worker_pool_composite <> composite_invariant_holds def
+R3499:3508 worker_pool_composite <> inv2_holds def
+R3511:3520 worker_pool_composite <> inv3_holds def
+R3523:3533 worker_pool_composite <> inv12_holds def
+R3545:3547 worker_pool_composite <> InQ def
+prf 3647:3678 <> valid_config_satisfies_composite
+R3734:3736 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3684:3708 worker_pool_composite <> composite_invariant_holds def
+R3713:3715 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R3729:3731 Stdlib.QArith.QArith_base <> ::Q_scope:x_'#'_x not
+R3737:3740 Corelib.Init.Datatypes <> true constr
+R3759:3783 worker_pool_composite <> composite_invariant_holds def
+R3795:3804 worker_pool_composite <> inv2_holds def
+R3807:3816 worker_pool_composite <> inv3_holds def
+R3819:3829 worker_pool_composite <> inv12_holds def
+R3841:3843 worker_pool_composite <> InQ def
+def 4004:4019 <> victory_achieved
+R4036:4038 Corelib.Init.Datatypes <> nat ind
+binder 4022:4032 <> seeds_found:11
+R4043:4046 Corelib.Init.Datatypes <> bool ind
+R4053:4055 Stdlib.Arith.Compare_dec <> leb abbrev
+R4057:4078 worker_pool_composite <> victory_seeds_required def
+R4080:4090 worker_pool_composite <> seeds_found:11 var
+prf 4102:4116 <> victory_not_yet
+R4140:4142 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4122:4137 worker_pool_composite <> victory_achieved def
+R4143:4147 Corelib.Init.Datatypes <> false constr
+R4166:4181 worker_pool_composite <> victory_achieved def
+prf 4224:4236 <> victory_exact
+R4260:4262 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4242:4257 worker_pool_composite <> victory_achieved def
+R4263:4266 Corelib.Init.Datatypes <> true constr
+R4285:4300 worker_pool_composite <> victory_achieved def
+def 4447:4470 <> worker_pool_bounds_holds
+R4487:4489 Corelib.Init.Datatypes <> nat ind
+binder 4473:4483 <> num_workers:12
+R4494:4497 Corelib.Init.Datatypes <> bool ind
+R4504:4507 Corelib.Init.Datatypes <> andb def
+R4537:4539 Stdlib.Arith.Compare_dec <> leb abbrev
+R4541:4551 worker_pool_composite <> num_workers:12 var
+R4553:4575 worker_pool_composite <> max_workers_per_machine def
+R4510:4512 Stdlib.Arith.Compare_dec <> leb abbrev
+R4516:4526 worker_pool_composite <> num_workers:12 var
+prf 4588:4608 <> worker_pool_too_small
+R4640:4642 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4614:4637 worker_pool_composite <> worker_pool_bounds_holds def
+R4643:4647 Corelib.Init.Datatypes <> false constr
+R4666:4689 worker_pool_composite <> worker_pool_bounds_holds def
+prf 4732:4752 <> worker_pool_too_large
+R4785:4787 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4758:4781 worker_pool_composite <> worker_pool_bounds_holds def
+R4788:4792 Corelib.Init.Datatypes <> false constr
+R4811:4834 worker_pool_composite <> worker_pool_bounds_holds def
+prf 4877:4893 <> worker_pool_valid
+R4925:4927 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4899:4922 worker_pool_composite <> worker_pool_bounds_holds def
+R4928:4931 Corelib.Init.Datatypes <> true constr
+R4950:4973 worker_pool_composite <> worker_pool_bounds_holds def

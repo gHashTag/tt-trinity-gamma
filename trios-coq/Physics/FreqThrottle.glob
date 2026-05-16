@@ -1,0 +1,269 @@
+DIGEST c683e43c9153351d758d4dbe74379f05
+FFreqThrottle
+R1546:1562 Stdlib.ZArith.ZArith <> <> lib
+R1580:1596 Stdlib.micromega.Lia <> <> lib
+def 1863:1878 <> OP_FREQ_THROTTLE
+def 2004:2019 <> OP_VOLTAGE_GUARD
+def 2062:2077 <> OP_THERMAL_GUARD
+def 2120:2131 <> OP_CAP_BOOST
+def 2178:2190 <> OP_FBB_ACTIVE
+def 2236:2241 <> OP_RBB
+def 2361:2374 <> SACRED_BANK_LO
+def 2409:2422 <> SACRED_BANK_HI
+def 2457:2472 <> SACRED_BANK_SIZE
+prf 2720:2760 <> freq_throttle_distinct_from_voltage_guard
+R2782:2785 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2766:2781 FreqThrottle <> OP_FREQ_THROTTLE def
+R2786:2801 FreqThrottle <> OP_VOLTAGE_GUARD def
+R2818:2833 FreqThrottle <> OP_FREQ_THROTTLE def
+R2836:2851 FreqThrottle <> OP_VOLTAGE_GUARD def
+prf 2871:2911 <> freq_throttle_distinct_from_thermal_guard
+R2933:2936 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2917:2932 FreqThrottle <> OP_FREQ_THROTTLE def
+R2937:2952 FreqThrottle <> OP_THERMAL_GUARD def
+R2969:2984 FreqThrottle <> OP_FREQ_THROTTLE def
+R2987:3002 FreqThrottle <> OP_THERMAL_GUARD def
+prf 3022:3058 <> freq_throttle_distinct_from_cap_boost
+R3080:3083 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3064:3079 FreqThrottle <> OP_FREQ_THROTTLE def
+R3084:3095 FreqThrottle <> OP_CAP_BOOST def
+R3112:3127 FreqThrottle <> OP_FREQ_THROTTLE def
+R3130:3141 FreqThrottle <> OP_CAP_BOOST def
+prf 3161:3198 <> freq_throttle_distinct_from_fbb_active
+R3220:3223 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3204:3219 FreqThrottle <> OP_FREQ_THROTTLE def
+R3224:3236 FreqThrottle <> OP_FBB_ACTIVE def
+R3253:3268 FreqThrottle <> OP_FREQ_THROTTLE def
+R3271:3283 FreqThrottle <> OP_FBB_ACTIVE def
+prf 3303:3333 <> freq_throttle_distinct_from_rbb
+R3355:3358 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3339:3354 FreqThrottle <> OP_FREQ_THROTTLE def
+R3359:3364 FreqThrottle <> OP_RBB def
+R3381:3396 FreqThrottle <> OP_FREQ_THROTTLE def
+R3399:3404 FreqThrottle <> OP_RBB def
+prf 3655:3684 <> freq_throttle_in_extended_bank
+R3724:3727 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3704:3707 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3690:3703 FreqThrottle <> SACRED_BANK_LO def
+R3708:3723 FreqThrottle <> OP_FREQ_THROTTLE def
+R3744:3747 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3728:3743 FreqThrottle <> OP_FREQ_THROTTLE def
+R3748:3761 FreqThrottle <> SACRED_BANK_HI def
+R3778:3791 FreqThrottle <> SACRED_BANK_LO def
+R3794:3809 FreqThrottle <> OP_FREQ_THROTTLE def
+R3812:3825 FreqThrottle <> SACRED_BANK_HI def
+prf 3845:3883 <> freq_throttle_adjacent_to_voltage_guard
+R3905:3907 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3889:3904 FreqThrottle <> OP_FREQ_THROTTLE def
+R3924:3926 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3908:3923 FreqThrottle <> OP_VOLTAGE_GUARD def
+R3944:3959 FreqThrottle <> OP_FREQ_THROTTLE def
+R3962:3977 FreqThrottle <> OP_VOLTAGE_GUARD def
+prf 3997:4023 <> sextuple_decker_consecutive
+R4058:4063 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4045:4047 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4029:4044 FreqThrottle <> OP_FREQ_THROTTLE def
+R4054:4056 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4048:4053 FreqThrottle <> OP_RBB def
+R4090:4095 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4077:4079 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4064:4076 FreqThrottle <> OP_FBB_ACTIVE def
+R4086:4088 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4080:4085 FreqThrottle <> OP_RBB def
+R4121:4126 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4108:4110 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4096:4107 FreqThrottle <> OP_CAP_BOOST def
+R4117:4119 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4111:4116 FreqThrottle <> OP_RBB def
+R4156:4161 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4143:4145 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4127:4142 FreqThrottle <> OP_THERMAL_GUARD def
+R4152:4154 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4146:4151 FreqThrottle <> OP_RBB def
+R4178:4180 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4162:4177 FreqThrottle <> OP_VOLTAGE_GUARD def
+R4187:4189 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4181:4186 FreqThrottle <> OP_RBB def
+R4216:4231 FreqThrottle <> OP_FREQ_THROTTLE def
+R4234:4239 FreqThrottle <> OP_RBB def
+R4263:4275 FreqThrottle <> OP_FBB_ACTIVE def
+R4278:4283 FreqThrottle <> OP_RBB def
+R4307:4318 FreqThrottle <> OP_CAP_BOOST def
+R4321:4326 FreqThrottle <> OP_RBB def
+R4350:4365 FreqThrottle <> OP_THERMAL_GUARD def
+R4368:4373 FreqThrottle <> OP_RBB def
+R4390:4405 FreqThrottle <> OP_VOLTAGE_GUARD def
+R4408:4413 FreqThrottle <> OP_RBB def
+def 4712:4727 <> freq_nominal_MHz
+R4731:4731 Corelib.Numbers.BinNums <> Z ind
+def 4778:4794 <> freq_guard_lo_MHz
+R4798:4798 Corelib.Numbers.BinNums <> Z ind
+def 4844:4860 <> freq_guard_hi_MHz
+R4864:4864 Corelib.Numbers.BinNums <> Z ind
+def 4911:4930 <> delta_f_throttle_MHz
+R4934:4934 Corelib.Numbers.BinNums <> Z ind
+R4955:4957 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R4939:4954 FreqThrottle <> freq_nominal_MHz def
+R4958:4974 FreqThrottle <> freq_guard_lo_MHz def
+def 5038:5050 <> F_THROTTLE_MV
+R5056:5056 Corelib.Numbers.BinNums <> Z ind
+def 5110:5124 <> F_TOLERANCE_MHz
+R5128:5128 Corelib.Numbers.BinNums <> Z ind
+prf 5453:5478 <> delta_f_throttle_is_100MHz
+R5502:5504 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5482:5501 FreqThrottle <> delta_f_throttle_MHz def
+R5524:5543 FreqThrottle <> delta_f_throttle_MHz def
+R5546:5561 FreqThrottle <> freq_nominal_MHz def
+R5564:5580 FreqThrottle <> freq_guard_lo_MHz def
+prf 5650:5676 <> freq_guard_lo_below_nominal
+R5699:5701 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5682:5698 FreqThrottle <> freq_guard_lo_MHz def
+R5702:5717 FreqThrottle <> freq_nominal_MHz def
+R5734:5750 FreqThrottle <> freq_guard_lo_MHz def
+R5753:5768 FreqThrottle <> freq_nominal_MHz def
+prf 5838:5864 <> freq_nominal_below_guard_hi
+R5886:5888 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5870:5885 FreqThrottle <> freq_nominal_MHz def
+R5889:5905 FreqThrottle <> freq_guard_hi_MHz def
+R5922:5937 FreqThrottle <> freq_nominal_MHz def
+R5940:5956 FreqThrottle <> freq_guard_hi_MHz def
+prf 6047:6065 <> freq_envelope_valid
+R6107:6110 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6088:6090 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6071:6087 FreqThrottle <> freq_guard_lo_MHz def
+R6091:6106 FreqThrottle <> freq_nominal_MHz def
+R6127:6129 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6111:6126 FreqThrottle <> freq_nominal_MHz def
+R6130:6146 FreqThrottle <> freq_guard_hi_MHz def
+R6172:6198 FreqThrottle <> freq_guard_lo_below_nominal thm
+R6208:6234 FreqThrottle <> freq_nominal_below_guard_hi thm
+R6172:6198 FreqThrottle <> freq_guard_lo_below_nominal thm
+R6208:6234 FreqThrottle <> freq_nominal_below_guard_hi thm
+prf 6320:6340 <> freq_tolerance_200MHz
+R6346:6346 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6384:6387 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6364:6366 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R6347:6363 FreqThrottle <> freq_guard_hi_MHz def
+R6367:6383 FreqThrottle <> freq_guard_lo_MHz def
+R6409:6425 FreqThrottle <> freq_guard_hi_MHz def
+R6428:6444 FreqThrottle <> freq_guard_lo_MHz def
+prf 6525:6549 <> delta_f_throttle_positive
+R6573:6575 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R6553:6572 FreqThrottle <> delta_f_throttle_MHz def
+R6595:6614 FreqThrottle <> delta_f_throttle_MHz def
+R6617:6632 FreqThrottle <> freq_nominal_MHz def
+R6635:6651 FreqThrottle <> freq_guard_lo_MHz def
+prf 6728:6748 <> freq_nominal_centered
+R6774:6776 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6770:6772 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6754:6769 FreqThrottle <> freq_nominal_MHz def
+R6794:6796 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6777:6793 FreqThrottle <> freq_guard_lo_MHz def
+R6797:6813 FreqThrottle <> freq_guard_hi_MHz def
+R6832:6847 FreqThrottle <> freq_nominal_MHz def
+R6850:6866 FreqThrottle <> freq_guard_lo_MHz def
+R6869:6885 FreqThrottle <> freq_guard_hi_MHz def
+prf 6952:6977 <> sacred_bank_size_preserved
+R6997:6999 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6981:6996 FreqThrottle <> SACRED_BANK_SIZE def
+R7018:7033 FreqThrottle <> SACRED_BANK_SIZE def
+prf 7111:7134 <> sextuple_decker_sequence
+R7152:7157 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7146:7148 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7140:7145 FreqThrottle <> OP_RBB def
+R7177:7182 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7171:7173 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7158:7170 FreqThrottle <> OP_FBB_ACTIVE def
+R7201:7206 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7195:7197 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7183:7194 FreqThrottle <> OP_CAP_BOOST def
+R7229:7234 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7223:7225 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7207:7222 FreqThrottle <> OP_THERMAL_GUARD def
+R7257:7262 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7251:7253 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7235:7250 FreqThrottle <> OP_VOLTAGE_GUARD def
+R7279:7281 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7263:7278 FreqThrottle <> OP_FREQ_THROTTLE def
+R7310:7315 FreqThrottle <> OP_RBB def
+R7347:7359 FreqThrottle <> OP_FBB_ACTIVE def
+R7391:7402 FreqThrottle <> OP_CAP_BOOST def
+R7434:7449 FreqThrottle <> OP_THERMAL_GUARD def
+R7481:7496 FreqThrottle <> OP_VOLTAGE_GUARD def
+R7521:7536 FreqThrottle <> OP_FREQ_THROTTLE def
+prf 7632:7658 <> delta_f_throttle_percentage
+R7673:7675 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7667:7669 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R7680:7682 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 7764:7786 <> freq_tolerance_in_range
+R7809:7814 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7802:7805 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R7796:7798 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R7825:7828 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R7819:7821 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+prf 7914:7932 <> freq_envelope_width
+R7975:7977 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7955:7957 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R7938:7954 FreqThrottle <> freq_guard_hi_MHz def
+R7958:7974 FreqThrottle <> freq_guard_lo_MHz def
+R7999:8015 FreqThrottle <> freq_guard_hi_MHz def
+R8018:8034 FreqThrottle <> freq_guard_lo_MHz def
+prf 8101:8127 <> freq_throttle_is_10_percent
+R8141:8143 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8136:8138 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 8467:8489 <> freq_throttle_composite
+R8517:8522 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8511:8513 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8495:8510 FreqThrottle <> OP_FREQ_THROTTLE def
+R8546:8551 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8539:8541 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8523:8538 FreqThrottle <> freq_nominal_MHz def
+R8575:8580 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8569:8571 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8552:8568 FreqThrottle <> freq_guard_lo_MHz def
+R8605:8610 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8598:8600 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8581:8597 FreqThrottle <> freq_guard_hi_MHz def
+R8637:8642 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8631:8633 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8611:8630 FreqThrottle <> delta_f_throttle_MHz def
+R8679:8684 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8660:8662 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8643:8659 FreqThrottle <> freq_guard_lo_MHz def
+R8663:8678 FreqThrottle <> freq_nominal_MHz def
+R8721:8726 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8701:8703 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8685:8700 FreqThrottle <> freq_nominal_MHz def
+R8704:8720 FreqThrottle <> freq_guard_hi_MHz def
+R8751:8756 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8747:8749 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8727:8746 FreqThrottle <> delta_f_throttle_MHz def
+R8796:8801 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8773:8775 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8757:8772 FreqThrottle <> OP_FREQ_THROTTLE def
+R8792:8794 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8776:8791 FreqThrottle <> OP_VOLTAGE_GUARD def
+R8831:8836 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8818:8820 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8802:8817 FreqThrottle <> OP_FREQ_THROTTLE def
+R8827:8829 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8821:8826 FreqThrottle <> OP_RBB def
+R8853:8855 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8837:8852 FreqThrottle <> SACRED_BANK_SIZE def
+R8883:8898 FreqThrottle <> OP_FREQ_THROTTLE def
+R8930:8945 FreqThrottle <> freq_nominal_MHz def
+R8977:8993 FreqThrottle <> freq_guard_lo_MHz def
+R9025:9041 FreqThrottle <> freq_guard_hi_MHz def
+R9072:9097 FreqThrottle <> delta_f_throttle_is_100MHz thm
+R9072:9097 FreqThrottle <> delta_f_throttle_is_100MHz thm
+R9115:9141 FreqThrottle <> freq_guard_lo_below_nominal thm
+R9115:9141 FreqThrottle <> freq_guard_lo_below_nominal thm
+R9159:9185 FreqThrottle <> freq_nominal_below_guard_hi thm
+R9159:9185 FreqThrottle <> freq_nominal_below_guard_hi thm
+R9203:9227 FreqThrottle <> delta_f_throttle_positive thm
+R9203:9227 FreqThrottle <> delta_f_throttle_positive thm
+R9245:9283 FreqThrottle <> freq_throttle_adjacent_to_voltage_guard thm
+R9245:9283 FreqThrottle <> freq_throttle_adjacent_to_voltage_guard thm
+R9302:9317 FreqThrottle <> OP_FREQ_THROTTLE def
+R9320:9325 FreqThrottle <> OP_RBB def
+R9342:9357 FreqThrottle <> SACRED_BANK_SIZE def

@@ -1,0 +1,29 @@
+-R . TriosCoq
+-R ../coq T27
+IGLA/Sparsity24.v
+IGLA/Timing400.v
+IGLA/PdkPortable.v
+IGLA/Tenet.v
+IGLA/LutNpu.v
+IGLA/Avs.v
+IGLA/VoltStack.v
+Kernel/LutNpu.v
+Physics/AvsStacking.v
+Physics/SubThreshold.v
+Physics/HoloMux.v
+Physics/DFS.v
+Physics/SparseGate.v
+Physics/StochRound.v
+Physics/DrowsyRet.v
+Physics/FBBActive.v
+Physics/NodeShrink.v
+Physics/MoeRouter.v
+Physics/WLBoost.v
+Physics/AdiabRC.v
+Physics/Int2QuantSafe.v
+Physics/RBB.v
+Physics/StochSkipSafe.v
+
+Physics/FBBActive2.v
+Physics/CapBoost.v
+Physics/ThermalGuard.v

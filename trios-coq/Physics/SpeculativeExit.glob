@@ -1,0 +1,314 @@
+DIGEST 277c561b5b34364486ffd34fce5de813
+FTriosCoq.Physics.SpeculativeExit
+R518:522 Stdlib.Reals.Reals <> <> lib
+R540:542 Stdlib.micromega.Lia <> <> lib
+R560:562 Stdlib.micromega.Lra <> <> lib
+R580:583 Stdlib.Lists.List <> <> lib
+R593:605 Stdlib.Lists.List ListNotations <> mod
+ind 686:687 <> Z3
+constr 698:700 <> TM1
+constr 704:705 <> T0
+constr 709:711 <> TP1
+scheme 686:687 <> Z3_rect
+scheme 686:687 <> Z3_ind
+scheme 686:687 <> Z3_rec
+scheme 686:687 <> Z3_sind
+def 773:779 <> phi_inv
+R783:783 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R792:794 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+rec 809:828 <> ConfidenceClassifier
+proj 842:853 <> cc_logit_max
+proj 863:874 <> cc_logit_2nd
+proj 884:893 <> cc_softmax
+R858:858 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R879:879 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R900:900 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+rec 913:926 <> InferenceState
+proj 940:947 <> is_input
+proj 963:974 <> is_depth_max
+proj 987:998 <> is_avg_depth
+proj 1009:1021 <> is_w38_bypass
+R957:958 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+R980:982 Corelib.Init.Datatypes <> nat ind
+R1004:1004 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1026:1029 Corelib.Init.Datatypes <> bool ind
+def 1046:1055 <> full_depth
+R1062:1063 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+binder 1058:1058 <> x:12
+R1068:1069 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+R1074:1074 TriosCoq.Physics.SpeculativeExit <> x:12 var
+def 1089:1101 <> early_exit_at
+R1108:1110 Corelib.Init.Datatypes <> nat ind
+binder 1104:1104 <> k:13
+R1118:1119 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+binder 1114:1114 <> x:14
+R1130:1130 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 1123:1126 <> conf:15
+R1135:1136 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+R1146:1152 Stdlib.Reals.RIneq <> Rle_dec thm
+R1154:1160 TriosCoq.Physics.SpeculativeExit <> phi_inv def
+R1162:1165 TriosCoq.Physics.SpeculativeExit <> conf:15 var
+R1190:1199 TriosCoq.Physics.SpeculativeExit <> full_depth def
+R1201:1201 TriosCoq.Physics.SpeculativeExit <> x:14 var
+R1172:1181 TriosCoq.Physics.SpeculativeExit <> full_depth def
+R1183:1183 TriosCoq.Physics.SpeculativeExit <> x:14 var
+ax 1258:1271 <> avg_exit_depth
+R1277:1277 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1290:1295 <> eer_at
+R1310:1313 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1309:1309 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1314:1314 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1327:1354 <> misprediction_latency_cycles
+R1358:1360 Corelib.Init.Datatypes <> nat ind
+ax 1373:1392 <> spec_exit_star_count
+R1396:1398 Corelib.Init.Datatypes <> nat ind
+ax 1411:1426 <> two_of_three_acc
+R1430:1430 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1443:1460 <> tops_per_watt_spec
+R1466:1466 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1479:1495 <> tops_per_watt_w38
+R1502:1502 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1515:1527 <> overhead_frac
+R1534:1534 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1547:1556 <> depth_frac
+R1566:1566 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1576:1584 <> depth_pos
+R1609:1611 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>'_x not
+R1595:1608 TriosCoq.Physics.SpeculativeExit <> avg_exit_depth defax
+ax 1621:1631 <> depth_upper
+R1654:1657 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1640:1653 TriosCoq.Physics.SpeculativeExit <> avg_exit_depth defax
+ax 1667:1677 <> mispred_one
+R1714:1716 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1686:1713 TriosCoq.Physics.SpeculativeExit <> misprediction_latency_cycles defax
+ax 1730:1744 <> synth_star_zero
+R1769:1771 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1749:1768 TriosCoq.Physics.SpeculativeExit <> spec_exit_star_count defax
+ax 1785:1800 <> two_three_acc_lo
+R1820:1823 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R1804:1819 TriosCoq.Physics.SpeculativeExit <> two_of_three_acc defax
+R1826:1828 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+ax 1840:1854 <> phi_inv_min_eer
+R1872:1872 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 1866:1868 <> tau:44
+R1888:1891 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1876:1879 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R1883:1886 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R1880:1882 TriosCoq.Physics.SpeculativeExit <> tau:44 var
+R1880:1882 TriosCoq.Physics.SpeculativeExit <> tau:44 var
+R1906:1909 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1892:1897 TriosCoq.Physics.SpeculativeExit <> eer_at defax
+R1899:1905 TriosCoq.Physics.SpeculativeExit <> phi_inv def
+R1910:1915 TriosCoq.Physics.SpeculativeExit <> eer_at defax
+R1917:1919 TriosCoq.Physics.SpeculativeExit <> tau:44 var
+ax 1928:1939 <> tops_w38_392
+R1964:1966 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1947:1963 TriosCoq.Physics.SpeculativeExit <> tops_per_watt_w38 defax
+ax 1978:1990 <> tops_gain_120
+R2015:2017 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1997:2014 TriosCoq.Physics.SpeculativeExit <> tops_per_watt_spec defax
+R2027:2029 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R2021:2023 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R2030:2046 TriosCoq.Physics.SpeculativeExit <> tops_per_watt_w38 defax
+prf 2185:2205 <> speculative_exit_safe
+R2223:2224 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+binder 2219:2219 <> x:51
+R2232:2234 Corelib.Init.Datatypes <> nat ind
+binder 2228:2228 <> k:52
+R2245:2245 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 2238:2241 <> conf:53
+R2268:2275 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2257:2260 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R2253:2256 TriosCoq.Physics.SpeculativeExit <> conf:53 var
+R2261:2267 TriosCoq.Physics.SpeculativeExit <> phi_inv def
+R2298:2300 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2276:2288 TriosCoq.Physics.SpeculativeExit <> early_exit_at def
+R2290:2290 TriosCoq.Physics.SpeculativeExit <> k:52 var
+R2292:2292 TriosCoq.Physics.SpeculativeExit <> x:51 var
+R2294:2297 TriosCoq.Physics.SpeculativeExit <> conf:53 var
+R2301:2310 TriosCoq.Physics.SpeculativeExit <> full_depth def
+R2312:2312 TriosCoq.Physics.SpeculativeExit <> x:51 var
+R2352:2364 TriosCoq.Physics.SpeculativeExit <> early_exit_at def
+R2379:2385 Stdlib.Reals.RIneq <> Rle_dec thm
+R2387:2393 TriosCoq.Physics.SpeculativeExit <> phi_inv def
+R2379:2385 Stdlib.Reals.RIneq <> Rle_dec thm
+R2387:2393 TriosCoq.Physics.SpeculativeExit <> phi_inv def
+prf 2537:2560 <> speculative_exit_no_star
+R2584:2586 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2564:2583 TriosCoq.Physics.SpeculativeExit <> spec_exit_star_count defax
+R2607:2621 TriosCoq.Physics.SpeculativeExit <> synth_star_zero prfax
+R2607:2621 TriosCoq.Physics.SpeculativeExit <> synth_star_zero prfax
+prf 2697:2728 <> misprediction_recovery_one_cycle
+R2762:2764 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2734:2761 TriosCoq.Physics.SpeculativeExit <> misprediction_latency_cycles defax
+R2785:2795 TriosCoq.Physics.SpeculativeExit <> mispred_one prfax
+R2785:2795 TriosCoq.Physics.SpeculativeExit <> mispred_one prfax
+prf 2867:2892 <> two_of_three_majority_safe
+R2914:2917 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R2898:2913 TriosCoq.Physics.SpeculativeExit <> two_of_three_acc defax
+R2920:2922 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R2941:2956 TriosCoq.Physics.SpeculativeExit <> two_three_acc_lo prfax
+R2941:2956 TriosCoq.Physics.SpeculativeExit <> two_three_acc_lo prfax
+def 3008:3024 <> op_spec_exit_byte
+R3028:3030 Corelib.Init.Datatypes <> nat ind
+def 3085:3099 <> op_null_pe_byte
+R3105:3107 Corelib.Init.Datatypes <> nat ind
+def 3167:3183 <> op_subth_clk_byte
+R3187:3189 Corelib.Init.Datatypes <> nat ind
+def 3245:3261 <> isa_dispatch_spec
+R3269:3271 Corelib.Init.Datatypes <> nat ind
+binder 3264:3265 <> op:54
+R3279:3280 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+binder 3275:3275 <> x:55
+R3291:3291 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 3284:3287 <> conf:56
+R3296:3301 Corelib.Init.Datatypes <> option ind
+R3303:3304 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+R3314:3320 Stdlib.Arith.PeanoNat Nat eqb def
+R3322:3323 TriosCoq.Physics.SpeculativeExit <> op:54 var
+R3325:3341 TriosCoq.Physics.SpeculativeExit <> op_spec_exit_byte def
+R3387:3390 Corelib.Init.Datatypes <> None constr
+R3350:3353 Corelib.Init.Datatypes <> Some constr
+R3356:3368 TriosCoq.Physics.SpeculativeExit <> early_exit_at def
+R3372:3372 TriosCoq.Physics.SpeculativeExit <> x:55 var
+R3374:3377 TriosCoq.Physics.SpeculativeExit <> conf:56 var
+prf 3400:3417 <> opcode_EB_dispatch
+R3435:3436 TriosCoq.Physics.SpeculativeExit <> Z3 ind
+binder 3431:3431 <> x:57
+R3447:3447 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 3440:3443 <> conf:58
+R3497:3505 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3455:3471 TriosCoq.Physics.SpeculativeExit <> isa_dispatch_spec def
+R3473:3489 TriosCoq.Physics.SpeculativeExit <> op_spec_exit_byte def
+R3491:3491 TriosCoq.Physics.SpeculativeExit <> x:57 var
+R3493:3496 TriosCoq.Physics.SpeculativeExit <> conf:58 var
+R3506:3509 Corelib.Init.Datatypes <> Some constr
+R3512:3524 TriosCoq.Physics.SpeculativeExit <> early_exit_at def
+R3528:3528 TriosCoq.Physics.SpeculativeExit <> x:57 var
+R3530:3533 TriosCoq.Physics.SpeculativeExit <> conf:58 var
+R3568:3584 TriosCoq.Physics.SpeculativeExit <> isa_dispatch_spec def
+R3597:3608 Stdlib.Arith.PeanoNat Nat eqb_refl thm
+R3597:3608 Stdlib.Arith.PeanoNat Nat eqb_refl thm
+R3597:3608 Stdlib.Arith.PeanoNat Nat eqb_refl thm
+prf 3681:3698 <> exit_depth_bounded
+R3722:3725 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3705:3707 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<'_x not
+R3708:3721 TriosCoq.Physics.SpeculativeExit <> avg_exit_depth defax
+R3740:3743 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R3726:3739 TriosCoq.Physics.SpeculativeExit <> avg_exit_depth defax
+R3769:3777 TriosCoq.Physics.SpeculativeExit <> depth_pos prfax
+R3787:3797 TriosCoq.Physics.SpeculativeExit <> depth_upper prfax
+R3769:3777 TriosCoq.Physics.SpeculativeExit <> depth_pos prfax
+R3787:3797 TriosCoq.Physics.SpeculativeExit <> depth_upper prfax
+prf 3880:3904 <> phi_inv_threshold_optimal
+R3923:3923 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 3917:3919 <> tau:59
+R3939:3942 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3927:3930 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R3934:3937 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R3931:3933 TriosCoq.Physics.SpeculativeExit <> tau:59 var
+R3931:3933 TriosCoq.Physics.SpeculativeExit <> tau:59 var
+R3957:3960 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R3943:3948 TriosCoq.Physics.SpeculativeExit <> eer_at defax
+R3950:3956 TriosCoq.Physics.SpeculativeExit <> phi_inv def
+R3961:3966 TriosCoq.Physics.SpeculativeExit <> eer_at defax
+R3968:3970 TriosCoq.Physics.SpeculativeExit <> tau:59 var
+R3986:4000 TriosCoq.Physics.SpeculativeExit <> phi_inv_min_eer prfax
+R3986:4000 TriosCoq.Physics.SpeculativeExit <> phi_inv_min_eer prfax
+prf 4088:4105 <> tops_per_w_geq_470
+R4133:4138 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4121:4124 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R4111:4120 TriosCoq.Physics.SpeculativeExit <> depth_frac defax
+R4127:4129 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R4164:4169 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4152:4155 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R4139:4151 TriosCoq.Physics.SpeculativeExit <> overhead_frac defax
+R4158:4160 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R4188:4191 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R4170:4187 TriosCoq.Physics.SpeculativeExit <> tops_per_watt_spec defax
+R4230:4242 TriosCoq.Physics.SpeculativeExit <> tops_gain_120 prfax
+R4245:4256 TriosCoq.Physics.SpeculativeExit <> tops_w38_392 prfax
+R4230:4242 TriosCoq.Physics.SpeculativeExit <> tops_gain_120 prfax
+R4230:4242 TriosCoq.Physics.SpeculativeExit <> tops_gain_120 prfax
+R4245:4256 TriosCoq.Physics.SpeculativeExit <> tops_w38_392 prfax
+R4245:4256 TriosCoq.Physics.SpeculativeExit <> tops_w38_392 prfax
+def 4406:4419 <> trinity_bypass
+R4426:4439 TriosCoq.Physics.SpeculativeExit <> InferenceState rec
+binder 4422:4422 <> s:60
+R4453:4456 Corelib.Init.Datatypes <> bool ind
+binder 4443:4449 <> mispred:61
+R4461:4474 TriosCoq.Physics.SpeculativeExit <> InferenceState rec
+R4484:4490 TriosCoq.Physics.SpeculativeExit <> mispred:61 var
+R4563:4563 TriosCoq.Physics.SpeculativeExit <> s:60 var
+R4499:4502 TriosCoq.Physics.SpeculativeExit <> mkIS constr
+R4505:4512 TriosCoq.Physics.SpeculativeExit <> is_input proj
+R4514:4514 TriosCoq.Physics.SpeculativeExit <> s:60 var
+R4518:4529 TriosCoq.Physics.SpeculativeExit <> is_depth_max proj
+R4531:4531 TriosCoq.Physics.SpeculativeExit <> s:60 var
+R4535:4546 TriosCoq.Physics.SpeculativeExit <> is_avg_depth proj
+R4548:4548 TriosCoq.Physics.SpeculativeExit <> s:60 var
+R4551:4554 Corelib.Init.Datatypes <> true constr
+prf 4573:4591 <> trinity_bypass_safe
+R4608:4621 TriosCoq.Physics.SpeculativeExit <> InferenceState rec
+binder 4604:4604 <> s:62
+R4673:4680 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4660:4662 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4628:4635 TriosCoq.Physics.SpeculativeExit <> is_input proj
+R4638:4651 TriosCoq.Physics.SpeculativeExit <> trinity_bypass def
+R4653:4653 TriosCoq.Physics.SpeculativeExit <> s:62 var
+R4655:4658 Corelib.Init.Datatypes <> true constr
+R4663:4670 TriosCoq.Physics.SpeculativeExit <> is_input proj
+R4672:4672 TriosCoq.Physics.SpeculativeExit <> s:62 var
+R4718:4720 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4681:4693 TriosCoq.Physics.SpeculativeExit <> is_w38_bypass proj
+R4696:4709 TriosCoq.Physics.SpeculativeExit <> trinity_bypass def
+R4711:4711 TriosCoq.Physics.SpeculativeExit <> s:62 var
+R4713:4716 Corelib.Init.Datatypes <> true constr
+R4721:4724 Corelib.Init.Datatypes <> true constr
+R4753:4766 TriosCoq.Physics.SpeculativeExit <> trinity_bypass def
+def 4895:4900 <> bin_27
+R4904:4907 Corelib.Init.Datatypes <> list ind
+R4909:4909 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R4914:4919 Corelib.Lists.ListDef <> repeat def
+R4923:4925 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+def 4944:4947 <> sumR
+R4954:4957 Corelib.Init.Datatypes <> list ind
+R4959:4959 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 4950:4950 <> l:63
+R4964:4964 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R4977:4977 TriosCoq.Physics.SpeculativeExit <> l:63 var
+R4988:4989 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R5005:5008 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5015:5017 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'+'_x not
+R5018:5021 TriosCoq.Physics.SpeculativeExit <> sumR:64 def
+prf 5039:5066 <> stratified_27_bins_partition
+R5083:5085 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5072:5075 TriosCoq.Physics.SpeculativeExit <> sumR def
+R5077:5082 TriosCoq.Physics.SpeculativeExit <> bin_27 def
+R5105:5110 TriosCoq.Physics.SpeculativeExit <> bin_27 def
+prf 5196:5216 <> spec_exit_w39_witness
+R5250:5255 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5242:5244 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5222:5241 TriosCoq.Physics.SpeculativeExit <> spec_exit_star_count defax
+R5292:5297 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5284:5286 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5256:5283 TriosCoq.Physics.SpeculativeExit <> misprediction_latency_cycles defax
+R5326:5331 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5314:5317 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R5298:5313 TriosCoq.Physics.SpeculativeExit <> two_of_three_acc defax
+R5320:5322 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5351:5356 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5346:5349 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R5332:5345 TriosCoq.Physics.SpeculativeExit <> avg_exit_depth defax
+R5368:5370 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5357:5360 TriosCoq.Physics.SpeculativeExit <> sumR def
+R5362:5367 TriosCoq.Physics.SpeculativeExit <> bin_27 def
+R5407:5421 TriosCoq.Physics.SpeculativeExit <> synth_star_zero prfax
+R5407:5421 TriosCoq.Physics.SpeculativeExit <> synth_star_zero prfax
+R5434:5444 TriosCoq.Physics.SpeculativeExit <> mispred_one prfax
+R5434:5444 TriosCoq.Physics.SpeculativeExit <> mispred_one prfax
+R5457:5472 TriosCoq.Physics.SpeculativeExit <> two_three_acc_lo prfax
+R5457:5472 TriosCoq.Physics.SpeculativeExit <> two_three_acc_lo prfax
+R5485:5495 TriosCoq.Physics.SpeculativeExit <> depth_upper prfax
+R5485:5495 TriosCoq.Physics.SpeculativeExit <> depth_upper prfax
+R5509:5514 TriosCoq.Physics.SpeculativeExit <> bin_27 def

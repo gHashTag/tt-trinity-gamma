@@ -1,0 +1,390 @@
+DIGEST aa83dae84949424e85477a4b4ab49dbf
+FTriosCoq.Physics.NullorReversible
+R758:762 Stdlib.Reals.Reals <> <> lib
+R780:782 Stdlib.micromega.Lia <> <> lib
+R800:802 Stdlib.micromega.Lra <> <> lib
+R820:825 Stdlib.ZArith.ZArith <> <> lib
+R843:846 Stdlib.Lists.List <> <> lib
+ind 925:926 <> Z3
+constr 941:943 <> TM1
+constr 966:967 <> T0
+constr 991:993 <> TP1
+R947:948 TriosCoq.Physics.NullorReversible <> Z3:1 ind
+R972:973 TriosCoq.Physics.NullorReversible <> Z3:1 ind
+R997:998 TriosCoq.Physics.NullorReversible <> Z3:1 ind
+scheme 925:926 <> Z3_rect
+scheme 925:926 <> Z3_ind
+scheme 925:926 <> Z3_rec
+scheme 925:926 <> Z3_sind
+def 1024:1030 <> z3_to_R
+R1037:1038 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 1033:1033 <> t:3
+R1043:1043 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1056:1056 TriosCoq.Physics.NullorReversible <> t:3 var
+R1067:1069 TriosCoq.Physics.NullorReversible <> TM1 constr
+R1081:1082 TriosCoq.Physics.NullorReversible <> T0 constr
+R1094:1096 TriosCoq.Physics.NullorReversible <> TP1 constr
+def 1122:1127 <> z3_mul
+R1136:1137 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 1130:1130 <> a:5
+binder 1132:1132 <> b:6
+R1142:1143 TriosCoq.Physics.NullorReversible <> Z3 ind
+R1159:1159 TriosCoq.Physics.NullorReversible <> b:6 var
+R1156:1156 TriosCoq.Physics.NullorReversible <> a:5 var
+R1170:1171 TriosCoq.Physics.NullorReversible <> T0 constr
+R1181:1182 TriosCoq.Physics.NullorReversible <> T0 constr
+R1191:1192 TriosCoq.Physics.NullorReversible <> T0 constr
+R1199:1200 TriosCoq.Physics.NullorReversible <> T0 constr
+R1206:1208 TriosCoq.Physics.NullorReversible <> TP1 constr
+R1226:1228 TriosCoq.Physics.NullorReversible <> TP1 constr
+R1240:1242 TriosCoq.Physics.NullorReversible <> TM1 constr
+R1245:1247 TriosCoq.Physics.NullorReversible <> TM1 constr
+R1252:1254 TriosCoq.Physics.NullorReversible <> TP1 constr
+rec 1314:1322 <> Reservoir
+proj 1344:1353 <> res_charge
+proj 1397:1405 <> res_cap_n
+R1357:1357 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1410:1412 Corelib.Init.Datatypes <> nat ind
+rec 1474:1482 <> ChargeBus
+proj 1498:1503 <> bus_in
+proj 1514:1520 <> bus_out
+proj 1530:1537 <> bus_diss
+R1509:1509 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1525:1525 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1541:1541 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1634:1642 <> eta_reuse
+R1653:1653 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1701:1710 <> eps_bypass
+R1720:1720 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1761:1780 <> tops_per_watt_nullor
+R1784:1784 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1826:1834 <> phi_clock
+R1848:1851 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1845:1847 Corelib.Init.Datatypes <> nat ind
+R1852:1852 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 1925:1938 <> dispatch_table
+R1947:1951 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1966:1966 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1944:1946 Corelib.Init.Datatypes <> nat ind
+R1954:1957 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1952:1953 TriosCoq.Physics.NullorReversible <> Z3 ind
+R1960:1963 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1958:1959 TriosCoq.Physics.NullorReversible <> Z3 ind
+R1964:1965 TriosCoq.Physics.NullorReversible <> Z3 ind
+ax 1979:1988 <> op_null_pe
+R1998:2000 Corelib.Init.Datatypes <> nat ind
+ax 2127:2147 <> op_null_pe_star_count
+R2151:2153 Corelib.Init.Datatypes <> nat ind
+ax 2229:2245 <> subth_chain_sound
+ax 2265:2279 <> avs_chain_sound
+ax 2301:2315 <> lut_chain_sound
+def 2387:2397 <> mult_result
+R2406:2407 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 2400:2400 <> x:36
+binder 2402:2402 <> y:37
+R2412:2413 TriosCoq.Physics.NullorReversible <> Z3 ind
+R2418:2423 TriosCoq.Physics.NullorReversible <> z3_mul def
+R2425:2425 TriosCoq.Physics.NullorReversible <> x:36 var
+R2427:2427 TriosCoq.Physics.NullorReversible <> y:37 var
+def 2442:2460 <> reservoir_recovered
+R2467:2475 TriosCoq.Physics.NullorReversible <> Reservoir rec
+binder 2463:2463 <> s:38
+R2480:2488 TriosCoq.Physics.NullorReversible <> Reservoir rec
+R2495:2506 TriosCoq.Physics.NullorReversible <> mk_reservoir constr
+R2518:2521 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R2534:2534 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R2509:2517 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R2522:2531 TriosCoq.Physics.NullorReversible <> res_charge proj
+R2533:2533 TriosCoq.Physics.NullorReversible <> s:38 var
+R2538:2546 TriosCoq.Physics.NullorReversible <> res_cap_n proj
+R2548:2548 TriosCoq.Physics.NullorReversible <> s:38 var
+def 2564:2574 <> nullor_mult
+R2583:2584 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 2577:2577 <> x:39
+binder 2579:2579 <> y:40
+R2592:2600 TriosCoq.Physics.NullorReversible <> Reservoir rec
+binder 2588:2588 <> s:41
+R2607:2609 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R2605:2606 TriosCoq.Physics.NullorReversible <> Z3 ind
+R2610:2618 TriosCoq.Physics.NullorReversible <> Reservoir rec
+R2625:2625 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2641:2642 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2664:2664 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2626:2636 TriosCoq.Physics.NullorReversible <> mult_result def
+R2638:2638 TriosCoq.Physics.NullorReversible <> x:39 var
+R2640:2640 TriosCoq.Physics.NullorReversible <> y:40 var
+R2643:2661 TriosCoq.Physics.NullorReversible <> reservoir_recovered def
+R2663:2663 TriosCoq.Physics.NullorReversible <> s:41 var
+def 2766:2783 <> nullor_mult_bypass
+R2792:2793 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 2786:2786 <> x:42
+binder 2788:2788 <> y:43
+R2801:2809 TriosCoq.Physics.NullorReversible <> Reservoir rec
+binder 2797:2797 <> s:44
+R2816:2818 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R2814:2815 TriosCoq.Physics.NullorReversible <> Z3 ind
+R2819:2827 TriosCoq.Physics.NullorReversible <> Reservoir rec
+R2840:2840 TriosCoq.Physics.NullorReversible <> x:42 var
+R2851:2852 TriosCoq.Physics.NullorReversible <> T0 constr
+R2857:2857 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2860:2861 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2863:2863 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R2858:2859 TriosCoq.Physics.NullorReversible <> T0 constr
+R2862:2862 TriosCoq.Physics.NullorReversible <> s:44 var
+R2875:2885 TriosCoq.Physics.NullorReversible <> nullor_mult def
+R2887:2887 TriosCoq.Physics.NullorReversible <> x:42 var
+R2889:2889 TriosCoq.Physics.NullorReversible <> y:43 var
+R2891:2891 TriosCoq.Physics.NullorReversible <> s:44 var
+ax 3025:3039 <> eta_reuse_floor
+R3052:3055 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R3043:3051 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R3058:3060 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+ax 3072:3087 <> eta_reuse_le_one
+R3100:3103 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R3091:3099 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+ax 3135:3148 <> eps_bypass_pos
+R3162:3164 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>'_x not
+R3152:3161 TriosCoq.Physics.NullorReversible <> eps_bypass defax
+ax 3231:3247 <> tops_nullor_floor
+R3271:3274 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R3251:3270 TriosCoq.Physics.NullorReversible <> tops_per_watt_nullor defax
+ax 3371:3388 <> phi_clock_disjoint
+R3407:3409 Corelib.Init.Datatypes <> nat ind
+binder 3401:3401 <> i:54
+binder 3403:3403 <> j:55
+R3423:3426 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3414:3416 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R3413:3413 TriosCoq.Physics.NullorReversible <> i:54 var
+R3438:3441 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3429:3431 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R3428:3428 TriosCoq.Physics.NullorReversible <> j:55 var
+R3448:3455 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3443:3446 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3442:3442 TriosCoq.Physics.NullorReversible <> i:54 var
+R3447:3447 TriosCoq.Physics.NullorReversible <> j:55 var
+R3481:3483 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3467:3469 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R3456:3464 TriosCoq.Physics.NullorReversible <> phi_clock defax
+R3466:3466 TriosCoq.Physics.NullorReversible <> i:54 var
+R3470:3478 TriosCoq.Physics.NullorReversible <> phi_clock defax
+R3480:3480 TriosCoq.Physics.NullorReversible <> j:55 var
+ax 3558:3572 <> op_null_no_star
+R3597:3599 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3576:3596 TriosCoq.Physics.NullorReversible <> op_null_pe_star_count defax
+ax 3699:3714 <> op_null_pe_value
+R3728:3730 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3718:3727 TriosCoq.Physics.NullorReversible <> op_null_pe defax
+ax 3746:3765 <> dispatch_E5_is_z3mul
+R3787:3789 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3769:3782 TriosCoq.Physics.NullorReversible <> dispatch_table defax
+R3790:3795 TriosCoq.Physics.NullorReversible <> z3_mul def
+ax 3870:3886 <> subth_chain_holds
+R3890:3906 TriosCoq.Physics.NullorReversible <> subth_chain_sound defax
+ax 3915:3929 <> avs_chain_holds
+R3935:3949 TriosCoq.Physics.NullorReversible <> avs_chain_sound defax
+ax 3958:3972 <> lut_chain_holds
+R3978:3992 TriosCoq.Physics.NullorReversible <> lut_chain_sound defax
+prf 4181:4197 <> nullor_reversible
+R4217:4218 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 4211:4211 <> x:70
+binder 4213:4213 <> y:71
+R4226:4234 TriosCoq.Physics.NullorReversible <> Reservoir rec
+binder 4222:4222 <> s:72
+R4259:4261 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4242:4252 TriosCoq.Physics.NullorReversible <> nullor_mult def
+R4254:4254 TriosCoq.Physics.NullorReversible <> x:70 var
+R4256:4256 TriosCoq.Physics.NullorReversible <> y:71 var
+R4258:4258 TriosCoq.Physics.NullorReversible <> s:72 var
+R4262:4262 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4278:4279 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4301:4301 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4263:4273 TriosCoq.Physics.NullorReversible <> mult_result def
+R4275:4275 TriosCoq.Physics.NullorReversible <> x:70 var
+R4277:4277 TriosCoq.Physics.NullorReversible <> y:71 var
+R4280:4298 TriosCoq.Physics.NullorReversible <> reservoir_recovered def
+R4300:4300 TriosCoq.Physics.NullorReversible <> s:72 var
+prf 4420:4433 <> nullor_no_star
+R4460:4462 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4439:4459 TriosCoq.Physics.NullorReversible <> op_null_pe_star_count defax
+R4485:4499 TriosCoq.Physics.NullorReversible <> op_null_no_star prfax
+R4485:4499 TriosCoq.Physics.NullorReversible <> op_null_no_star prfax
+def 4714:4726 <> charge_bus_of
+R4738:4738 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 4729:4734 <> energy:73
+R4743:4751 TriosCoq.Physics.NullorReversible <> ChargeBus rec
+R4758:4763 TriosCoq.Physics.NullorReversible <> mk_bus constr
+R4765:4770 TriosCoq.Physics.NullorReversible <> energy:73 var
+R4782:4784 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R4773:4781 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R4785:4790 TriosCoq.Physics.NullorReversible <> energy:73 var
+R4794:4794 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R4808:4811 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R4796:4798 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R4799:4807 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R4812:4817 TriosCoq.Physics.NullorReversible <> energy:73 var
+prf 4828:4846 <> charge_conservation
+R4868:4868 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 4859:4864 <> energy:74
+R4882:4889 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4877:4880 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R4871:4876 TriosCoq.Physics.NullorReversible <> energy:74 var
+R4991:4998 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4920:4926 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4890:4895 TriosCoq.Physics.NullorReversible <> bus_in proj
+R4899:4911 TriosCoq.Physics.NullorReversible <> charge_bus_of def
+R4913:4918 TriosCoq.Physics.NullorReversible <> energy:74 var
+R4957:4959 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'+'_x not
+R4927:4933 TriosCoq.Physics.NullorReversible <> bus_out proj
+R4936:4948 TriosCoq.Physics.NullorReversible <> charge_bus_of def
+R4950:4955 TriosCoq.Physics.NullorReversible <> energy:74 var
+R4960:4967 TriosCoq.Physics.NullorReversible <> bus_diss proj
+R4970:4982 TriosCoq.Physics.NullorReversible <> charge_bus_of def
+R4984:4989 TriosCoq.Physics.NullorReversible <> energy:74 var
+R5030:5033 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R4999:5006 TriosCoq.Physics.NullorReversible <> bus_diss proj
+R5009:5021 TriosCoq.Physics.NullorReversible <> charge_bus_of def
+R5023:5028 TriosCoq.Physics.NullorReversible <> energy:74 var
+R5034:5034 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R5045:5048 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R5036:5038 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R5041:5041 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5049:5054 TriosCoq.Physics.NullorReversible <> energy:74 var
+R5149:5152 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R5140:5148 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R5155:5155 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5170:5184 TriosCoq.Physics.NullorReversible <> eta_reuse_floor prfax
+R5149:5152 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R5140:5148 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R5155:5155 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5170:5184 TriosCoq.Physics.NullorReversible <> eta_reuse_floor prfax
+R5217:5220 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R5205:5207 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R5208:5216 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R5222:5224 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R5227:5227 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5217:5220 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R5205:5207 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R5208:5216 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R5222:5224 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R5227:5227 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5251:5267 Stdlib.Reals.RIneq <> Rmult_le_compat_r thm
+R5251:5267 Stdlib.Reals.RIneq <> Rmult_le_compat_r thm
+prf 5377:5393 <> reservoir_bounded
+R5410:5418 TriosCoq.Physics.NullorReversible <> Reservoir rec
+binder 5406:5406 <> s:75
+R5458:5460 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5425:5433 TriosCoq.Physics.NullorReversible <> res_cap_n proj
+R5436:5454 TriosCoq.Physics.NullorReversible <> reservoir_recovered def
+R5456:5456 TriosCoq.Physics.NullorReversible <> s:75 var
+R5461:5469 TriosCoq.Physics.NullorReversible <> res_cap_n proj
+R5471:5471 TriosCoq.Physics.NullorReversible <> s:75 var
+prf 5587:5603 <> eta_reuse_geq_088
+R5618:5621 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R5609:5617 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R5624:5626 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5647:5661 TriosCoq.Physics.NullorReversible <> eta_reuse_floor prfax
+R5647:5661 TriosCoq.Physics.NullorReversible <> eta_reuse_floor prfax
+prf 5762:5779 <> bypass_correctness
+R5797:5798 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 5793:5793 <> y:76
+R5806:5814 TriosCoq.Physics.NullorReversible <> Reservoir rec
+binder 5802:5802 <> s:77
+R5847:5849 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5822:5839 TriosCoq.Physics.NullorReversible <> nullor_mult_bypass def
+R5841:5842 TriosCoq.Physics.NullorReversible <> T0 constr
+R5844:5844 TriosCoq.Physics.NullorReversible <> y:76 var
+R5846:5846 TriosCoq.Physics.NullorReversible <> s:77 var
+R5850:5850 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5853:5854 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5856:5856 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5851:5852 TriosCoq.Physics.NullorReversible <> T0 constr
+R5855:5855 TriosCoq.Physics.NullorReversible <> s:77 var
+prf 5980:6000 <> four_phase_no_overlap
+R6019:6021 Corelib.Init.Datatypes <> nat ind
+binder 6013:6013 <> i:78
+binder 6015:6015 <> j:79
+R6035:6038 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6026:6028 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R6025:6025 TriosCoq.Physics.NullorReversible <> i:78 var
+R6050:6053 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6041:6043 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R6040:6040 TriosCoq.Physics.NullorReversible <> j:79 var
+R6060:6067 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6055:6058 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R6054:6054 TriosCoq.Physics.NullorReversible <> i:78 var
+R6059:6059 TriosCoq.Physics.NullorReversible <> j:79 var
+R6093:6095 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6079:6081 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R6068:6076 TriosCoq.Physics.NullorReversible <> phi_clock defax
+R6078:6078 TriosCoq.Physics.NullorReversible <> i:78 var
+R6082:6090 TriosCoq.Physics.NullorReversible <> phi_clock defax
+R6092:6092 TriosCoq.Physics.NullorReversible <> j:79 var
+R6114:6131 TriosCoq.Physics.NullorReversible <> phi_clock_disjoint prfax
+R6114:6131 TriosCoq.Physics.NullorReversible <> phi_clock_disjoint prfax
+prf 6312:6336 <> dendrite_backprop_eq_grad
+R6353:6354 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 6349:6349 <> y:80
+R6369:6371 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6357:6362 TriosCoq.Physics.NullorReversible <> z3_mul def
+R6364:6366 TriosCoq.Physics.NullorReversible <> TP1 constr
+R6368:6368 TriosCoq.Physics.NullorReversible <> y:80 var
+R6372:6372 TriosCoq.Physics.NullorReversible <> y:80 var
+prf 6757:6773 <> nullor_idempotent
+R6790:6791 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 6786:6786 <> y:81
+R6817:6819 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6794:6799 TriosCoq.Physics.NullorReversible <> z3_mul def
+R6801:6802 TriosCoq.Physics.NullorReversible <> T0 constr
+R6805:6810 TriosCoq.Physics.NullorReversible <> z3_mul def
+R6812:6813 TriosCoq.Physics.NullorReversible <> T0 constr
+R6815:6815 TriosCoq.Physics.NullorReversible <> y:81 var
+R6820:6825 TriosCoq.Physics.NullorReversible <> z3_mul def
+R6827:6828 TriosCoq.Physics.NullorReversible <> T0 constr
+R6830:6830 TriosCoq.Physics.NullorReversible <> y:81 var
+prf 7198:7215 <> opcode_E5_dispatch
+R7234:7235 TriosCoq.Physics.NullorReversible <> Z3 ind
+binder 7228:7228 <> x:82
+binder 7230:7230 <> y:83
+R7271:7273 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7242:7255 TriosCoq.Physics.NullorReversible <> dispatch_table defax
+R7257:7266 TriosCoq.Physics.NullorReversible <> op_null_pe defax
+R7268:7268 TriosCoq.Physics.NullorReversible <> x:82 var
+R7270:7270 TriosCoq.Physics.NullorReversible <> y:83 var
+R7274:7284 TriosCoq.Physics.NullorReversible <> mult_result def
+R7286:7286 TriosCoq.Physics.NullorReversible <> x:82 var
+R7288:7288 TriosCoq.Physics.NullorReversible <> y:83 var
+R7321:7331 TriosCoq.Physics.NullorReversible <> mult_result def
+R7344:7359 TriosCoq.Physics.NullorReversible <> op_null_pe_value prfax
+R7344:7359 TriosCoq.Physics.NullorReversible <> op_null_pe_value prfax
+R7344:7359 TriosCoq.Physics.NullorReversible <> op_null_pe_value prfax
+R7372:7391 TriosCoq.Physics.NullorReversible <> dispatch_E5_is_z3mul prfax
+R7372:7391 TriosCoq.Physics.NullorReversible <> dispatch_E5_is_z3mul prfax
+R7372:7391 TriosCoq.Physics.NullorReversible <> dispatch_E5_is_z3mul prfax
+prf 7559:7576 <> nullor_w38_witness
+R7609:7614 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7602:7605 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R7582:7601 TriosCoq.Physics.NullorReversible <> tops_per_watt_nullor defax
+R7632:7635 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7615:7631 TriosCoq.Physics.NullorReversible <> subth_chain_sound defax
+R7651:7654 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7636:7650 TriosCoq.Physics.NullorReversible <> avs_chain_sound defax
+R7670:7675 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7655:7669 TriosCoq.Physics.NullorReversible <> lut_chain_sound defax
+R7705:7710 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7697:7699 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7676:7696 TriosCoq.Physics.NullorReversible <> op_null_pe_star_count defax
+R7720:7723 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R7711:7719 TriosCoq.Physics.NullorReversible <> eta_reuse defax
+R7726:7726 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R7765:7781 TriosCoq.Physics.NullorReversible <> tops_nullor_floor prfax
+R7765:7781 TriosCoq.Physics.NullorReversible <> tops_nullor_floor prfax
+R7794:7810 TriosCoq.Physics.NullorReversible <> subth_chain_holds prfax
+R7794:7810 TriosCoq.Physics.NullorReversible <> subth_chain_holds prfax
+R7823:7837 TriosCoq.Physics.NullorReversible <> avs_chain_holds prfax
+R7823:7837 TriosCoq.Physics.NullorReversible <> avs_chain_holds prfax
+R7850:7864 TriosCoq.Physics.NullorReversible <> lut_chain_holds prfax
+R7850:7864 TriosCoq.Physics.NullorReversible <> lut_chain_holds prfax
+R7877:7891 TriosCoq.Physics.NullorReversible <> op_null_no_star prfax
+R7877:7891 TriosCoq.Physics.NullorReversible <> op_null_no_star prfax
+R7904:7918 TriosCoq.Physics.NullorReversible <> eta_reuse_floor prfax
+R7904:7918 TriosCoq.Physics.NullorReversible <> eta_reuse_floor prfax

@@ -1,0 +1,317 @@
+DIGEST 72bd417dce6e9441aba28408984fc8f5
+FClockGating
+R1481:1497 Stdlib.ZArith.ZArith <> <> lib
+R1515:1531 Stdlib.micromega.Lia <> <> lib
+def 1798:1812 <> OP_CLOCK_GATING
+def 1941:1955 <> OP_SLEEP_GATING
+def 2000:2020 <> OP_EMERGENCY_SHUTDOWN
+def 2061:2076 <> OP_POWER_CAPPING
+def 2122:2137 <> OP_FREQ_THROTTLE
+def 2182:2197 <> OP_VOLTAGE_GUARD
+def 2242:2257 <> OP_THERMAL_GUARD
+def 2302:2313 <> OP_CAP_BOOST
+def 2362:2374 <> OP_FBB_ACTIVE
+def 2422:2427 <> OP_RBB
+def 2549:2562 <> SACRED_BANK_LO
+def 2597:2610 <> SACRED_BANK_HI
+def 2645:2660 <> SACRED_BANK_SIZE
+prf 2908:2946 <> clock_gating_distinct_from_sleep_gating
+R2967:2970 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2952:2966 ClockGating <> OP_CLOCK_GATING def
+R2971:2985 ClockGating <> OP_SLEEP_GATING def
+R3002:3016 ClockGating <> OP_CLOCK_GATING def
+R3019:3033 ClockGating <> OP_SLEEP_GATING def
+prf 3053:3097 <> clock_gating_distinct_from_emergency_shutdown
+R3118:3121 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3103:3117 ClockGating <> OP_CLOCK_GATING def
+R3122:3142 ClockGating <> OP_EMERGENCY_SHUTDOWN def
+R3159:3173 ClockGating <> OP_CLOCK_GATING def
+R3176:3196 ClockGating <> OP_EMERGENCY_SHUTDOWN def
+prf 3216:3255 <> clock_gating_distinct_from_power_capping
+R3276:3279 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3261:3275 ClockGating <> OP_CLOCK_GATING def
+R3280:3295 ClockGating <> OP_POWER_CAPPING def
+R3312:3326 ClockGating <> OP_CLOCK_GATING def
+R3329:3344 ClockGating <> OP_POWER_CAPPING def
+prf 3364:3403 <> clock_gating_distinct_from_freq_throttle
+R3424:3427 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3409:3423 ClockGating <> OP_CLOCK_GATING def
+R3428:3443 ClockGating <> OP_FREQ_THROTTLE def
+R3460:3474 ClockGating <> OP_CLOCK_GATING def
+R3477:3492 ClockGating <> OP_FREQ_THROTTLE def
+prf 3512:3551 <> clock_gating_distinct_from_voltage_guard
+R3572:3575 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3557:3571 ClockGating <> OP_CLOCK_GATING def
+R3576:3591 ClockGating <> OP_VOLTAGE_GUARD def
+R3608:3622 ClockGating <> OP_CLOCK_GATING def
+R3625:3640 ClockGating <> OP_VOLTAGE_GUARD def
+prf 3660:3699 <> clock_gating_distinct_from_thermal_guard
+R3720:3723 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3705:3719 ClockGating <> OP_CLOCK_GATING def
+R3724:3739 ClockGating <> OP_THERMAL_GUARD def
+R3756:3770 ClockGating <> OP_CLOCK_GATING def
+R3773:3788 ClockGating <> OP_THERMAL_GUARD def
+prf 3808:3843 <> clock_gating_distinct_from_cap_boost
+R3864:3867 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3849:3863 ClockGating <> OP_CLOCK_GATING def
+R3868:3879 ClockGating <> OP_CAP_BOOST def
+R3896:3910 ClockGating <> OP_CLOCK_GATING def
+R3913:3924 ClockGating <> OP_CAP_BOOST def
+prf 3944:3980 <> clock_gating_distinct_from_fbb_active
+R4001:4004 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3986:4000 ClockGating <> OP_CLOCK_GATING def
+R4005:4017 ClockGating <> OP_FBB_ACTIVE def
+R4034:4048 ClockGating <> OP_CLOCK_GATING def
+R4051:4063 ClockGating <> OP_FBB_ACTIVE def
+prf 4083:4112 <> clock_gating_distinct_from_rbb
+R4133:4136 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R4118:4132 ClockGating <> OP_CLOCK_GATING def
+R4137:4142 ClockGating <> OP_RBB def
+R4159:4173 ClockGating <> OP_CLOCK_GATING def
+R4176:4181 ClockGating <> OP_RBB def
+prf 4432:4460 <> clock_gating_in_extended_bank
+R4499:4502 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4480:4483 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R4466:4479 ClockGating <> SACRED_BANK_LO def
+R4484:4498 ClockGating <> OP_CLOCK_GATING def
+R4518:4521 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R4503:4517 ClockGating <> OP_CLOCK_GATING def
+R4522:4535 ClockGating <> SACRED_BANK_HI def
+R4552:4565 ClockGating <> SACRED_BANK_LO def
+R4568:4582 ClockGating <> OP_CLOCK_GATING def
+R4585:4598 ClockGating <> SACRED_BANK_HI def
+prf 4618:4654 <> clock_gating_adjacent_to_sleep_gating
+R4675:4677 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4660:4674 ClockGating <> OP_CLOCK_GATING def
+R4693:4695 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4678:4692 ClockGating <> OP_SLEEP_GATING def
+R4713:4727 ClockGating <> OP_CLOCK_GATING def
+R4730:4744 ClockGating <> OP_SLEEP_GATING def
+prf 4764:4789 <> decuple_decker_consecutive
+R4823:4828 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4810:4812 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4795:4809 ClockGating <> OP_CLOCK_GATING def
+R4819:4821 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4813:4818 ClockGating <> OP_RBB def
+R4855:4860 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4842:4844 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4829:4841 ClockGating <> OP_FBB_ACTIVE def
+R4851:4853 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4845:4850 ClockGating <> OP_RBB def
+R4886:4891 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4873:4875 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4861:4872 ClockGating <> OP_CAP_BOOST def
+R4882:4884 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4876:4881 ClockGating <> OP_RBB def
+R4921:4926 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4908:4910 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4892:4907 ClockGating <> OP_THERMAL_GUARD def
+R4917:4919 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4911:4916 ClockGating <> OP_RBB def
+R4956:4961 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4943:4945 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4927:4942 ClockGating <> OP_VOLTAGE_GUARD def
+R4952:4954 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4946:4951 ClockGating <> OP_RBB def
+R4991:4996 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4978:4980 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4962:4977 ClockGating <> OP_FREQ_THROTTLE def
+R4987:4989 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4981:4986 ClockGating <> OP_RBB def
+R5026:5031 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5013:5015 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4997:5012 ClockGating <> OP_POWER_CAPPING def
+R5022:5024 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R5016:5021 ClockGating <> OP_RBB def
+R5066:5071 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5053:5055 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5032:5052 ClockGating <> OP_EMERGENCY_SHUTDOWN def
+R5062:5064 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R5056:5061 ClockGating <> OP_RBB def
+R5087:5089 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5072:5086 ClockGating <> OP_SLEEP_GATING def
+R5096:5098 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R5090:5095 ClockGating <> OP_RBB def
+R5125:5139 ClockGating <> OP_CLOCK_GATING def
+R5142:5147 ClockGating <> OP_RBB def
+R5171:5183 ClockGating <> OP_FBB_ACTIVE def
+R5186:5191 ClockGating <> OP_RBB def
+R5215:5226 ClockGating <> OP_CAP_BOOST def
+R5229:5234 ClockGating <> OP_RBB def
+R5258:5273 ClockGating <> OP_THERMAL_GUARD def
+R5276:5281 ClockGating <> OP_RBB def
+R5305:5320 ClockGating <> OP_VOLTAGE_GUARD def
+R5323:5328 ClockGating <> OP_RBB def
+R5352:5367 ClockGating <> OP_FREQ_THROTTLE def
+R5370:5375 ClockGating <> OP_RBB def
+R5399:5414 ClockGating <> OP_POWER_CAPPING def
+R5417:5422 ClockGating <> OP_RBB def
+R5446:5466 ClockGating <> OP_EMERGENCY_SHUTDOWN def
+R5469:5474 ClockGating <> OP_RBB def
+R5491:5505 ClockGating <> OP_SLEEP_GATING def
+R5508:5513 ClockGating <> OP_RBB def
+def 5812:5824 <> freq_full_MHz
+R5828:5828 Corelib.Numbers.BinNums <> Z ind
+def 5877:5890 <> freq_gated_MHz
+R5894:5894 Corelib.Numbers.BinNums <> Z ind
+def 5941:5957 <> delta_f_gated_MHz
+R5961:5961 Corelib.Numbers.BinNums <> Z ind
+R5979:5981 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R5966:5978 ClockGating <> freq_full_MHz def
+R5982:5995 ClockGating <> freq_gated_MHz def
+def 6059:6079 <> gating_efficiency_bps
+R6083:6083 Corelib.Numbers.BinNums <> Z ind
+def 6178:6201 <> gating_enable_latency_ns
+R6205:6205 Corelib.Numbers.BinNums <> Z ind
+def 6246:6270 <> gating_disable_latency_ns
+R6274:6274 Corelib.Numbers.BinNums <> Z ind
+prf 6581:6604 <> delta_f_gated_is_1000MHz
+R6625:6627 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6608:6624 ClockGating <> delta_f_gated_MHz def
+R6648:6664 ClockGating <> delta_f_gated_MHz def
+R6667:6679 ClockGating <> freq_full_MHz def
+R6682:6695 ClockGating <> freq_gated_MHz def
+prf 6749:6766 <> freq_gated_is_0MHz
+R6784:6786 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6770:6783 ClockGating <> freq_gated_MHz def
+R6804:6817 ClockGating <> freq_gated_MHz def
+prf 6888:6915 <> freq_full_greater_than_gated
+R6934:6936 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R6921:6933 ClockGating <> freq_full_MHz def
+R6937:6950 ClockGating <> freq_gated_MHz def
+R6967:6979 ClockGating <> freq_full_MHz def
+R6982:6995 ClockGating <> freq_gated_MHz def
+prf 7051:7072 <> delta_f_gated_positive
+R7093:7095 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R7076:7092 ClockGating <> delta_f_gated_MHz def
+R7115:7131 ClockGating <> delta_f_gated_MHz def
+R7134:7146 ClockGating <> freq_full_MHz def
+R7149:7162 ClockGating <> freq_gated_MHz def
+prf 7228:7247 <> freq_full_is_1000MHz
+R7264:7266 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7251:7263 ClockGating <> freq_full_MHz def
+R7287:7299 ClockGating <> freq_full_MHz def
+prf 7380:7405 <> gating_efficiency_is_90pct
+R7430:7432 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7409:7429 ClockGating <> gating_efficiency_bps def
+R7452:7472 ClockGating <> gating_efficiency_bps def
+prf 7545:7570 <> sacred_bank_size_preserved
+R7590:7592 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7574:7589 ClockGating <> SACRED_BANK_SIZE def
+R7611:7626 ClockGating <> SACRED_BANK_SIZE def
+prf 7704:7726 <> decuple_decker_sequence
+R7744:7749 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7738:7740 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7732:7737 ClockGating <> OP_RBB def
+R7769:7774 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7763:7765 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7750:7762 ClockGating <> OP_FBB_ACTIVE def
+R7793:7798 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7787:7789 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7775:7786 ClockGating <> OP_CAP_BOOST def
+R7821:7826 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7815:7817 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7799:7814 ClockGating <> OP_THERMAL_GUARD def
+R7849:7854 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7843:7845 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7827:7842 ClockGating <> OP_VOLTAGE_GUARD def
+R7877:7882 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7871:7873 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7855:7870 ClockGating <> OP_FREQ_THROTTLE def
+R7905:7910 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7899:7901 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7883:7898 ClockGating <> OP_POWER_CAPPING def
+R7938:7943 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7932:7934 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7911:7931 ClockGating <> OP_EMERGENCY_SHUTDOWN def
+R7965:7970 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7959:7961 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7944:7958 ClockGating <> OP_SLEEP_GATING def
+R7986:7988 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7971:7985 ClockGating <> OP_CLOCK_GATING def
+R8017:8022 ClockGating <> OP_RBB def
+R8054:8066 ClockGating <> OP_FBB_ACTIVE def
+R8098:8109 ClockGating <> OP_CAP_BOOST def
+R8141:8156 ClockGating <> OP_THERMAL_GUARD def
+R8188:8203 ClockGating <> OP_VOLTAGE_GUARD def
+R8235:8250 ClockGating <> OP_FREQ_THROTTLE def
+R8282:8297 ClockGating <> OP_POWER_CAPPING def
+R8329:8349 ClockGating <> OP_EMERGENCY_SHUTDOWN def
+R8381:8395 ClockGating <> OP_SLEEP_GATING def
+R8420:8434 ClockGating <> OP_CLOCK_GATING def
+prf 8505:8538 <> gating_efficiency_is_90pct_of_full
+R8550:8552 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8545:8547 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8557:8559 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 8621:8641 <> enable_latency_is_5ns
+R8669:8671 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8645:8668 ClockGating <> gating_enable_latency_ns def
+R8689:8712 ClockGating <> gating_enable_latency_ns def
+prf 8775:8796 <> disable_latency_is_3ns
+R8825:8827 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8800:8824 ClockGating <> gating_disable_latency_ns def
+R8845:8869 ClockGating <> gating_disable_latency_ns def
+prf 8935:8969 <> enable_latency_greater_than_disable
+R8999:9001 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8975:8998 ClockGating <> gating_enable_latency_ns def
+R9002:9026 ClockGating <> gating_disable_latency_ns def
+R9045:9068 ClockGating <> gating_enable_latency_ns def
+R9071:9095 ClockGating <> gating_disable_latency_ns def
+prf 9157:9183 <> total_gating_latency_is_8ns
+R9241:9243 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9213:9215 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9189:9212 ClockGating <> gating_enable_latency_ns def
+R9216:9240 ClockGating <> gating_disable_latency_ns def
+R9263:9286 ClockGating <> gating_enable_latency_ns def
+R9289:9313 ClockGating <> gating_disable_latency_ns def
+prf 9380:9402 <> gating_saves_90_percent
+R9409:9411 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9414:9416 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 9738:9759 <> clock_gating_composite
+R9786:9791 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9780:9782 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9765:9779 ClockGating <> OP_CLOCK_GATING def
+R9812:9817 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9805:9807 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9792:9804 ClockGating <> freq_full_MHz def
+R9836:9841 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9832:9834 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9818:9831 ClockGating <> freq_gated_MHz def
+R9866:9871 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9859:9861 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9842:9858 ClockGating <> delta_f_gated_MHz def
+R9902:9907 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9885:9887 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R9872:9884 ClockGating <> freq_full_MHz def
+R9888:9901 ClockGating <> freq_gated_MHz def
+R9929:9934 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9925:9927 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R9908:9924 ClockGating <> delta_f_gated_MHz def
+R9972:9977 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9950:9952 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9935:9949 ClockGating <> OP_CLOCK_GATING def
+R9968:9970 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9953:9967 ClockGating <> OP_SLEEP_GATING def
+R10006:10011 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9993:9995 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9978:9992 ClockGating <> OP_CLOCK_GATING def
+R10002:10004 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9996:10001 ClockGating <> OP_RBB def
+R10028:10030 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R10012:10027 ClockGating <> SACRED_BANK_SIZE def
+R10058:10072 ClockGating <> OP_CLOCK_GATING def
+R10103:10122 ClockGating <> freq_full_is_1000MHz thm
+R10103:10122 ClockGating <> freq_full_is_1000MHz thm
+R10140:10157 ClockGating <> freq_gated_is_0MHz thm
+R10140:10157 ClockGating <> freq_gated_is_0MHz thm
+R10175:10198 ClockGating <> delta_f_gated_is_1000MHz thm
+R10175:10198 ClockGating <> delta_f_gated_is_1000MHz thm
+R10216:10243 ClockGating <> freq_full_greater_than_gated thm
+R10216:10243 ClockGating <> freq_full_greater_than_gated thm
+R10261:10282 ClockGating <> delta_f_gated_positive thm
+R10261:10282 ClockGating <> delta_f_gated_positive thm
+R10300:10336 ClockGating <> clock_gating_adjacent_to_sleep_gating thm
+R10300:10336 ClockGating <> clock_gating_adjacent_to_sleep_gating thm
+R10355:10369 ClockGating <> OP_CLOCK_GATING def
+R10372:10377 ClockGating <> OP_RBB def
+R10394:10409 ClockGating <> SACRED_BANK_SIZE def

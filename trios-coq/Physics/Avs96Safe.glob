@@ -1,0 +1,55 @@
+DIGEST 3f0d8d9a74207f49ced8b408b272b329
+FTriosCoq.Physics.Avs96Safe
+R238:249 Corelib.Init.Nat <> <> lib
+R267:281 Stdlib.Arith.Arith <> <> lib
+R299:301 Stdlib.micromega.Lia <> <> lib
+mod 312:320 <> Avs96Safe
+def 335:345 Avs96Safe avs96_steps
+R349:351 Corelib.Init.Datatypes <> nat ind
+def 371:388 Avs96Safe avs96_bin_width_uv
+R392:394 Corelib.Init.Datatypes <> nat ind
+def 447:464 Avs96Safe avs48_bin_width_uv
+R468:470 Corelib.Init.Datatypes <> nat ind
+def 513:527 Avs96Safe step_gate_input
+R546:548 Corelib.Init.Datatypes <> nat ind
+binder 530:542 <> occupancy_bin:1
+R553:555 Corelib.Init.Datatypes <> nat ind
+R565:571 Stdlib.Arith.PeanoNat Nat ltb def
+R573:585 TriosCoq.Physics.Avs96Safe <> occupancy_bin:1 var
+R587:597 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_steps def
+R604:616 TriosCoq.Physics.Avs96Safe <> occupancy_bin:1 var
+prf 669:684 Avs96Safe avs96_step_count
+R699:701 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R688:698 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_steps def
+prf 777:800 Avs96Safe avs96_bin_width_positive
+R822:824 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R804:821 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_bin_width_uv def
+R844:861 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_bin_width_uv def
+prf 967:985 Avs96Safe avs96_half_of_avs48
+R1011:1013 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R990:992 Corelib.Init.Nat <> ::nat_scope:x_'*'_x not
+R993:1010 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_bin_width_uv def
+R1014:1031 TriosCoq.Physics.Avs96Safe Avs96Safe avs48_bin_width_uv def
+R1050:1067 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_bin_width_uv def
+R1070:1087 TriosCoq.Physics.Avs96Safe Avs96Safe avs48_bin_width_uv def
+prf 1165:1182 Avs96Safe step_gate_in_range
+R1204:1206 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1186:1200 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+R1227:1241 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+prf 1336:1363 Avs96Safe step_gate_clamp_out_of_range
+R1386:1388 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1367:1381 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+R1408:1422 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+prf 1496:1509 Avs96Safe step_gate_zero
+R1530:1532 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1513:1527 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+R1552:1566 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+prf 1659:1680 Avs96Safe step_gate_max_in_range
+R1702:1704 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1684:1698 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+R1725:1739 TriosCoq.Physics.Avs96Safe Avs96Safe step_gate_input def
+prf 1820:1838 Avs96Safe avs96_steps_ne_zero
+R1853:1856 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R1842:1852 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_steps def
+R1876:1886 TriosCoq.Physics.Avs96Safe Avs96Safe avs96_steps def
+R1904:1912 TriosCoq.Physics.Avs96Safe Avs96Safe <> mod

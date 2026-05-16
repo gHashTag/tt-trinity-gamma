@@ -1,0 +1,247 @@
+DIGEST e50c6f4a55e748842a6d5914e4dbd69a
+FVoltageGuard
+R1526:1542 Stdlib.ZArith.ZArith <> <> lib
+R1560:1576 Stdlib.micromega.Lia <> <> lib
+def 1843:1858 <> OP_VOLTAGE_GUARD
+def 1985:2000 <> OP_THERMAL_GUARD
+def 2043:2054 <> OP_CAP_BOOST
+def 2101:2113 <> OP_FBB_ACTIVE
+def 2159:2164 <> OP_RBB
+def 2284:2297 <> SACRED_BANK_LO
+def 2332:2345 <> SACRED_BANK_HI
+def 2380:2395 <> SACRED_BANK_SIZE
+prf 2643:2683 <> voltage_guard_distinct_from_thermal_guard
+R2705:2708 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2689:2704 VoltageGuard <> OP_VOLTAGE_GUARD def
+R2709:2724 VoltageGuard <> OP_THERMAL_GUARD def
+R2741:2756 VoltageGuard <> OP_VOLTAGE_GUARD def
+R2759:2774 VoltageGuard <> OP_THERMAL_GUARD def
+prf 2794:2830 <> voltage_guard_distinct_from_cap_boost
+R2852:2855 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2836:2851 VoltageGuard <> OP_VOLTAGE_GUARD def
+R2856:2867 VoltageGuard <> OP_CAP_BOOST def
+R2884:2899 VoltageGuard <> OP_VOLTAGE_GUARD def
+R2902:2913 VoltageGuard <> OP_CAP_BOOST def
+prf 2933:2970 <> voltage_guard_distinct_from_fbb_active
+R2992:2995 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2976:2991 VoltageGuard <> OP_VOLTAGE_GUARD def
+R2996:3008 VoltageGuard <> OP_FBB_ACTIVE def
+R3025:3040 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3043:3055 VoltageGuard <> OP_FBB_ACTIVE def
+prf 3075:3105 <> voltage_guard_distinct_from_rbb
+R3127:3130 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3111:3126 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3131:3136 VoltageGuard <> OP_RBB def
+R3153:3168 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3171:3176 VoltageGuard <> OP_RBB def
+prf 3427:3456 <> voltage_guard_in_extended_bank
+R3496:3499 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3476:3479 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3462:3475 VoltageGuard <> SACRED_BANK_LO def
+R3480:3495 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3516:3519 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3500:3515 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3520:3533 VoltageGuard <> SACRED_BANK_HI def
+R3550:3563 VoltageGuard <> SACRED_BANK_LO def
+R3566:3581 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3584:3597 VoltageGuard <> SACRED_BANK_HI def
+prf 3617:3655 <> voltage_guard_adjacent_to_thermal_guard
+R3677:3679 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3661:3676 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3696:3698 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3680:3695 VoltageGuard <> OP_THERMAL_GUARD def
+R3716:3731 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3734:3749 VoltageGuard <> OP_THERMAL_GUARD def
+prf 3769:3796 <> quintuple_decker_consecutive
+R3831:3836 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3818:3820 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3802:3817 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3827:3829 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3821:3826 VoltageGuard <> OP_RBB def
+R3863:3868 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3850:3852 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3837:3849 VoltageGuard <> OP_FBB_ACTIVE def
+R3859:3861 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3853:3858 VoltageGuard <> OP_RBB def
+R3894:3899 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3881:3883 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3869:3880 VoltageGuard <> OP_CAP_BOOST def
+R3890:3892 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3884:3889 VoltageGuard <> OP_RBB def
+R3916:3918 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3900:3915 VoltageGuard <> OP_THERMAL_GUARD def
+R3925:3927 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3919:3924 VoltageGuard <> OP_RBB def
+R3954:3969 VoltageGuard <> OP_VOLTAGE_GUARD def
+R3972:3977 VoltageGuard <> OP_RBB def
+R4001:4013 VoltageGuard <> OP_FBB_ACTIVE def
+R4016:4021 VoltageGuard <> OP_RBB def
+R4045:4056 VoltageGuard <> OP_CAP_BOOST def
+R4059:4064 VoltageGuard <> OP_RBB def
+R4081:4096 VoltageGuard <> OP_THERMAL_GUARD def
+R4099:4104 VoltageGuard <> OP_RBB def
+def 4408:4425 <> voltage_nominal_mV
+R4429:4429 Corelib.Numbers.BinNums <> Z ind
+def 4473:4491 <> voltage_guard_lo_mV
+R4495:4495 Corelib.Numbers.BinNums <> Z ind
+def 4539:4557 <> voltage_guard_hi_mV
+R4561:4561 Corelib.Numbers.BinNums <> Z ind
+def 4605:4621 <> delta_V_margin_mV
+R4626:4626 Corelib.Numbers.BinNums <> Z ind
+R4649:4651 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R4631:4648 VoltageGuard <> voltage_nominal_mV def
+R4652:4670 VoltageGuard <> voltage_guard_lo_mV def
+def 4731:4741 <> V_MARGIN_MV
+R4750:4750 Corelib.Numbers.BinNums <> Z ind
+def 4790:4803 <> V_TOLERANCE_MV
+R4809:4809 Corelib.Numbers.BinNums <> Z ind
+prf 5133:5154 <> delta_V_margin_is_50mV
+R5175:5177 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5158:5174 VoltageGuard <> delta_V_margin_mV def
+R5196:5212 VoltageGuard <> delta_V_margin_mV def
+R5215:5232 VoltageGuard <> voltage_nominal_mV def
+R5235:5253 VoltageGuard <> voltage_guard_lo_mV def
+prf 5323:5352 <> voltage_guard_lo_below_nominal
+R5377:5379 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5358:5376 VoltageGuard <> voltage_guard_lo_mV def
+R5380:5397 VoltageGuard <> voltage_nominal_mV def
+R5414:5432 VoltageGuard <> voltage_guard_lo_mV def
+R5435:5452 VoltageGuard <> voltage_nominal_mV def
+prf 5522:5551 <> voltage_nominal_below_guard_hi
+R5575:5577 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5557:5574 VoltageGuard <> voltage_nominal_mV def
+R5578:5596 VoltageGuard <> voltage_guard_hi_mV def
+R5613:5630 VoltageGuard <> voltage_nominal_mV def
+R5633:5651 VoltageGuard <> voltage_guard_hi_mV def
+prf 5742:5763 <> voltage_envelope_valid
+R5809:5812 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5788:5790 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5769:5787 VoltageGuard <> voltage_guard_lo_mV def
+R5791:5808 VoltageGuard <> voltage_nominal_mV def
+R5831:5833 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5813:5830 VoltageGuard <> voltage_nominal_mV def
+R5834:5852 VoltageGuard <> voltage_guard_hi_mV def
+R5878:5907 VoltageGuard <> voltage_guard_lo_below_nominal thm
+R5917:5946 VoltageGuard <> voltage_nominal_below_guard_hi thm
+R5878:5907 VoltageGuard <> voltage_guard_lo_below_nominal thm
+R5917:5946 VoltageGuard <> voltage_nominal_below_guard_hi thm
+prf 6027:6049 <> voltage_tolerance_100mV
+R6055:6055 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6097:6100 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6075:6077 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R6056:6074 VoltageGuard <> voltage_guard_hi_mV def
+R6078:6096 VoltageGuard <> voltage_guard_lo_mV def
+R6122:6140 VoltageGuard <> voltage_guard_hi_mV def
+R6143:6161 VoltageGuard <> voltage_guard_lo_mV def
+prf 6231:6253 <> delta_V_margin_positive
+R6274:6276 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R6257:6273 VoltageGuard <> delta_V_margin_mV def
+R6296:6312 VoltageGuard <> delta_V_margin_mV def
+R6315:6332 VoltageGuard <> voltage_nominal_mV def
+R6335:6353 VoltageGuard <> voltage_guard_lo_mV def
+prf 6428:6451 <> voltage_nominal_centered
+R6479:6481 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6475:6477 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6457:6474 VoltageGuard <> voltage_nominal_mV def
+R6501:6503 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6482:6500 VoltageGuard <> voltage_guard_lo_mV def
+R6504:6522 VoltageGuard <> voltage_guard_hi_mV def
+R6541:6558 VoltageGuard <> voltage_nominal_mV def
+R6561:6579 VoltageGuard <> voltage_guard_lo_mV def
+R6582:6600 VoltageGuard <> voltage_guard_hi_mV def
+prf 6667:6692 <> sacred_bank_size_preserved
+R6712:6714 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6696:6711 VoltageGuard <> SACRED_BANK_SIZE def
+R6733:6748 VoltageGuard <> SACRED_BANK_SIZE def
+prf 6827:6851 <> quintuple_decker_sequence
+R6869:6874 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6863:6865 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6857:6862 VoltageGuard <> OP_RBB def
+R6894:6899 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6888:6890 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6875:6887 VoltageGuard <> OP_FBB_ACTIVE def
+R6918:6923 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6912:6914 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6900:6911 VoltageGuard <> OP_CAP_BOOST def
+R6946:6951 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6940:6942 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6924:6939 VoltageGuard <> OP_THERMAL_GUARD def
+R6968:6970 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6952:6967 VoltageGuard <> OP_VOLTAGE_GUARD def
+R6999:7004 VoltageGuard <> OP_RBB def
+R7036:7048 VoltageGuard <> OP_FBB_ACTIVE def
+R7080:7091 VoltageGuard <> OP_CAP_BOOST def
+R7123:7138 VoltageGuard <> OP_THERMAL_GUARD def
+R7163:7178 VoltageGuard <> OP_VOLTAGE_GUARD def
+prf 7262:7293 <> delta_V_margin_percentage_approx
+R7307:7309 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7301:7303 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 7391:7416 <> voltage_tolerance_in_range
+R7437:7442 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7430:7433 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R7425:7427 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R7451:7454 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R7446:7448 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+prf 7536:7557 <> voltage_envelope_width
+R7604:7606 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7582:7584 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R7563:7581 VoltageGuard <> voltage_guard_hi_mV def
+R7585:7603 VoltageGuard <> voltage_guard_lo_mV def
+R7628:7646 VoltageGuard <> voltage_guard_hi_mV def
+R7649:7667 VoltageGuard <> voltage_guard_lo_mV def
+prf 7982:8004 <> voltage_guard_composite
+R8032:8037 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8026:8028 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8010:8025 VoltageGuard <> OP_VOLTAGE_GUARD def
+R8062:8067 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8056:8058 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8038:8055 VoltageGuard <> voltage_nominal_mV def
+R8093:8098 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8087:8089 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8068:8086 VoltageGuard <> voltage_guard_lo_mV def
+R8124:8129 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8118:8120 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8099:8117 VoltageGuard <> voltage_guard_hi_mV def
+R8152:8157 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8147:8149 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8130:8146 VoltageGuard <> delta_V_margin_mV def
+R8198:8203 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8177:8179 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8158:8176 VoltageGuard <> voltage_guard_lo_mV def
+R8180:8197 VoltageGuard <> voltage_nominal_mV def
+R8244:8249 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8222:8224 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8204:8221 VoltageGuard <> voltage_nominal_mV def
+R8225:8243 VoltageGuard <> voltage_guard_hi_mV def
+R8271:8276 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8267:8269 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8250:8266 VoltageGuard <> delta_V_margin_mV def
+R8316:8321 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8293:8295 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8277:8292 VoltageGuard <> OP_VOLTAGE_GUARD def
+R8312:8314 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8296:8311 VoltageGuard <> OP_THERMAL_GUARD def
+R8351:8356 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8338:8340 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8322:8337 VoltageGuard <> OP_VOLTAGE_GUARD def
+R8347:8349 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8341:8346 VoltageGuard <> OP_RBB def
+R8373:8375 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8357:8372 VoltageGuard <> SACRED_BANK_SIZE def
+R8403:8418 VoltageGuard <> OP_VOLTAGE_GUARD def
+R8450:8467 VoltageGuard <> voltage_nominal_mV def
+R8499:8517 VoltageGuard <> voltage_guard_lo_mV def
+R8549:8567 VoltageGuard <> voltage_guard_hi_mV def
+R8598:8619 VoltageGuard <> delta_V_margin_is_50mV thm
+R8598:8619 VoltageGuard <> delta_V_margin_is_50mV thm
+R8637:8666 VoltageGuard <> voltage_guard_lo_below_nominal thm
+R8637:8666 VoltageGuard <> voltage_guard_lo_below_nominal thm
+R8684:8713 VoltageGuard <> voltage_nominal_below_guard_hi thm
+R8684:8713 VoltageGuard <> voltage_nominal_below_guard_hi thm
+R8731:8753 VoltageGuard <> delta_V_margin_positive thm
+R8731:8753 VoltageGuard <> delta_V_margin_positive thm
+R8771:8809 VoltageGuard <> voltage_guard_adjacent_to_thermal_guard thm
+R8771:8809 VoltageGuard <> voltage_guard_adjacent_to_thermal_guard thm
+R8828:8843 VoltageGuard <> OP_VOLTAGE_GUARD def
+R8846:8851 VoltageGuard <> OP_RBB def
+R8868:8883 VoltageGuard <> SACRED_BANK_SIZE def

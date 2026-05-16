@@ -1,0 +1,307 @@
+DIGEST 4721762ba7d0bbe2befa32cd2f3e4030
+FTriosCoq.Physics.SparsityMask
+R1074:1078 Stdlib.Reals.Reals <> <> lib
+R1096:1101 Stdlib.QArith.QArith <> <> lib
+R1119:1121 Stdlib.micromega.Lia <> <> lib
+R1139:1141 Stdlib.micromega.Lra <> <> lib
+R1159:1162 Stdlib.Lists.List <> <> lib
+R1172:1184 Stdlib.Lists.List ListNotations <> mod
+ind 1264:1265 <> Z3
+constr 1276:1278 <> TM1
+constr 1282:1283 <> T0
+constr 1287:1289 <> TP1
+scheme 1264:1265 <> Z3_rect
+scheme 1264:1265 <> Z3_ind
+scheme 1264:1265 <> Z3_rec
+scheme 1264:1265 <> Z3_sind
+def 1377:1380 <> Mask
+R1385:1388 Corelib.Init.Datatypes <> bool ind
+def 1403:1412 <> apply_mask
+R1419:1422 TriosCoq.Physics.SparsityMask <> Mask def
+binder 1415:1415 <> m:3
+R1430:1431 TriosCoq.Physics.SparsityMask <> Z3 ind
+binder 1426:1426 <> x:4
+R1436:1437 TriosCoq.Physics.SparsityMask <> Z3 ind
+R1447:1447 TriosCoq.Physics.SparsityMask <> m:3 var
+R1461:1462 TriosCoq.Physics.SparsityMask <> T0 constr
+R1454:1454 TriosCoq.Physics.SparsityMask <> x:4 var
+rec 1549:1560 <> ChannelGroup
+proj 1574:1581 <> cg_index
+proj 1611:1617 <> cg_size
+proj 1632:1638 <> cg_kept
+R1588:1590 Corelib.Init.Datatypes <> nat ind
+R1625:1627 Corelib.Init.Datatypes <> nat ind
+R1646:1649 Corelib.Init.Datatypes <> bool ind
+def 1666:1673 <> cg_count
+R1677:1679 Corelib.Init.Datatypes <> nat ind
+def 1702:1708 <> cg_seed
+R1715:1717 Corelib.Init.Datatypes <> nat ind
+binder 1711:1711 <> n:9
+R1722:1725 Corelib.Init.Datatypes <> list ind
+R1727:1738 TriosCoq.Physics.SparsityMask <> ChannelGroup rec
+R1751:1751 TriosCoq.Physics.SparsityMask <> n:9 var
+R1762:1762 Corelib.Init.Datatypes <> O constr
+R1770:1771 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1777:1777 Corelib.Init.Datatypes <> S constr
+R1798:1801 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1785:1788 TriosCoq.Physics.SparsityMask <> mkCG constr
+R1794:1797 Corelib.Init.Datatypes <> true constr
+R1802:1808 TriosCoq.Physics.SparsityMask <> cg_seed:10 def
+def 1831:1843 <> coptic_groups
+R1847:1850 Corelib.Init.Datatypes <> list ind
+R1852:1863 TriosCoq.Physics.SparsityMask <> ChannelGroup rec
+R1868:1874 TriosCoq.Physics.SparsityMask <> cg_seed def
+R1876:1883 TriosCoq.Physics.SparsityMask <> cg_count def
+def 1942:1951 <> phi_inv_sq
+R1955:1955 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R1963:1965 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+ax 2006:2011 <> L_task
+R2023:2026 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2022:2022 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R2027:2027 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2040:2052 <> sparsity_loss
+R2057:2060 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2056:2056 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R2061:2061 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+def 2075:2081 <> L_total
+R2095:2095 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 2084:2089 <> lambda:16
+binder 2091:2091 <> x:17
+R2100:2100 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R2113:2115 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'+'_x not
+R2105:2110 TriosCoq.Physics.SparsityMask <> L_task defax
+R2112:2112 TriosCoq.Physics.SparsityMask <> x:17 var
+R2122:2124 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R2116:2121 TriosCoq.Physics.SparsityMask <> lambda:16 var
+R2125:2137 TriosCoq.Physics.SparsityMask <> sparsity_loss defax
+R2139:2139 TriosCoq.Physics.SparsityMask <> x:17 var
+ax 2183:2206 <> sparsity_mask_star_count
+R2210:2212 Corelib.Init.Datatypes <> nat ind
+ax 2225:2246 <> two_three_majority_acc
+R2252:2252 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2265:2281 <> reactivation_rate
+R2292:2292 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2305:2322 <> reactivation_bound
+R2332:2332 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2345:2358 <> depth_fraction
+R2372:2372 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2385:2398 <> width_fraction
+R2412:2412 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2425:2441 <> combined_fraction
+R2452:2452 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2465:2477 <> overhead_frac
+R2492:2492 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2505:2515 <> s_keep_rate
+R2532:2532 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2545:2561 <> tops_per_watt_w40
+R2572:2572 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2585:2601 <> tops_per_watt_w39
+R2612:2612 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+ax 2625:2641 <> golden_lambda_min
+R2665:2665 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 2659:2661 <> lam:40
+R2681:2723 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2669:2672 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R2676:2679 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R2673:2675 TriosCoq.Physics.SparsityMask <> lam:40 var
+R2673:2675 TriosCoq.Physics.SparsityMask <> lam:40 var
+R2744:2747 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2724:2730 TriosCoq.Physics.SparsityMask <> L_total def
+R2732:2741 TriosCoq.Physics.SparsityMask <> phi_inv_sq def
+R2748:2754 TriosCoq.Physics.SparsityMask <> L_total def
+R2756:2758 TriosCoq.Physics.SparsityMask <> lam:40 var
+ax 2770:2784 <> synth_star_zero
+R2819:2821 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2795:2818 TriosCoq.Physics.SparsityMask <> sparsity_mask_star_count defax
+ax 2835:2853 <> two_three_acc_at_80
+R2882:2884 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2860:2881 TriosCoq.Physics.SparsityMask <> two_three_majority_acc defax
+R2887:2889 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+ax 2901:2921 <> reactivation_bound_lo
+R2943:2946 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2926:2942 TriosCoq.Physics.SparsityMask <> reactivation_rate defax
+R2947:2964 TriosCoq.Physics.SparsityMask <> reactivation_bound defax
+ax 2973:2989 <> depth_fraction_eq
+R3012:3014 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2998:3011 TriosCoq.Physics.SparsityMask <> depth_fraction defax
+R3017:3019 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+ax 3031:3047 <> width_fraction_eq
+R3070:3072 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3056:3069 TriosCoq.Physics.SparsityMask <> width_fraction defax
+R3075:3077 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+ax 3089:3099 <> combined_eq
+R3131:3133 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3114:3130 TriosCoq.Physics.SparsityMask <> combined_fraction defax
+R3148:3150 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R3134:3147 TriosCoq.Physics.SparsityMask <> depth_fraction defax
+R3151:3164 TriosCoq.Physics.SparsityMask <> width_fraction defax
+ax 3173:3184 <> tops_w39_470
+R3215:3217 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3198:3214 TriosCoq.Physics.SparsityMask <> tops_per_watt_w39 defax
+ax 3229:3241 <> tops_gain_115
+R3271:3273 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3254:3270 TriosCoq.Physics.SparsityMask <> tops_per_watt_w40 defax
+R3283:3285 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'*'_x not
+R3277:3279 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R3286:3302 TriosCoq.Physics.SparsityMask <> tops_per_watt_w39 defax
+prf 3419:3439 <> sparsity_mask_no_star
+R3469:3471 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3445:3468 TriosCoq.Physics.SparsityMask <> sparsity_mask_star_count defax
+R3492:3506 TriosCoq.Physics.SparsityMask <> synth_star_zero prfax
+R3492:3506 TriosCoq.Physics.SparsityMask <> synth_star_zero prfax
+prf 3769:3791 <> two_of_three_vote_at_80
+R3819:3821 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3797:3818 TriosCoq.Physics.SparsityMask <> two_three_majority_acc defax
+R3824:3826 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R3845:3863 TriosCoq.Physics.SparsityMask <> two_three_acc_at_80 prfax
+R3845:3863 TriosCoq.Physics.SparsityMask <> two_three_acc_at_80 prfax
+def 4033:4051 <> op_sparse_mask_byte
+R4055:4057 Corelib.Init.Datatypes <> nat ind
+def 4083:4099 <> isa_dispatch_mask
+R4107:4109 Corelib.Init.Datatypes <> nat ind
+binder 4102:4103 <> op:59
+R4117:4120 TriosCoq.Physics.SparsityMask <> Mask def
+binder 4113:4113 <> m:60
+R4128:4129 TriosCoq.Physics.SparsityMask <> Z3 ind
+binder 4124:4124 <> x:61
+R4134:4139 Corelib.Init.Datatypes <> option ind
+R4141:4142 TriosCoq.Physics.SparsityMask <> Z3 ind
+R4152:4158 Stdlib.Arith.PeanoNat Nat eqb def
+R4160:4161 TriosCoq.Physics.SparsityMask <> op:59 var
+R4163:4181 TriosCoq.Physics.SparsityMask <> op_sparse_mask_byte def
+R4219:4222 Corelib.Init.Datatypes <> None constr
+R4190:4193 Corelib.Init.Datatypes <> Some constr
+R4196:4205 TriosCoq.Physics.SparsityMask <> apply_mask def
+R4207:4207 TriosCoq.Physics.SparsityMask <> m:60 var
+R4209:4209 TriosCoq.Physics.SparsityMask <> x:61 var
+prf 4232:4249 <> opcode_E8_dispatch
+R4267:4270 TriosCoq.Physics.SparsityMask <> Mask def
+binder 4263:4263 <> m:62
+R4278:4279 TriosCoq.Physics.SparsityMask <> Z3 ind
+binder 4274:4274 <> x:63
+R4328:4330 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4287:4303 TriosCoq.Physics.SparsityMask <> isa_dispatch_mask def
+R4305:4323 TriosCoq.Physics.SparsityMask <> op_sparse_mask_byte def
+R4325:4325 TriosCoq.Physics.SparsityMask <> m:62 var
+R4327:4327 TriosCoq.Physics.SparsityMask <> x:63 var
+R4331:4334 Corelib.Init.Datatypes <> Some constr
+R4337:4346 TriosCoq.Physics.SparsityMask <> apply_mask def
+R4348:4348 TriosCoq.Physics.SparsityMask <> m:62 var
+R4350:4350 TriosCoq.Physics.SparsityMask <> x:63 var
+R4382:4398 TriosCoq.Physics.SparsityMask <> isa_dispatch_mask def
+R4409:4420 Stdlib.Arith.PeanoNat Nat eqb_refl thm
+R4409:4420 Stdlib.Arith.PeanoNat Nat eqb_refl thm
+R4409:4420 Stdlib.Arith.PeanoNat Nat eqb_refl thm
+prf 4528:4555 <> golden_lambda_minimises_loss
+R4574:4574 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+binder 4568:4570 <> lam:64
+R4590:4597 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4578:4581 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R4585:4588 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x_'<='_x not
+R4582:4584 TriosCoq.Physics.SparsityMask <> lam:64 var
+R4582:4584 TriosCoq.Physics.SparsityMask <> lam:64 var
+R4618:4621 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R4598:4604 TriosCoq.Physics.SparsityMask <> L_total def
+R4606:4615 TriosCoq.Physics.SparsityMask <> phi_inv_sq def
+R4622:4628 TriosCoq.Physics.SparsityMask <> L_total def
+R4630:4632 TriosCoq.Physics.SparsityMask <> lam:64 var
+R4650:4666 TriosCoq.Physics.SparsityMask <> golden_lambda_min defax
+R4650:4666 TriosCoq.Physics.SparsityMask <> golden_lambda_min defax
+prf 4759:4777 <> coptic_27_partition
+R4803:4805 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4783:4788 Corelib.Init.Datatypes <> length def
+R4790:4802 TriosCoq.Physics.SparsityMask <> coptic_groups def
+prf 4905:4924 <> reactivation_bounded
+R4947:4950 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R4930:4946 TriosCoq.Physics.SparsityMask <> reactivation_rate defax
+R4951:4968 TriosCoq.Physics.SparsityMask <> reactivation_bound defax
+R4984:5004 TriosCoq.Physics.SparsityMask <> reactivation_bound_lo prfax
+R4984:5004 TriosCoq.Physics.SparsityMask <> reactivation_bound_lo prfax
+prf 5097:5111 <> mask_idempotent
+R5129:5132 TriosCoq.Physics.SparsityMask <> Mask def
+binder 5125:5125 <> m:65
+R5140:5141 TriosCoq.Physics.SparsityMask <> Z3 ind
+binder 5136:5136 <> x:66
+R5178:5180 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5149:5158 TriosCoq.Physics.SparsityMask <> apply_mask def
+R5160:5160 TriosCoq.Physics.SparsityMask <> m:65 var
+R5163:5172 TriosCoq.Physics.SparsityMask <> apply_mask def
+R5174:5174 TriosCoq.Physics.SparsityMask <> m:65 var
+R5176:5176 TriosCoq.Physics.SparsityMask <> x:66 var
+R5181:5190 TriosCoq.Physics.SparsityMask <> apply_mask def
+R5192:5192 TriosCoq.Physics.SparsityMask <> m:65 var
+R5194:5194 TriosCoq.Physics.SparsityMask <> x:66 var
+R5225:5234 TriosCoq.Physics.SparsityMask <> apply_mask def
+prf 5333:5357 <> combined_compute_fraction
+R5380:5382 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5363:5379 TriosCoq.Physics.SparsityMask <> combined_fraction defax
+R5385:5387 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5411:5421 TriosCoq.Physics.SparsityMask <> combined_eq prfax
+R5424:5440 TriosCoq.Physics.SparsityMask <> depth_fraction_eq prfax
+R5443:5459 TriosCoq.Physics.SparsityMask <> width_fraction_eq prfax
+R5411:5421 TriosCoq.Physics.SparsityMask <> combined_eq prfax
+R5411:5421 TriosCoq.Physics.SparsityMask <> combined_eq prfax
+R5424:5440 TriosCoq.Physics.SparsityMask <> depth_fraction_eq prfax
+R5424:5440 TriosCoq.Physics.SparsityMask <> depth_fraction_eq prfax
+R5443:5459 TriosCoq.Physics.SparsityMask <> width_fraction_eq prfax
+R5443:5459 TriosCoq.Physics.SparsityMask <> width_fraction_eq prfax
+prf 5531:5548 <> tops_per_w_geq_540
+R5577:5582 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5565:5568 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R5554:5564 TriosCoq.Physics.SparsityMask <> s_keep_rate defax
+R5571:5573 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5608:5613 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5596:5599 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R5583:5595 TriosCoq.Physics.SparsityMask <> overhead_frac defax
+R5602:5604 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R5631:5634 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'>='_x not
+R5614:5630 TriosCoq.Physics.SparsityMask <> tops_per_watt_w40 defax
+R5674:5686 TriosCoq.Physics.SparsityMask <> tops_gain_115 prfax
+R5689:5700 TriosCoq.Physics.SparsityMask <> tops_w39_470 prfax
+R5674:5686 TriosCoq.Physics.SparsityMask <> tops_gain_115 prfax
+R5674:5686 TriosCoq.Physics.SparsityMask <> tops_gain_115 prfax
+R5689:5700 TriosCoq.Physics.SparsityMask <> tops_w39_470 prfax
+R5689:5700 TriosCoq.Physics.SparsityMask <> tops_w39_470 prfax
+prf 5939:5966 <> nullor_bypass_safe_with_mask
+R5983:5984 TriosCoq.Physics.SparsityMask <> Z3 ind
+binder 5979:5979 <> x:67
+R6005:6007 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5987:5996 TriosCoq.Physics.SparsityMask <> apply_mask def
+R5998:6002 Corelib.Init.Datatypes <> false constr
+R6004:6004 TriosCoq.Physics.SparsityMask <> x:67 var
+R6008:6009 TriosCoq.Physics.SparsityMask <> T0 constr
+R6038:6047 TriosCoq.Physics.SparsityMask <> apply_mask def
+prf 6134:6153 <> sparsity_w40_witness
+R6191:6196 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6183:6185 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6159:6182 TriosCoq.Physics.SparsityMask <> sparsity_mask_star_count defax
+R6230:6235 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6219:6221 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6197:6218 TriosCoq.Physics.SparsityMask <> two_three_majority_acc defax
+R6224:6226 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R6265:6270 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6256:6258 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6236:6241 Corelib.Init.Datatypes <> length def
+R6243:6255 TriosCoq.Physics.SparsityMask <> coptic_groups def
+R6310:6315 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6288:6291 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R6271:6287 TriosCoq.Physics.SparsityMask <> reactivation_rate defax
+R6292:6309 TriosCoq.Physics.SparsityMask <> reactivation_bound defax
+R6333:6335 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6316:6332 TriosCoq.Physics.SparsityMask <> combined_fraction defax
+R6338:6340 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R6370:6384 TriosCoq.Physics.SparsityMask <> synth_star_zero prfax
+R6370:6384 TriosCoq.Physics.SparsityMask <> synth_star_zero prfax
+R6406:6424 TriosCoq.Physics.SparsityMask <> two_three_acc_at_80 prfax
+R6406:6424 TriosCoq.Physics.SparsityMask <> two_three_acc_at_80 prfax
+R6472:6492 TriosCoq.Physics.SparsityMask <> reactivation_bound_lo prfax
+R6472:6492 TriosCoq.Physics.SparsityMask <> reactivation_bound_lo prfax
+R6508:6518 TriosCoq.Physics.SparsityMask <> combined_eq prfax
+R6521:6537 TriosCoq.Physics.SparsityMask <> depth_fraction_eq prfax
+R6540:6556 TriosCoq.Physics.SparsityMask <> width_fraction_eq prfax
+R6508:6518 TriosCoq.Physics.SparsityMask <> combined_eq prfax
+R6508:6518 TriosCoq.Physics.SparsityMask <> combined_eq prfax
+R6521:6537 TriosCoq.Physics.SparsityMask <> depth_fraction_eq prfax
+R6521:6537 TriosCoq.Physics.SparsityMask <> depth_fraction_eq prfax
+R6540:6556 TriosCoq.Physics.SparsityMask <> width_fraction_eq prfax
+R6540:6556 TriosCoq.Physics.SparsityMask <> width_fraction_eq prfax

@@ -1,0 +1,279 @@
+DIGEST df728cd7c7ebe662ae0565a85aad5a5c
+FEmergencyShutdown
+R1530:1546 Stdlib.ZArith.ZArith <> <> lib
+R1564:1580 Stdlib.micromega.Lia <> <> lib
+def 1847:1867 <> OP_EMERGENCY_SHUTDOWN
+def 1993:2008 <> OP_POWER_CAPPING
+def 2051:2066 <> OP_FREQ_THROTTLE
+def 2108:2123 <> OP_VOLTAGE_GUARD
+def 2166:2181 <> OP_THERMAL_GUARD
+def 2224:2235 <> OP_CAP_BOOST
+def 2282:2294 <> OP_FBB_ACTIVE
+def 2340:2345 <> OP_RBB
+def 2465:2478 <> SACRED_BANK_LO
+def 2513:2526 <> SACRED_BANK_HI
+def 2561:2576 <> SACRED_BANK_SIZE
+prf 2824:2869 <> emergency_shutdown_distinct_from_power_capping
+R2896:2899 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2875:2895 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R2900:2915 EmergencyShutdown <> OP_POWER_CAPPING def
+R2932:2952 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R2955:2970 EmergencyShutdown <> OP_POWER_CAPPING def
+prf 2990:3035 <> emergency_shutdown_distinct_from_freq_throttle
+R3062:3065 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3041:3061 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3066:3081 EmergencyShutdown <> OP_FREQ_THROTTLE def
+R3098:3118 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3121:3136 EmergencyShutdown <> OP_FREQ_THROTTLE def
+prf 3156:3201 <> emergency_shutdown_distinct_from_voltage_guard
+R3228:3231 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3207:3227 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3232:3247 EmergencyShutdown <> OP_VOLTAGE_GUARD def
+R3264:3284 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3287:3302 EmergencyShutdown <> OP_VOLTAGE_GUARD def
+prf 3322:3367 <> emergency_shutdown_distinct_from_thermal_guard
+R3394:3397 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3373:3393 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3398:3413 EmergencyShutdown <> OP_THERMAL_GUARD def
+R3430:3450 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3453:3468 EmergencyShutdown <> OP_THERMAL_GUARD def
+prf 3488:3529 <> emergency_shutdown_distinct_from_cap_boost
+R3556:3559 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3535:3555 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3560:3571 EmergencyShutdown <> OP_CAP_BOOST def
+R3588:3608 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3611:3622 EmergencyShutdown <> OP_CAP_BOOST def
+prf 3642:3684 <> emergency_shutdown_distinct_from_fbb_active
+R3711:3714 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3690:3710 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3715:3727 EmergencyShutdown <> OP_FBB_ACTIVE def
+R3744:3764 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3767:3779 EmergencyShutdown <> OP_FBB_ACTIVE def
+prf 3799:3834 <> emergency_shutdown_distinct_from_rbb
+R3861:3864 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3840:3860 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3865:3870 EmergencyShutdown <> OP_RBB def
+R3887:3907 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R3910:3915 EmergencyShutdown <> OP_RBB def
+prf 4166:4200 <> emergency_shutdown_in_extended_bank
+R4245:4248 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4220:4223 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R4206:4219 EmergencyShutdown <> SACRED_BANK_LO def
+R4224:4244 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4270:4273 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R4249:4269 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4274:4287 EmergencyShutdown <> SACRED_BANK_HI def
+R4304:4317 EmergencyShutdown <> SACRED_BANK_LO def
+R4320:4340 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4343:4356 EmergencyShutdown <> SACRED_BANK_HI def
+prf 4376:4419 <> emergency_shutdown_adjacent_to_power_capping
+R4446:4448 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4425:4445 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4465:4467 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4449:4464 EmergencyShutdown <> OP_POWER_CAPPING def
+R4485:4505 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4508:4523 EmergencyShutdown <> OP_POWER_CAPPING def
+prf 4543:4568 <> octuple_decker_consecutive
+R4608:4613 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4595:4597 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4574:4594 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4604:4606 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4598:4603 EmergencyShutdown <> OP_RBB def
+R4640:4645 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4627:4629 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4614:4626 EmergencyShutdown <> OP_FBB_ACTIVE def
+R4636:4638 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4630:4635 EmergencyShutdown <> OP_RBB def
+R4671:4676 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4658:4660 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4646:4657 EmergencyShutdown <> OP_CAP_BOOST def
+R4667:4669 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4661:4666 EmergencyShutdown <> OP_RBB def
+R4706:4711 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4693:4695 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4677:4692 EmergencyShutdown <> OP_THERMAL_GUARD def
+R4702:4704 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4696:4701 EmergencyShutdown <> OP_RBB def
+R4741:4746 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4728:4730 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4712:4727 EmergencyShutdown <> OP_VOLTAGE_GUARD def
+R4737:4739 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4731:4736 EmergencyShutdown <> OP_RBB def
+R4776:4781 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4763:4765 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4747:4762 EmergencyShutdown <> OP_FREQ_THROTTLE def
+R4772:4774 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4766:4771 EmergencyShutdown <> OP_RBB def
+R4798:4800 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4782:4797 EmergencyShutdown <> OP_POWER_CAPPING def
+R4807:4809 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4801:4806 EmergencyShutdown <> OP_RBB def
+R4836:4856 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R4859:4864 EmergencyShutdown <> OP_RBB def
+R4888:4900 EmergencyShutdown <> OP_FBB_ACTIVE def
+R4903:4908 EmergencyShutdown <> OP_RBB def
+R4932:4943 EmergencyShutdown <> OP_CAP_BOOST def
+R4946:4951 EmergencyShutdown <> OP_RBB def
+R4975:4990 EmergencyShutdown <> OP_THERMAL_GUARD def
+R4993:4998 EmergencyShutdown <> OP_RBB def
+R5022:5037 EmergencyShutdown <> OP_VOLTAGE_GUARD def
+R5040:5045 EmergencyShutdown <> OP_RBB def
+R5069:5084 EmergencyShutdown <> OP_FREQ_THROTTLE def
+R5087:5092 EmergencyShutdown <> OP_RBB def
+R5109:5124 EmergencyShutdown <> OP_POWER_CAPPING def
+R5127:5132 EmergencyShutdown <> OP_RBB def
+def 5436:5453 <> temperature_crit_K
+R5457:5457 Corelib.Numbers.BinNums <> Z ind
+def 5519:5540 <> temperature_shutdown_K
+R5544:5544 Corelib.Numbers.BinNums <> Z ind
+def 5605:5623 <> delta_T_emergency_K
+R5627:5627 Corelib.Numbers.BinNums <> Z ind
+R5650:5652 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R5632:5649 EmergencyShutdown <> temperature_crit_K def
+R5653:5674 EmergencyShutdown <> temperature_shutdown_K def
+def 5737:5751 <> voltage_crit_mV
+R5755:5755 Corelib.Numbers.BinNums <> Z ind
+def 5851:5877 <> emergency_shutdown_delay_us
+R5881:5881 Corelib.Numbers.BinNums <> Z ind
+def 5937:5959 <> emergency_reset_time_ms
+R5963:5963 Corelib.Numbers.BinNums <> Z ind
+prf 6286:6309 <> delta_T_emergency_is_10K
+R6332:6334 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6313:6331 EmergencyShutdown <> delta_T_emergency_K def
+R6353:6371 EmergencyShutdown <> delta_T_emergency_K def
+R6374:6391 EmergencyShutdown <> temperature_crit_K def
+R6394:6415 EmergencyShutdown <> temperature_shutdown_K def
+prf 6491:6521 <> temperature_shutdown_below_crit
+R6549:6551 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6527:6548 EmergencyShutdown <> temperature_shutdown_K def
+R6552:6569 EmergencyShutdown <> temperature_crit_K def
+R6586:6607 EmergencyShutdown <> temperature_shutdown_K def
+R6610:6627 EmergencyShutdown <> temperature_crit_K def
+prf 6686:6711 <> delta_T_emergency_positive
+R6734:6736 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R6715:6733 EmergencyShutdown <> delta_T_emergency_K def
+R6756:6774 EmergencyShutdown <> delta_T_emergency_K def
+R6777:6794 EmergencyShutdown <> temperature_crit_K def
+R6797:6818 EmergencyShutdown <> temperature_shutdown_K def
+prf 6896:6919 <> temperature_crit_is_373K
+R6941:6943 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6923:6940 EmergencyShutdown <> temperature_crit_K def
+R6963:6980 EmergencyShutdown <> temperature_crit_K def
+prf 7063:7090 <> temperature_shutdown_is_363K
+R7116:7118 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7094:7115 EmergencyShutdown <> temperature_shutdown_K def
+R7138:7159 EmergencyShutdown <> temperature_shutdown_K def
+prf 7232:7257 <> sacred_bank_size_preserved
+R7277:7279 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7261:7276 EmergencyShutdown <> SACRED_BANK_SIZE def
+R7298:7313 EmergencyShutdown <> SACRED_BANK_SIZE def
+prf 7393:7415 <> octuple_decker_sequence
+R7433:7438 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7427:7429 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7421:7426 EmergencyShutdown <> OP_RBB def
+R7458:7463 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7452:7454 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7439:7451 EmergencyShutdown <> OP_FBB_ACTIVE def
+R7482:7487 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7476:7478 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7464:7475 EmergencyShutdown <> OP_CAP_BOOST def
+R7510:7515 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7504:7506 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7488:7503 EmergencyShutdown <> OP_THERMAL_GUARD def
+R7538:7543 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7532:7534 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7516:7531 EmergencyShutdown <> OP_VOLTAGE_GUARD def
+R7566:7571 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7560:7562 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7544:7559 EmergencyShutdown <> OP_FREQ_THROTTLE def
+R7594:7599 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7588:7590 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7572:7587 EmergencyShutdown <> OP_POWER_CAPPING def
+R7621:7623 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7600:7620 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R7652:7657 EmergencyShutdown <> OP_RBB def
+R7689:7701 EmergencyShutdown <> OP_FBB_ACTIVE def
+R7733:7744 EmergencyShutdown <> OP_CAP_BOOST def
+R7776:7791 EmergencyShutdown <> OP_THERMAL_GUARD def
+R7823:7838 EmergencyShutdown <> OP_VOLTAGE_GUARD def
+R7870:7885 EmergencyShutdown <> OP_FREQ_THROTTLE def
+R7917:7932 EmergencyShutdown <> OP_POWER_CAPPING def
+R7957:7977 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+prf 8057:8078 <> voltage_crit_is_1000mV
+R8097:8099 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8082:8096 EmergencyShutdown <> voltage_crit_mV def
+R8120:8134 EmergencyShutdown <> voltage_crit_mV def
+prf 8216:8238 <> emergency_delay_is_10us
+R8269:8271 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8242:8268 EmergencyShutdown <> emergency_shutdown_delay_us def
+R8290:8316 EmergencyShutdown <> emergency_shutdown_delay_us def
+prf 8396:8419 <> emergency_reset_is_100ms
+R8446:8448 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8423:8445 EmergencyShutdown <> emergency_reset_time_ms def
+R8468:8490 EmergencyShutdown <> emergency_reset_time_ms def
+prf 8567:8586 <> emergency_delay_fast
+R8619:8621 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8592:8618 EmergencyShutdown <> emergency_shutdown_delay_us def
+R8642:8668 EmergencyShutdown <> emergency_shutdown_delay_us def
+prf 8754:8782 <> reset_time_greater_than_delay
+R8818:8820 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8811:8813 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8788:8810 EmergencyShutdown <> emergency_reset_time_ms def
+R8821:8847 EmergencyShutdown <> emergency_shutdown_delay_us def
+R8866:8888 EmergencyShutdown <> emergency_reset_time_ms def
+R8891:8917 EmergencyShutdown <> emergency_shutdown_delay_us def
+prf 8987:9022 <> temperature_emergency_envelope_width
+R9071:9073 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9046:9048 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R9028:9045 EmergencyShutdown <> temperature_crit_K def
+R9049:9070 EmergencyShutdown <> temperature_shutdown_K def
+R9094:9111 EmergencyShutdown <> temperature_crit_K def
+R9114:9135 EmergencyShutdown <> temperature_shutdown_K def
+prf 9450:9477 <> emergency_shutdown_composite
+R9510:9515 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9504:9506 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9483:9503 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R9540:9545 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9534:9536 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9516:9533 EmergencyShutdown <> temperature_crit_K def
+R9574:9579 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9568:9570 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9546:9567 EmergencyShutdown <> temperature_shutdown_K def
+R9604:9609 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9599:9601 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9580:9598 EmergencyShutdown <> delta_T_emergency_K def
+R9653:9658 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9632:9634 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R9610:9631 EmergencyShutdown <> temperature_shutdown_K def
+R9635:9652 EmergencyShutdown <> temperature_crit_K def
+R9682:9687 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9678:9680 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R9659:9677 EmergencyShutdown <> delta_T_emergency_K def
+R9732:9737 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9709:9711 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9688:9708 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R9728:9730 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9712:9727 EmergencyShutdown <> OP_POWER_CAPPING def
+R9772:9777 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9759:9761 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9738:9758 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R9768:9770 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9762:9767 EmergencyShutdown <> OP_RBB def
+R9794:9796 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9778:9793 EmergencyShutdown <> SACRED_BANK_SIZE def
+R9824:9844 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R9875:9898 EmergencyShutdown <> temperature_crit_is_373K thm
+R9875:9898 EmergencyShutdown <> temperature_crit_is_373K thm
+R9916:9943 EmergencyShutdown <> temperature_shutdown_is_363K thm
+R9916:9943 EmergencyShutdown <> temperature_shutdown_is_363K thm
+R9961:9984 EmergencyShutdown <> delta_T_emergency_is_10K thm
+R9961:9984 EmergencyShutdown <> delta_T_emergency_is_10K thm
+R10002:10032 EmergencyShutdown <> temperature_shutdown_below_crit thm
+R10002:10032 EmergencyShutdown <> temperature_shutdown_below_crit thm
+R10050:10075 EmergencyShutdown <> delta_T_emergency_positive thm
+R10050:10075 EmergencyShutdown <> delta_T_emergency_positive thm
+R10093:10136 EmergencyShutdown <> emergency_shutdown_adjacent_to_power_capping thm
+R10093:10136 EmergencyShutdown <> emergency_shutdown_adjacent_to_power_capping thm
+R10155:10175 EmergencyShutdown <> OP_EMERGENCY_SHUTDOWN def
+R10178:10183 EmergencyShutdown <> OP_RBB def
+R10200:10215 EmergencyShutdown <> SACRED_BANK_SIZE def

@@ -1,0 +1,206 @@
+DIGEST 34a56bac98247dc9115dd95288b0d111
+FThermalGuard
+R1509:1525 Stdlib.ZArith.ZArith <> <> lib
+R1543:1559 Stdlib.micromega.Lia <> <> lib
+def 1826:1841 <> OP_THERMAL_GUARD
+def 1966:1977 <> OP_CAP_BOOST
+def 2024:2036 <> OP_FBB_ACTIVE
+def 2082:2087 <> OP_RBB
+def 2207:2220 <> SACRED_BANK_LO
+def 2255:2268 <> SACRED_BANK_HI
+def 2303:2318 <> SACRED_BANK_SIZE
+prf 2566:2602 <> thermal_guard_distinct_from_cap_boost
+R2624:2627 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2608:2623 ThermalGuard <> OP_THERMAL_GUARD def
+R2628:2639 ThermalGuard <> OP_CAP_BOOST def
+R2656:2671 ThermalGuard <> OP_THERMAL_GUARD def
+R2674:2685 ThermalGuard <> OP_CAP_BOOST def
+prf 2705:2742 <> thermal_guard_distinct_from_fbb_active
+R2764:2767 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2748:2763 ThermalGuard <> OP_THERMAL_GUARD def
+R2768:2780 ThermalGuard <> OP_FBB_ACTIVE def
+R2797:2812 ThermalGuard <> OP_THERMAL_GUARD def
+R2815:2827 ThermalGuard <> OP_FBB_ACTIVE def
+prf 2847:2877 <> thermal_guard_distinct_from_rbb
+R2899:2902 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2883:2898 ThermalGuard <> OP_THERMAL_GUARD def
+R2903:2908 ThermalGuard <> OP_RBB def
+R2925:2940 ThermalGuard <> OP_THERMAL_GUARD def
+R2943:2948 ThermalGuard <> OP_RBB def
+prf 3199:3228 <> thermal_guard_in_extended_bank
+R3268:3271 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3248:3251 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3234:3247 ThermalGuard <> SACRED_BANK_LO def
+R3252:3267 ThermalGuard <> OP_THERMAL_GUARD def
+R3288:3291 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3272:3287 ThermalGuard <> OP_THERMAL_GUARD def
+R3292:3305 ThermalGuard <> SACRED_BANK_HI def
+R3322:3335 ThermalGuard <> SACRED_BANK_LO def
+R3338:3353 ThermalGuard <> OP_THERMAL_GUARD def
+R3356:3369 ThermalGuard <> SACRED_BANK_HI def
+prf 3389:3423 <> thermal_guard_adjacent_to_cap_boost
+R3445:3447 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3429:3444 ThermalGuard <> OP_THERMAL_GUARD def
+R3460:3462 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3448:3459 ThermalGuard <> OP_CAP_BOOST def
+R3480:3495 ThermalGuard <> OP_THERMAL_GUARD def
+R3498:3509 ThermalGuard <> OP_CAP_BOOST def
+prf 3529:3556 <> quadruple_decker_consecutive
+R3591:3596 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3578:3580 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3562:3577 ThermalGuard <> OP_THERMAL_GUARD def
+R3587:3589 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3581:3586 ThermalGuard <> OP_RBB def
+R3623:3628 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3610:3612 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3597:3609 ThermalGuard <> OP_FBB_ACTIVE def
+R3619:3621 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3613:3618 ThermalGuard <> OP_RBB def
+R3641:3643 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3629:3640 ThermalGuard <> OP_CAP_BOOST def
+R3650:3652 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3644:3649 ThermalGuard <> OP_RBB def
+R3679:3694 ThermalGuard <> OP_THERMAL_GUARD def
+R3697:3702 ThermalGuard <> OP_RBB def
+R3726:3738 ThermalGuard <> OP_FBB_ACTIVE def
+R3741:3746 ThermalGuard <> OP_RBB def
+R3763:3774 ThermalGuard <> OP_CAP_BOOST def
+R3777:3782 ThermalGuard <> OP_RBB def
+def 4076:4094 <> temperature_ambient
+R4098:4098 Corelib.Numbers.BinNums <> Z ind
+def 4119:4133 <> temperature_max
+R4141:4141 Corelib.Numbers.BinNums <> Z ind
+def 4162:4178 <> temperature_guard
+R4184:4184 Corelib.Numbers.BinNums <> Z ind
+def 4205:4217 <> delta_T_guard
+R4227:4227 Corelib.Numbers.BinNums <> Z ind
+R4247:4249 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R4232:4246 ThermalGuard <> temperature_max def
+R4250:4266 ThermalGuard <> temperature_guard def
+prf 4541:4560 <> delta_T_guard_is_20K
+R4577:4579 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4564:4576 ThermalGuard <> delta_T_guard def
+R4598:4610 ThermalGuard <> delta_T_guard def
+R4613:4627 ThermalGuard <> temperature_max def
+R4630:4646 ThermalGuard <> temperature_guard def
+prf 4728:4753 <> temperature_guard_in_range
+R4798:4801 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4778:4780 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R4759:4777 ThermalGuard <> temperature_ambient def
+R4781:4797 ThermalGuard <> temperature_guard def
+R4819:4821 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R4802:4818 ThermalGuard <> temperature_guard def
+R4822:4836 ThermalGuard <> temperature_max def
+R4866:4884 ThermalGuard <> temperature_ambient def
+R4887:4903 ThermalGuard <> temperature_guard def
+R4922:4938 ThermalGuard <> temperature_guard def
+R4941:4955 ThermalGuard <> temperature_max def
+prf 5036:5066 <> temperature_guard_above_ambient
+R5091:5093 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5072:5090 ThermalGuard <> temperature_ambient def
+R5094:5110 ThermalGuard <> temperature_guard def
+R5127:5143 ThermalGuard <> temperature_guard def
+R5146:5164 ThermalGuard <> temperature_ambient def
+prf 5243:5269 <> temperature_guard_below_max
+R5292:5294 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5275:5291 ThermalGuard <> temperature_guard def
+R5295:5309 ThermalGuard <> temperature_max def
+R5326:5342 ThermalGuard <> temperature_guard def
+R5345:5359 ThermalGuard <> temperature_max def
+prf 5431:5452 <> delta_T_guard_positive
+R5469:5471 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R5456:5468 ThermalGuard <> delta_T_guard def
+R5489:5501 ThermalGuard <> delta_T_guard def
+R5504:5518 ThermalGuard <> temperature_max def
+R5521:5537 ThermalGuard <> temperature_guard def
+prf 5614:5642 <> temperature_max_above_ambient
+R5663:5665 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R5648:5662 ThermalGuard <> temperature_max def
+R5666:5684 ThermalGuard <> temperature_ambient def
+R5701:5715 ThermalGuard <> temperature_max def
+R5718:5736 ThermalGuard <> temperature_ambient def
+prf 5821:5845 <> delta_T_guard_appropriate
+R5868:5871 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5862:5865 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R5849:5861 ThermalGuard <> delta_T_guard def
+R5885:5888 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R5872:5884 ThermalGuard <> delta_T_guard def
+R5909:5921 ThermalGuard <> delta_T_guard def
+R5924:5938 ThermalGuard <> temperature_max def
+R5941:5957 ThermalGuard <> temperature_guard def
+prf 6031:6056 <> sacred_bank_size_preserved
+R6076:6078 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6060:6075 ThermalGuard <> SACRED_BANK_SIZE def
+R6097:6112 ThermalGuard <> SACRED_BANK_SIZE def
+prf 6191:6215 <> quadruple_decker_sequence
+R6233:6238 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6227:6229 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6221:6226 ThermalGuard <> OP_RBB def
+R6258:6263 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6252:6254 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6239:6251 ThermalGuard <> OP_FBB_ACTIVE def
+R6282:6287 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6276:6278 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6264:6275 ThermalGuard <> OP_CAP_BOOST def
+R6304:6306 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6288:6303 ThermalGuard <> OP_THERMAL_GUARD def
+R6335:6340 ThermalGuard <> OP_RBB def
+R6372:6384 ThermalGuard <> OP_FBB_ACTIVE def
+R6416:6427 ThermalGuard <> OP_CAP_BOOST def
+R6452:6467 ThermalGuard <> OP_THERMAL_GUARD def
+prf 6788:6810 <> thermal_guard_composite
+R6838:6843 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6832:6834 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6816:6831 ThermalGuard <> OP_THERMAL_GUARD def
+R6869:6874 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6863:6865 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6844:6862 ThermalGuard <> temperature_ambient def
+R6898:6903 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6892:6894 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6875:6891 ThermalGuard <> temperature_guard def
+R6925:6930 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6919:6921 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6904:6918 ThermalGuard <> temperature_max def
+R6949:6954 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6944:6946 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6931:6943 ThermalGuard <> delta_T_guard def
+R6994:6999 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6974:6976 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6955:6973 ThermalGuard <> temperature_ambient def
+R6977:6993 ThermalGuard <> temperature_guard def
+R7035:7040 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7017:7019 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R7000:7016 ThermalGuard <> temperature_guard def
+R7020:7034 ThermalGuard <> temperature_max def
+R7058:7063 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7054:7056 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R7041:7053 ThermalGuard <> delta_T_guard def
+R7099:7104 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7080:7082 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7064:7079 ThermalGuard <> OP_THERMAL_GUARD def
+R7095:7097 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R7083:7094 ThermalGuard <> OP_CAP_BOOST def
+R7134:7139 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7121:7123 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7105:7120 ThermalGuard <> OP_THERMAL_GUARD def
+R7130:7132 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R7124:7129 ThermalGuard <> OP_RBB def
+R7156:7158 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7140:7155 ThermalGuard <> SACRED_BANK_SIZE def
+R7186:7201 ThermalGuard <> OP_THERMAL_GUARD def
+R7233:7251 ThermalGuard <> temperature_ambient def
+R7283:7299 ThermalGuard <> temperature_guard def
+R7331:7345 ThermalGuard <> temperature_max def
+R7376:7395 ThermalGuard <> delta_T_guard_is_20K thm
+R7376:7395 ThermalGuard <> delta_T_guard_is_20K thm
+R7413:7443 ThermalGuard <> temperature_guard_above_ambient thm
+R7413:7443 ThermalGuard <> temperature_guard_above_ambient thm
+R7461:7487 ThermalGuard <> temperature_guard_below_max thm
+R7461:7487 ThermalGuard <> temperature_guard_below_max thm
+R7505:7526 ThermalGuard <> delta_T_guard_positive thm
+R7505:7526 ThermalGuard <> delta_T_guard_positive thm
+R7544:7578 ThermalGuard <> thermal_guard_adjacent_to_cap_boost thm
+R7544:7578 ThermalGuard <> thermal_guard_adjacent_to_cap_boost thm
+R7597:7612 ThermalGuard <> OP_THERMAL_GUARD def
+R7615:7620 ThermalGuard <> OP_RBB def
+R7637:7652 ThermalGuard <> SACRED_BANK_SIZE def

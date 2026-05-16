@@ -1,0 +1,143 @@
+DIGEST 6218a7ba127a59ac0710d2a02f4fac63
+FTriosCoq.Physics.PurkinjeThermal
+R548:552 Stdlib.Arith.Arith <> <> lib
+R570:573 Stdlib.Bool.Bool <> <> lib
+R591:593 Stdlib.micromega.Lia <> <> lib
+R611:628 Stdlib.Strings.String <> <> lib
+def 705:708 <> mask
+R715:717 Corelib.Init.Datatypes <> nat ind
+binder 711:711 <> t:1
+R722:725 Corelib.Init.Datatypes <> bool ind
+R736:739 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R735:735 TriosCoq.Physics.PurkinjeThermal <> t:1 var
+R758:762 Corelib.Init.Datatypes <> false constr
+R748:751 Corelib.Init.Datatypes <> true constr
+def 842:852 <> energy_gate
+R859:861 Corelib.Init.Datatypes <> nat ind
+binder 855:855 <> t:2
+R866:868 Corelib.Init.Datatypes <> nat ind
+R873:873 TriosCoq.Physics.PurkinjeThermal <> t:2 var
+def 937:943 <> inhibit
+R950:952 Corelib.Init.Datatypes <> nat ind
+binder 946:946 <> x:3
+R957:959 Corelib.Init.Datatypes <> nat ind
+R970:973 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R969:969 TriosCoq.Physics.PurkinjeThermal <> x:3 var
+R982:982 TriosCoq.Physics.PurkinjeThermal <> x:3 var
+def 1061:1067 <> balance
+R1076:1078 Corelib.Init.Datatypes <> nat ind
+binder 1070:1070 <> a:4
+binder 1072:1072 <> b:5
+R1083:1085 Corelib.Init.Datatypes <> nat ind
+R1091:1093 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1090:1090 TriosCoq.Physics.PurkinjeThermal <> a:4 var
+R1094:1094 TriosCoq.Physics.PurkinjeThermal <> b:5 var
+def 1173:1185 <> compose_masks
+R1197:1200 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1194:1196 Corelib.Init.Datatypes <> nat ind
+R1201:1204 Corelib.Init.Datatypes <> bool ind
+binder 1188:1188 <> f:6
+binder 1190:1190 <> g:7
+R1212:1214 Corelib.Init.Datatypes <> nat ind
+binder 1208:1208 <> t:8
+R1219:1222 Corelib.Init.Datatypes <> bool ind
+R1229:1232 Corelib.Init.Datatypes <> andb def
+R1241:1241 TriosCoq.Physics.PurkinjeThermal <> g:7 var
+R1243:1243 TriosCoq.Physics.PurkinjeThermal <> t:8 var
+R1235:1235 TriosCoq.Physics.PurkinjeThermal <> f:6 var
+R1237:1237 TriosCoq.Physics.PurkinjeThermal <> t:8 var
+prf 1411:1433 <> thermal_mask_idempotent
+R1448:1450 Corelib.Init.Datatypes <> nat ind
+binder 1444:1444 <> t:9
+R1477:1479 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1455:1458 Corelib.Init.Datatypes <> andb def
+R1470:1473 TriosCoq.Physics.PurkinjeThermal <> mask def
+R1475:1475 TriosCoq.Physics.PurkinjeThermal <> t:9 var
+R1461:1464 TriosCoq.Physics.PurkinjeThermal <> mask def
+R1466:1466 TriosCoq.Physics.PurkinjeThermal <> t:9 var
+R1480:1483 TriosCoq.Physics.PurkinjeThermal <> mask def
+R1485:1485 TriosCoq.Physics.PurkinjeThermal <> t:9 var
+R1515:1518 TriosCoq.Physics.PurkinjeThermal <> mask def
+R1534:1537 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R1534:1537 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+prf 1694:1715 <> gating_energy_monotone
+R1734:1736 Corelib.Init.Datatypes <> nat ind
+binder 1726:1727 <> t1:10
+binder 1729:1730 <> t2:11
+R1749:1752 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1743:1746 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1741:1742 TriosCoq.Physics.PurkinjeThermal <> t1:10 var
+R1747:1748 TriosCoq.Physics.PurkinjeThermal <> t2:11 var
+R1767:1770 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1753:1763 TriosCoq.Physics.PurkinjeThermal <> energy_gate def
+R1765:1766 TriosCoq.Physics.PurkinjeThermal <> t1:10 var
+R1771:1781 TriosCoq.Physics.PurkinjeThermal <> energy_gate def
+R1783:1784 TriosCoq.Physics.PurkinjeThermal <> t2:11 var
+R1821:1831 TriosCoq.Physics.PurkinjeThermal <> energy_gate def
+R1843:1854 Stdlib.Arith.PeanoNat Nat le_trans thm
+R1866:1876 Stdlib.Arith.PeanoNat Nat le_refl thm
+R1843:1854 Stdlib.Arith.PeanoNat Nat le_trans thm
+R1866:1876 Stdlib.Arith.PeanoNat Nat le_refl thm
+prf 2005:2029 <> purkinje_inhibition_bound
+R2044:2046 Corelib.Init.Datatypes <> nat ind
+binder 2040:2040 <> x:12
+R2060:2063 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R2051:2057 TriosCoq.Physics.PurkinjeThermal <> inhibit def
+R2059:2059 TriosCoq.Physics.PurkinjeThermal <> x:12 var
+R2095:2101 TriosCoq.Physics.PurkinjeThermal <> inhibit def
+R2117:2120 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R2117:2120 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'<?'_x not
+R2144:2153 Stdlib.Arith.PeanoNat Nat ltb_lt thm
+R2144:2153 Stdlib.Arith.PeanoNat Nat ltb_lt thm
+prf 2284:2297 <> lugaro_balance
+R2314:2316 Corelib.Init.Datatypes <> nat ind
+binder 2308:2308 <> a:13
+binder 2310:2310 <> b:14
+R2332:2334 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2321:2327 TriosCoq.Physics.PurkinjeThermal <> balance def
+R2329:2329 TriosCoq.Physics.PurkinjeThermal <> a:13 var
+R2331:2331 TriosCoq.Physics.PurkinjeThermal <> b:14 var
+R2335:2341 TriosCoq.Physics.PurkinjeThermal <> balance def
+R2343:2343 TriosCoq.Physics.PurkinjeThermal <> b:14 var
+R2345:2345 TriosCoq.Physics.PurkinjeThermal <> a:13 var
+R2378:2384 TriosCoq.Physics.PurkinjeThermal <> balance def
+R2395:2406 Stdlib.Arith.PeanoNat Nat add_comm thm
+R2395:2406 Stdlib.Arith.PeanoNat Nat add_comm thm
+prf 2587:2604 <> tile_mask_27_total
+R2619:2621 Corelib.Init.Datatypes <> nat ind
+binder 2615:2615 <> t:15
+R2633:2636 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2627:2630 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R2626:2626 TriosCoq.Physics.PurkinjeThermal <> t:15 var
+R2643:2645 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2637:2640 TriosCoq.Physics.PurkinjeThermal <> mask def
+R2642:2642 TriosCoq.Physics.PurkinjeThermal <> t:15 var
+R2646:2650 Corelib.Init.Datatypes <> false constr
+R2685:2688 TriosCoq.Physics.PurkinjeThermal <> mask def
+R2699:2708 Stdlib.Arith.PeanoNat Nat ltb_ge thm
+R2699:2708 Stdlib.Arith.PeanoNat Nat ltb_ge thm
+prf 2853:2870 <> mask_compose_assoc
+R2893:2896 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2890:2892 Corelib.Init.Datatypes <> nat ind
+R2897:2900 Corelib.Init.Datatypes <> bool ind
+binder 2882:2882 <> f:16
+binder 2884:2884 <> g:17
+binder 2886:2886 <> h:18
+R2908:2910 Corelib.Init.Datatypes <> nat ind
+binder 2904:2904 <> t:19
+R2953:2957 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2916:2928 TriosCoq.Physics.PurkinjeThermal <> compose_masks def
+R2931:2943 TriosCoq.Physics.PurkinjeThermal <> compose_masks def
+R2945:2945 TriosCoq.Physics.PurkinjeThermal <> f:16 var
+R2947:2947 TriosCoq.Physics.PurkinjeThermal <> g:17 var
+R2950:2950 TriosCoq.Physics.PurkinjeThermal <> h:18 var
+R2952:2952 TriosCoq.Physics.PurkinjeThermal <> t:19 var
+R2958:2970 TriosCoq.Physics.PurkinjeThermal <> compose_masks def
+R2972:2972 TriosCoq.Physics.PurkinjeThermal <> f:16 var
+R2975:2987 TriosCoq.Physics.PurkinjeThermal <> compose_masks def
+R2989:2989 TriosCoq.Physics.PurkinjeThermal <> g:17 var
+R2991:2991 TriosCoq.Physics.PurkinjeThermal <> h:18 var
+R2994:2994 TriosCoq.Physics.PurkinjeThermal <> t:19 var
+R3031:3043 TriosCoq.Physics.PurkinjeThermal <> compose_masks def
+prf 3301:3318 <> phi_anchor_present
+R3322:3325 Corelib.Init.Logic <> True ind

@@ -1,0 +1,316 @@
+DIGEST eddc7e7d390949beb45c913293ea0c41
+FSleepGating
+R1517:1533 Stdlib.ZArith.ZArith <> <> lib
+R1551:1567 Stdlib.micromega.Lia <> <> lib
+def 1834:1848 <> OP_SLEEP_GATING
+def 1977:1997 <> OP_EMERGENCY_SHUTDOWN
+def 2038:2053 <> OP_POWER_CAPPING
+def 2099:2114 <> OP_FREQ_THROTTLE
+def 2159:2174 <> OP_VOLTAGE_GUARD
+def 2219:2234 <> OP_THERMAL_GUARD
+def 2279:2290 <> OP_CAP_BOOST
+def 2339:2351 <> OP_FBB_ACTIVE
+def 2399:2404 <> OP_RBB
+def 2526:2539 <> SACRED_BANK_LO
+def 2574:2587 <> SACRED_BANK_HI
+def 2622:2637 <> SACRED_BANK_SIZE
+prf 2885:2929 <> sleep_gating_distinct_from_emergency_shutdown
+R2950:2953 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2935:2949 SleepGating <> OP_SLEEP_GATING def
+R2954:2974 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R2991:3005 SleepGating <> OP_SLEEP_GATING def
+R3008:3028 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+prf 3048:3087 <> sleep_gating_distinct_from_power_capping
+R3108:3111 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3093:3107 SleepGating <> OP_SLEEP_GATING def
+R3112:3127 SleepGating <> OP_POWER_CAPPING def
+R3144:3158 SleepGating <> OP_SLEEP_GATING def
+R3161:3176 SleepGating <> OP_POWER_CAPPING def
+prf 3196:3235 <> sleep_gating_distinct_from_freq_throttle
+R3256:3259 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3241:3255 SleepGating <> OP_SLEEP_GATING def
+R3260:3275 SleepGating <> OP_FREQ_THROTTLE def
+R3292:3306 SleepGating <> OP_SLEEP_GATING def
+R3309:3324 SleepGating <> OP_FREQ_THROTTLE def
+prf 3344:3383 <> sleep_gating_distinct_from_voltage_guard
+R3404:3407 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3389:3403 SleepGating <> OP_SLEEP_GATING def
+R3408:3423 SleepGating <> OP_VOLTAGE_GUARD def
+R3440:3454 SleepGating <> OP_SLEEP_GATING def
+R3457:3472 SleepGating <> OP_VOLTAGE_GUARD def
+prf 3492:3531 <> sleep_gating_distinct_from_thermal_guard
+R3552:3555 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3537:3551 SleepGating <> OP_SLEEP_GATING def
+R3556:3571 SleepGating <> OP_THERMAL_GUARD def
+R3588:3602 SleepGating <> OP_SLEEP_GATING def
+R3605:3620 SleepGating <> OP_THERMAL_GUARD def
+prf 3640:3675 <> sleep_gating_distinct_from_cap_boost
+R3696:3699 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3681:3695 SleepGating <> OP_SLEEP_GATING def
+R3700:3711 SleepGating <> OP_CAP_BOOST def
+R3728:3742 SleepGating <> OP_SLEEP_GATING def
+R3745:3756 SleepGating <> OP_CAP_BOOST def
+prf 3776:3812 <> sleep_gating_distinct_from_fbb_active
+R3833:3836 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3818:3832 SleepGating <> OP_SLEEP_GATING def
+R3837:3849 SleepGating <> OP_FBB_ACTIVE def
+R3866:3880 SleepGating <> OP_SLEEP_GATING def
+R3883:3895 SleepGating <> OP_FBB_ACTIVE def
+prf 3915:3944 <> sleep_gating_distinct_from_rbb
+R3965:3968 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3950:3964 SleepGating <> OP_SLEEP_GATING def
+R3969:3974 SleepGating <> OP_RBB def
+R3991:4005 SleepGating <> OP_SLEEP_GATING def
+R4008:4013 SleepGating <> OP_RBB def
+prf 4264:4292 <> sleep_gating_in_extended_bank
+R4331:4334 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4312:4315 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R4298:4311 SleepGating <> SACRED_BANK_LO def
+R4316:4330 SleepGating <> OP_SLEEP_GATING def
+R4350:4353 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R4335:4349 SleepGating <> OP_SLEEP_GATING def
+R4354:4367 SleepGating <> SACRED_BANK_HI def
+R4384:4397 SleepGating <> SACRED_BANK_LO def
+R4400:4414 SleepGating <> OP_SLEEP_GATING def
+R4417:4430 SleepGating <> SACRED_BANK_HI def
+prf 4450:4492 <> sleep_gating_adjacent_to_emergency_shutdown
+R4513:4515 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4498:4512 SleepGating <> OP_SLEEP_GATING def
+R4537:4539 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4516:4536 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R4557:4571 SleepGating <> OP_SLEEP_GATING def
+R4574:4594 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+prf 4614:4639 <> nonuple_decker_consecutive
+R4673:4678 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4660:4662 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4645:4659 SleepGating <> OP_SLEEP_GATING def
+R4669:4671 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4663:4668 SleepGating <> OP_RBB def
+R4705:4710 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4692:4694 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4679:4691 SleepGating <> OP_FBB_ACTIVE def
+R4701:4703 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4695:4700 SleepGating <> OP_RBB def
+R4736:4741 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4723:4725 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4711:4722 SleepGating <> OP_CAP_BOOST def
+R4732:4734 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4726:4731 SleepGating <> OP_RBB def
+R4771:4776 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4758:4760 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4742:4757 SleepGating <> OP_THERMAL_GUARD def
+R4767:4769 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4761:4766 SleepGating <> OP_RBB def
+R4806:4811 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4793:4795 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4777:4792 SleepGating <> OP_VOLTAGE_GUARD def
+R4802:4804 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4796:4801 SleepGating <> OP_RBB def
+R4841:4846 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4828:4830 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4812:4827 SleepGating <> OP_FREQ_THROTTLE def
+R4837:4839 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4831:4836 SleepGating <> OP_RBB def
+R4876:4881 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4863:4865 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4847:4862 SleepGating <> OP_POWER_CAPPING def
+R4872:4874 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4866:4871 SleepGating <> OP_RBB def
+R4903:4905 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4882:4902 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R4912:4914 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4906:4911 SleepGating <> OP_RBB def
+R4941:4955 SleepGating <> OP_SLEEP_GATING def
+R4958:4963 SleepGating <> OP_RBB def
+R4987:4999 SleepGating <> OP_FBB_ACTIVE def
+R5002:5007 SleepGating <> OP_RBB def
+R5031:5042 SleepGating <> OP_CAP_BOOST def
+R5045:5050 SleepGating <> OP_RBB def
+R5074:5089 SleepGating <> OP_THERMAL_GUARD def
+R5092:5097 SleepGating <> OP_RBB def
+R5121:5136 SleepGating <> OP_VOLTAGE_GUARD def
+R5139:5144 SleepGating <> OP_RBB def
+R5168:5183 SleepGating <> OP_FREQ_THROTTLE def
+R5186:5191 SleepGating <> OP_RBB def
+R5215:5230 SleepGating <> OP_POWER_CAPPING def
+R5233:5238 SleepGating <> OP_RBB def
+R5255:5275 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R5278:5283 SleepGating <> OP_RBB def
+def 5585:5598 <> power_sleep_mW
+R5602:5602 Corelib.Numbers.BinNums <> Z ind
+def 5647:5659 <> power_idle_mW
+R5664:5664 Corelib.Numbers.BinNums <> Z ind
+def 5709:5723 <> power_active_mW
+R5727:5727 Corelib.Numbers.BinNums <> Z ind
+def 5775:5790 <> delta_P_sleep_mW
+R5794:5794 Corelib.Numbers.BinNums <> Z ind
+R5812:5814 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R5799:5811 SleepGating <> power_idle_mW def
+R5815:5828 SleepGating <> power_sleep_mW def
+def 5888:5905 <> sleep_active_ratio
+R5909:5909 Corelib.Numbers.BinNums <> Z ind
+def 5959:5975 <> idle_active_ratio
+R5979:5979 Corelib.Numbers.BinNums <> Z ind
+def 6067:6086 <> sleep_wakeup_time_us
+R6090:6090 Corelib.Numbers.BinNums <> Z ind
+def 6142:6160 <> sleep_entry_time_us
+R6166:6166 Corelib.Numbers.BinNums <> Z ind
+prf 6479:6498 <> delta_P_sleep_is_9mW
+R6518:6520 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6502:6517 SleepGating <> delta_P_sleep_mW def
+R6538:6553 SleepGating <> delta_P_sleep_mW def
+R6556:6568 SleepGating <> power_idle_mW def
+R6571:6584 SleepGating <> power_sleep_mW def
+prf 6653:6674 <> power_sleep_below_idle
+R6694:6696 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6680:6693 SleepGating <> power_sleep_mW def
+R6697:6709 SleepGating <> power_idle_mW def
+R6726:6739 SleepGating <> power_sleep_mW def
+R6742:6754 SleepGating <> power_idle_mW def
+prf 6823:6845 <> power_idle_below_active
+R6864:6866 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6851:6863 SleepGating <> power_idle_mW def
+R6867:6881 SleepGating <> power_active_mW def
+R6898:6910 SleepGating <> power_idle_mW def
+R6913:6927 SleepGating <> power_active_mW def
+prf 6989:7010 <> delta_P_sleep_positive
+R7030:7032 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R7014:7029 SleepGating <> delta_P_sleep_mW def
+R7052:7067 SleepGating <> delta_P_sleep_mW def
+R7070:7082 SleepGating <> power_idle_mW def
+R7085:7098 SleepGating <> power_sleep_mW def
+prf 7157:7174 <> power_sleep_is_1mW
+R7192:7194 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7178:7191 SleepGating <> power_sleep_mW def
+R7212:7225 SleepGating <> power_sleep_mW def
+prf 7290:7307 <> power_idle_is_10mW
+R7324:7326 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7311:7323 SleepGating <> power_idle_mW def
+R7345:7357 SleepGating <> power_idle_mW def
+prf 7431:7452 <> power_active_is_1000mW
+R7471:7473 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7456:7470 SleepGating <> power_active_mW def
+R7494:7508 SleepGating <> power_active_mW def
+prf 7581:7606 <> sacred_bank_size_preserved
+R7626:7628 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7610:7625 SleepGating <> SACRED_BANK_SIZE def
+R7647:7662 SleepGating <> SACRED_BANK_SIZE def
+prf 7741:7763 <> nonuple_decker_sequence
+R7781:7786 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7775:7777 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7769:7774 SleepGating <> OP_RBB def
+R7806:7811 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7800:7802 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7787:7799 SleepGating <> OP_FBB_ACTIVE def
+R7830:7835 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7824:7826 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7812:7823 SleepGating <> OP_CAP_BOOST def
+R7858:7863 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7852:7854 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7836:7851 SleepGating <> OP_THERMAL_GUARD def
+R7886:7891 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7880:7882 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7864:7879 SleepGating <> OP_VOLTAGE_GUARD def
+R7914:7919 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7908:7910 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7892:7907 SleepGating <> OP_FREQ_THROTTLE def
+R7942:7947 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7936:7938 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7920:7935 SleepGating <> OP_POWER_CAPPING def
+R7975:7980 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7969:7971 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7948:7968 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R7996:7998 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7981:7995 SleepGating <> OP_SLEEP_GATING def
+R8027:8032 SleepGating <> OP_RBB def
+R8064:8076 SleepGating <> OP_FBB_ACTIVE def
+R8108:8119 SleepGating <> OP_CAP_BOOST def
+R8151:8166 SleepGating <> OP_THERMAL_GUARD def
+R8198:8213 SleepGating <> OP_VOLTAGE_GUARD def
+R8245:8260 SleepGating <> OP_FREQ_THROTTLE def
+R8292:8307 SleepGating <> OP_POWER_CAPPING def
+R8339:8359 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R8384:8398 SleepGating <> OP_SLEEP_GATING def
+prf 8467:8494 <> sleep_is_0pt1_percent_active
+R8506:8508 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8499:8501 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 8581:8599 <> wakeup_time_is_10us
+R8623:8625 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8603:8622 SleepGating <> sleep_wakeup_time_us def
+R8644:8663 SleepGating <> sleep_wakeup_time_us def
+prf 8731:8747 <> entry_time_is_5us
+R8770:8772 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8751:8769 SleepGating <> sleep_entry_time_us def
+R8790:8808 SleepGating <> sleep_entry_time_us def
+prf 8908:8937 <> wakeup_time_greater_than_entry
+R8963:8965 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8943:8962 SleepGating <> sleep_wakeup_time_us def
+R8966:8984 SleepGating <> sleep_entry_time_us def
+R9003:9022 SleepGating <> sleep_wakeup_time_us def
+R9025:9043 SleepGating <> sleep_entry_time_us def
+prf 9114:9135 <> sleep_saving_vs_active
+R9173:9175 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9156:9158 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R9141:9155 SleepGating <> power_active_mW def
+R9159:9172 SleepGating <> power_sleep_mW def
+R9197:9211 SleepGating <> power_active_mW def
+R9214:9227 SleepGating <> power_sleep_mW def
+prf 9542:9563 <> sleep_gating_composite
+R9590:9595 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9584:9586 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9569:9583 SleepGating <> OP_SLEEP_GATING def
+R9614:9619 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9610:9612 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9596:9609 SleepGating <> power_sleep_mW def
+R9638:9643 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9633:9635 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9620:9632 SleepGating <> power_idle_mW def
+R9666:9671 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9659:9661 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9644:9658 SleepGating <> power_active_mW def
+R9692:9697 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9688:9690 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9672:9687 SleepGating <> delta_P_sleep_mW def
+R9728:9733 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9712:9714 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R9698:9711 SleepGating <> power_sleep_mW def
+R9715:9727 SleepGating <> power_idle_mW def
+R9765:9770 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9747:9749 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R9734:9746 SleepGating <> power_idle_mW def
+R9750:9764 SleepGating <> power_active_mW def
+R9791:9796 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9787:9789 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R9771:9786 SleepGating <> delta_P_sleep_mW def
+R9840:9845 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9812:9814 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9797:9811 SleepGating <> OP_SLEEP_GATING def
+R9836:9838 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9815:9835 SleepGating <> OP_EMERGENCY_SHUTDOWN def
+R9874:9879 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9861:9863 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9846:9860 SleepGating <> OP_SLEEP_GATING def
+R9870:9872 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9864:9869 SleepGating <> OP_RBB def
+R9896:9898 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9880:9895 SleepGating <> SACRED_BANK_SIZE def
+R9926:9940 SleepGating <> OP_SLEEP_GATING def
+R9971:9988 SleepGating <> power_sleep_is_1mW thm
+R9971:9988 SleepGating <> power_sleep_is_1mW thm
+R10006:10023 SleepGating <> power_idle_is_10mW thm
+R10006:10023 SleepGating <> power_idle_is_10mW thm
+R10041:10062 SleepGating <> power_active_is_1000mW thm
+R10041:10062 SleepGating <> power_active_is_1000mW thm
+R10080:10099 SleepGating <> delta_P_sleep_is_9mW thm
+R10080:10099 SleepGating <> delta_P_sleep_is_9mW thm
+R10117:10138 SleepGating <> power_sleep_below_idle thm
+R10117:10138 SleepGating <> power_sleep_below_idle thm
+R10156:10178 SleepGating <> power_idle_below_active thm
+R10156:10178 SleepGating <> power_idle_below_active thm
+R10196:10217 SleepGating <> delta_P_sleep_positive thm
+R10196:10217 SleepGating <> delta_P_sleep_positive thm
+R10235:10277 SleepGating <> sleep_gating_adjacent_to_emergency_shutdown thm
+R10235:10277 SleepGating <> sleep_gating_adjacent_to_emergency_shutdown thm
+R10296:10310 SleepGating <> OP_SLEEP_GATING def
+R10313:10318 SleepGating <> OP_RBB def
+R10335:10350 SleepGating <> SACRED_BANK_SIZE def

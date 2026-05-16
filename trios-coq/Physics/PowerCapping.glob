@@ -1,0 +1,290 @@
+DIGEST e00fb8a6d2a27b01b15f32eb8e1b4a31
+FPowerCapping
+R1482:1498 Stdlib.ZArith.ZArith <> <> lib
+R1516:1532 Stdlib.micromega.Lia <> <> lib
+def 1799:1814 <> OP_POWER_CAPPING
+def 1943:1958 <> OP_FREQ_THROTTLE
+def 2000:2015 <> OP_VOLTAGE_GUARD
+def 2058:2073 <> OP_THERMAL_GUARD
+def 2116:2127 <> OP_CAP_BOOST
+def 2174:2186 <> OP_FBB_ACTIVE
+def 2232:2237 <> OP_RBB
+def 2357:2370 <> SACRED_BANK_LO
+def 2405:2418 <> SACRED_BANK_HI
+def 2453:2468 <> SACRED_BANK_SIZE
+prf 2716:2756 <> power_capping_distinct_from_freq_throttle
+R2778:2781 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2762:2777 PowerCapping <> OP_POWER_CAPPING def
+R2782:2797 PowerCapping <> OP_FREQ_THROTTLE def
+R2814:2829 PowerCapping <> OP_POWER_CAPPING def
+R2832:2847 PowerCapping <> OP_FREQ_THROTTLE def
+prf 2867:2907 <> power_capping_distinct_from_voltage_guard
+R2929:2932 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2913:2928 PowerCapping <> OP_POWER_CAPPING def
+R2933:2948 PowerCapping <> OP_VOLTAGE_GUARD def
+R2965:2980 PowerCapping <> OP_POWER_CAPPING def
+R2983:2998 PowerCapping <> OP_VOLTAGE_GUARD def
+prf 3018:3058 <> power_capping_distinct_from_thermal_guard
+R3080:3083 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3064:3079 PowerCapping <> OP_POWER_CAPPING def
+R3084:3099 PowerCapping <> OP_THERMAL_GUARD def
+R3116:3131 PowerCapping <> OP_POWER_CAPPING def
+R3134:3149 PowerCapping <> OP_THERMAL_GUARD def
+prf 3169:3205 <> power_capping_distinct_from_cap_boost
+R3227:3230 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3211:3226 PowerCapping <> OP_POWER_CAPPING def
+R3231:3242 PowerCapping <> OP_CAP_BOOST def
+R3259:3274 PowerCapping <> OP_POWER_CAPPING def
+R3277:3288 PowerCapping <> OP_CAP_BOOST def
+prf 3308:3345 <> power_capping_distinct_from_fbb_active
+R3367:3370 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3351:3366 PowerCapping <> OP_POWER_CAPPING def
+R3371:3383 PowerCapping <> OP_FBB_ACTIVE def
+R3400:3415 PowerCapping <> OP_POWER_CAPPING def
+R3418:3430 PowerCapping <> OP_FBB_ACTIVE def
+prf 3450:3480 <> power_capping_distinct_from_rbb
+R3502:3505 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3486:3501 PowerCapping <> OP_POWER_CAPPING def
+R3506:3511 PowerCapping <> OP_RBB def
+R3528:3543 PowerCapping <> OP_POWER_CAPPING def
+R3546:3551 PowerCapping <> OP_RBB def
+prf 3802:3831 <> power_capping_in_extended_bank
+R3871:3874 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3851:3854 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3837:3850 PowerCapping <> SACRED_BANK_LO def
+R3855:3870 PowerCapping <> OP_POWER_CAPPING def
+R3891:3894 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R3875:3890 PowerCapping <> OP_POWER_CAPPING def
+R3895:3908 PowerCapping <> SACRED_BANK_HI def
+R3925:3938 PowerCapping <> SACRED_BANK_LO def
+R3941:3956 PowerCapping <> OP_POWER_CAPPING def
+R3959:3972 PowerCapping <> SACRED_BANK_HI def
+prf 3992:4030 <> power_capping_adjacent_to_freq_throttle
+R4052:4054 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4036:4051 PowerCapping <> OP_POWER_CAPPING def
+R4071:4073 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4055:4070 PowerCapping <> OP_FREQ_THROTTLE def
+R4091:4106 PowerCapping <> OP_POWER_CAPPING def
+R4109:4124 PowerCapping <> OP_FREQ_THROTTLE def
+prf 4144:4170 <> septuple_decker_consecutive
+R4205:4210 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4192:4194 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4176:4191 PowerCapping <> OP_POWER_CAPPING def
+R4201:4203 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4195:4200 PowerCapping <> OP_RBB def
+R4237:4242 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4224:4226 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4211:4223 PowerCapping <> OP_FBB_ACTIVE def
+R4233:4235 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4227:4232 PowerCapping <> OP_RBB def
+R4268:4273 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4255:4257 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4243:4254 PowerCapping <> OP_CAP_BOOST def
+R4264:4266 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4258:4263 PowerCapping <> OP_RBB def
+R4303:4308 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4290:4292 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4274:4289 PowerCapping <> OP_THERMAL_GUARD def
+R4299:4301 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4293:4298 PowerCapping <> OP_RBB def
+R4338:4343 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4325:4327 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4309:4324 PowerCapping <> OP_VOLTAGE_GUARD def
+R4334:4336 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4328:4333 PowerCapping <> OP_RBB def
+R4360:4362 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4344:4359 PowerCapping <> OP_FREQ_THROTTLE def
+R4369:4371 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4363:4368 PowerCapping <> OP_RBB def
+R4398:4413 PowerCapping <> OP_POWER_CAPPING def
+R4416:4421 PowerCapping <> OP_RBB def
+R4445:4457 PowerCapping <> OP_FBB_ACTIVE def
+R4460:4465 PowerCapping <> OP_RBB def
+R4489:4500 PowerCapping <> OP_CAP_BOOST def
+R4503:4508 PowerCapping <> OP_RBB def
+R4532:4547 PowerCapping <> OP_THERMAL_GUARD def
+R4550:4555 PowerCapping <> OP_RBB def
+R4579:4594 PowerCapping <> OP_VOLTAGE_GUARD def
+R4597:4602 PowerCapping <> OP_RBB def
+R4619:4634 PowerCapping <> OP_FREQ_THROTTLE def
+R4637:4642 PowerCapping <> OP_RBB def
+def 4944:4955 <> power_TDP_dW
+R4959:4959 Corelib.Numbers.BinNums <> Z ind
+def 5003:5019 <> power_guard_lo_dW
+R5023:5023 Corelib.Numbers.BinNums <> Z ind
+def 5065:5081 <> power_guard_hi_dW
+R5085:5085 Corelib.Numbers.BinNums <> Z ind
+def 5129:5142 <> delta_P_cap_dW
+R5146:5146 Corelib.Numbers.BinNums <> Z ind
+R5163:5165 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R5151:5162 PowerCapping <> power_TDP_dW def
+R5166:5182 PowerCapping <> power_guard_lo_dW def
+def 5248:5255 <> P_CAP_DW
+R5261:5261 Corelib.Numbers.BinNums <> Z ind
+def 5321:5334 <> P_TOLERANCE_dW
+R5338:5338 Corelib.Numbers.BinNums <> Z ind
+prf 5668:5685 <> delta_P_cap_is_10W
+R5703:5705 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5689:5702 PowerCapping <> delta_P_cap_dW def
+R5725:5738 PowerCapping <> delta_P_cap_dW def
+R5741:5752 PowerCapping <> power_TDP_dW def
+R5755:5771 PowerCapping <> power_guard_lo_dW def
+prf 5837:5860 <> power_guard_lo_below_TDP
+R5883:5885 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R5866:5882 PowerCapping <> power_guard_lo_dW def
+R5886:5897 PowerCapping <> power_TDP_dW def
+R5914:5930 PowerCapping <> power_guard_lo_dW def
+R5933:5944 PowerCapping <> power_TDP_dW def
+prf 6010:6033 <> power_TDP_below_guard_hi
+R6051:6053 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6039:6050 PowerCapping <> power_TDP_dW def
+R6054:6070 PowerCapping <> power_guard_hi_dW def
+R6087:6098 PowerCapping <> power_TDP_dW def
+R6101:6117 PowerCapping <> power_guard_hi_dW def
+prf 6204:6223 <> power_envelope_valid
+R6261:6264 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R6246:6248 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6229:6245 PowerCapping <> power_guard_lo_dW def
+R6249:6260 PowerCapping <> power_TDP_dW def
+R6277:6279 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6265:6276 PowerCapping <> power_TDP_dW def
+R6280:6296 PowerCapping <> power_guard_hi_dW def
+R6322:6345 PowerCapping <> power_guard_lo_below_TDP thm
+R6355:6378 PowerCapping <> power_TDP_below_guard_hi thm
+R6322:6345 PowerCapping <> power_guard_lo_below_TDP thm
+R6355:6378 PowerCapping <> power_TDP_below_guard_hi thm
+prf 6463:6481 <> power_tolerance_20W
+R6487:6487 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6525:6528 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6505:6507 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R6488:6504 PowerCapping <> power_guard_hi_dW def
+R6508:6524 PowerCapping <> power_guard_lo_dW def
+R6550:6566 PowerCapping <> power_guard_hi_dW def
+R6569:6585 PowerCapping <> power_guard_lo_dW def
+prf 6664:6683 <> delta_P_cap_positive
+R6701:6703 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R6687:6700 PowerCapping <> delta_P_cap_dW def
+R6723:6736 PowerCapping <> delta_P_cap_dW def
+R6739:6750 PowerCapping <> power_TDP_dW def
+R6753:6769 PowerCapping <> power_guard_lo_dW def
+prf 6838:6855 <> power_TDP_centered
+R6877:6879 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6873:6875 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6861:6872 PowerCapping <> power_TDP_dW def
+R6897:6899 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6880:6896 PowerCapping <> power_guard_lo_dW def
+R6900:6916 PowerCapping <> power_guard_hi_dW def
+R6935:6946 PowerCapping <> power_TDP_dW def
+R6949:6965 PowerCapping <> power_guard_lo_dW def
+R6968:6984 PowerCapping <> power_guard_hi_dW def
+prf 7051:7076 <> sacred_bank_size_preserved
+R7096:7098 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7080:7095 PowerCapping <> SACRED_BANK_SIZE def
+R7117:7132 PowerCapping <> SACRED_BANK_SIZE def
+prf 7212:7235 <> septuple_decker_sequence
+R7253:7258 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7247:7249 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7241:7246 PowerCapping <> OP_RBB def
+R7278:7283 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7272:7274 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7259:7271 PowerCapping <> OP_FBB_ACTIVE def
+R7302:7307 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7296:7298 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7284:7295 PowerCapping <> OP_CAP_BOOST def
+R7330:7335 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7324:7326 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7308:7323 PowerCapping <> OP_THERMAL_GUARD def
+R7358:7363 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7352:7354 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7336:7351 PowerCapping <> OP_VOLTAGE_GUARD def
+R7386:7391 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7380:7382 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7364:7379 PowerCapping <> OP_FREQ_THROTTLE def
+R7408:7410 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7392:7407 PowerCapping <> OP_POWER_CAPPING def
+R7439:7444 PowerCapping <> OP_RBB def
+R7476:7488 PowerCapping <> OP_FBB_ACTIVE def
+R7520:7531 PowerCapping <> OP_CAP_BOOST def
+R7563:7578 PowerCapping <> OP_THERMAL_GUARD def
+R7610:7625 PowerCapping <> OP_VOLTAGE_GUARD def
+R7657:7672 PowerCapping <> OP_FREQ_THROTTLE def
+R7697:7712 PowerCapping <> OP_POWER_CAPPING def
+prf 7794:7815 <> delta_P_cap_percentage
+R7829:7831 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7824:7826 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 7911:7934 <> power_tolerance_in_range
+R7957:7962 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7950:7953 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R7944:7946 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R7973:7976 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R7967:7969 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+prf 8063:8082 <> power_envelope_width
+R8125:8127 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8105:8107 Stdlib.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R8088:8104 PowerCapping <> power_guard_hi_dW def
+R8108:8124 PowerCapping <> power_guard_lo_dW def
+R8149:8165 PowerCapping <> power_guard_hi_dW def
+R8168:8184 PowerCapping <> power_guard_lo_dW def
+prf 8243:8259 <> power_TDP_is_100W
+R8275:8277 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8263:8274 PowerCapping <> power_TDP_dW def
+R8298:8309 PowerCapping <> power_TDP_dW def
+prf 8376:8391 <> delta_P_cap_in_W
+R8402:8404 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8397:8399 Stdlib.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+prf 8727:8749 <> power_capping_composite
+R8777:8782 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8771:8773 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8755:8770 PowerCapping <> OP_POWER_CAPPING def
+R8802:8807 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8795:8797 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8783:8794 PowerCapping <> power_TDP_dW def
+R8831:8836 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8825:8827 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8808:8824 PowerCapping <> power_guard_lo_dW def
+R8861:8866 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8854:8856 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8837:8853 PowerCapping <> power_guard_hi_dW def
+R8887:8892 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8881:8883 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8867:8880 PowerCapping <> delta_P_cap_dW def
+R8925:8930 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8910:8912 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8893:8909 PowerCapping <> power_guard_lo_dW def
+R8913:8924 PowerCapping <> power_TDP_dW def
+R8963:8968 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8943:8945 Stdlib.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R8931:8942 PowerCapping <> power_TDP_dW def
+R8946:8962 PowerCapping <> power_guard_hi_dW def
+R8987:8992 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R8983:8985 Stdlib.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8969:8982 PowerCapping <> delta_P_cap_dW def
+R9032:9037 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9009:9011 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R8993:9008 PowerCapping <> OP_POWER_CAPPING def
+R9028:9030 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9012:9027 PowerCapping <> OP_FREQ_THROTTLE def
+R9067:9072 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R9054:9056 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9038:9053 PowerCapping <> OP_POWER_CAPPING def
+R9063:9065 Stdlib.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9057:9062 PowerCapping <> OP_RBB def
+R9089:9091 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R9073:9088 PowerCapping <> SACRED_BANK_SIZE def
+R9119:9134 PowerCapping <> OP_POWER_CAPPING def
+R9166:9177 PowerCapping <> power_TDP_dW def
+R9209:9225 PowerCapping <> power_guard_lo_dW def
+R9257:9273 PowerCapping <> power_guard_hi_dW def
+R9304:9321 PowerCapping <> delta_P_cap_is_10W thm
+R9304:9321 PowerCapping <> delta_P_cap_is_10W thm
+R9339:9362 PowerCapping <> power_guard_lo_below_TDP thm
+R9339:9362 PowerCapping <> power_guard_lo_below_TDP thm
+R9380:9403 PowerCapping <> power_TDP_below_guard_hi thm
+R9380:9403 PowerCapping <> power_TDP_below_guard_hi thm
+R9421:9440 PowerCapping <> delta_P_cap_positive thm
+R9421:9440 PowerCapping <> delta_P_cap_positive thm
+R9458:9496 PowerCapping <> power_capping_adjacent_to_freq_throttle thm
+R9458:9496 PowerCapping <> power_capping_adjacent_to_freq_throttle thm
+R9515:9530 PowerCapping <> OP_POWER_CAPPING def
+R9533:9538 PowerCapping <> OP_RBB def
+R9555:9570 PowerCapping <> SACRED_BANK_SIZE def
