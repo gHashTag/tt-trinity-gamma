@@ -49,14 +49,17 @@ module bitnet_encoder (
         integer i;
         reg [1:0] xe, we;
         reg signed [15:0] acc;
+        reg [15:0] temp;
         begin
             acc = 0;
             for (i = 0; i < 64; i = i + 1) begin
-                xe = x[2*i +: 2];
+                // Verilog-2005 compatible: extract 2 bits using shift and mask
+                temp = x >> (i * 2);
+                xe = temp[1:0];
                 we = w_gen(neuron_base + i[5:0]);
                 if (!xe[1] && !we[1]) begin
-                    if (xe[0] == we[0]) acc = acc + 16'sd1;
-                    else                acc = acc - 16'sd1;
+                    if (xe[0] == we[0]) acc = acc + 1;
+                    else                acc = acc - 1;
                 end
             end
             ternary_dot = acc;
@@ -86,7 +89,7 @@ module bitnet_encoder (
                     2'd0: begin
                         // Layer 1: compute all 32 hidden activations
                         for (k = 0; k < 32; k = k + 1) begin
-                            dot = ternary_dot(x_reg, 10'(k * 64));
+                            dot = ternary_dot(x_reg, k * 64);
                             h1[k] <= dot;
                         end
                         stage <= 2'd1;
@@ -97,11 +100,21 @@ module bitnet_encoder (
                         for (j = 0; j < 8; j = j + 1) begin
                             dot = 0;
                             for (k = 0; k < 32; k = k + 1) begin
-                                if (h1[k][15]) dot = dot - 16'sd1;
-                                else if (|h1[k]) dot = dot + 16'sd1;
+                                if (h1[k][15]) dot = dot - 1;
+                                else if (|h1[k]) dot = dot + 1;
                             end
                             y_acc[j] <= dot;
-                            y_out[8*j +: 8] <= dot[7:0];
+                            // Verilog-2005 compatible: assign byte by byte
+                            case (j)
+                                3'd0: y_out[7:0]   <= dot[7:0];
+                                3'd1: y_out[15:8]  <= dot[7:0];
+                                3'd2: y_out[23:16] <= dot[7:0];
+                                3'd3: y_out[31:24] <= dot[7:0];
+                                3'd4: y_out[39:32] <= dot[7:0];
+                                3'd5: y_out[47:40] <= dot[7:0];
+                                3'd6: y_out[55:48] <= dot[7:0];
+                                3'd7: y_out[63:56] <= dot[7:0];
+                            endcase
                         end
                         stage <= 2'd2;
                     end
