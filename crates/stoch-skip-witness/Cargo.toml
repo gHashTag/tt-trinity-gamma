@@ -1,0 +1,10 @@
+[package]
+name = "stoch-skip-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Stochastic time-skip witness for Wave 44 (W-107-G)"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+
+[lib]
+path = "src/lib.rs"

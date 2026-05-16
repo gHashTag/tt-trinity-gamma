@@ -23,5 +23,6 @@ members = [
     "crates/moe-router-witness",
     "crates/int2-quant-witness",
     "crates/rbb-witness",
+    "crates/stoch-skip-witness",
 ]
 resolver = "2"
