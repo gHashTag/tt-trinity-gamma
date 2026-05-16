@@ -520,8 +520,35 @@ module tt_um_trinity_max_true (
 
     assign uo_out  = crown_mode ? crown_byte_raw
                                 : (final_result[7:0]  | input_echo[7:0]);
+    // ==================================================================
+    // CLARA Gap-1: redteam_filter — 5 adversarial detectors (DARPA TA1)
+    // Wired minimally for observability; filter_block routed to uio[2].
+    // Inputs are derived from the last captured input_echo packet:
+    //   reported_fuel  = input_echo[15:8]  (last uio_in byte)
+    //   actual_fuel    = input_echo[7:0]   (last ui_in byte)
+    //   action_history = 64-bit replicated echo for demo (benign baseline)
+    //   timeline_offset= input_echo[7:0]   (same byte, signed interpretation)
+    //   compute_demand = input_echo[15:8]  (upper byte)
+    //   proof_trace_len= input_echo[11:8]  (4-bit nibble)
+    // filter_block is OBSERVABILITY ONLY — does NOT block computation.
+    // R-SI-1 clean. ~250 cells. DOI 10.5281/zenodo.19227877.
+    // ==================================================================
+    wire [4:0] redteam_attack;
+    wire       redteam_block;
+    redteam_filter u_redteam (
+        .reported_fuel   (input_echo[15:8]),
+        .actual_fuel     (input_echo[7:0]),
+        .action_history  ({input_echo, input_echo, input_echo, input_echo}),
+        .timeline_offset (input_echo[7:0]),
+        .compute_demand  (input_echo[15:8]),
+        .proof_trace_len (input_echo[11:8]),
+        .attack_detected (redteam_attack),
+        .filter_block    (redteam_block)
+    );
+
     // uio[7:4] keeps legacy mux; uio[3:0] carries TRI NET friend/foe.
-    assign uio_out = {uio_legacy[7:4], ff_valid, ff_friend, 1'b0, ff_tx};
+    // uio[2] repurposed: 0 in old design → redteam_block (CLARA Gap-1 debug)
+    assign uio_out = {uio_legacy[7:4], ff_valid, ff_friend, redteam_block, ff_tx};
     // uio[1] is RX bit (input); all others output.
     assign uio_oe  = 8'b1111_1101;
 
@@ -546,6 +573,7 @@ module tt_um_trinity_max_true (
                      nca_in_band, nca_popcount,
                      seed_safe, seed_replaced,
                      phi_dist[14:0],
+                     redteam_attack,
                      ui_in[7:4], 1'b0};
 
 endmodule
