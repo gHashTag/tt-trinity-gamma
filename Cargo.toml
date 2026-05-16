@@ -27,5 +27,6 @@ members = [
     "crates/stoch-skip-witness",
     "crates/avs96-witness",
     "crates/cap-boost-witness",
+    "crates/purkinje-thermal-witness",
 ]
 resolver = "2"

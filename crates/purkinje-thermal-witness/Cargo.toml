@@ -1,0 +1,7 @@
+[package]
+name = "purkinje-thermal-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+description = "Wave-46 purkinje thermal gating witness (W-109-G). phi^2 + phi^-2 = 3"
