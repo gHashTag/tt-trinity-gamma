@@ -37,7 +37,7 @@ module GF128 {
 
     struct GF128 {
         low  : u64,  // Lower 64 bits (mantissa bits 0-63)
-        high : u64,  // Upper 64 bits [sign(1) exp(28) mant(35)]
+        high : u64,  // Upper 64 bits [sign(1) exp(48) mant(15)]
     }
 
     // 3. Encoding/Decoding
@@ -301,11 +301,11 @@ module GF128 {
     invariant gf128_sign_bits_is_one
         assert SIGN_BITS == 1
 
-    invariant gf128_exp_bits_is_twenty_eight
-        assert EXP_BITS == 28
+    invariant gf128_exp_bits_is_forty_eight
+        assert EXP_BITS == 48
 
-    invariant gf128_mant_bits_is_ninety_nine
-        assert MANT_BITS == 99
+    invariant gf128_mant_bits_is_seventy_nine
+        assert MANT_BITS == 79
 
     invariant gf128_max_ge_min_positive
         assert max_value() >= min_positive()
@@ -316,8 +316,8 @@ module GF128 {
     invariant gf128_exp_bias_positive
         assert EXP_BIAS > 0
 
-    invariant gf128_exp_bias_is_134217727
-        assert EXP_BIAS == 134217727
+    invariant gf128_exp_bias_is_140737488355327
+        assert EXP_BIAS == 140737488355327
 
     invariant gf128_extended_range_mode_true
         assert EXTENDED_RANGE_MODE == true
@@ -328,9 +328,9 @@ module GF128 {
     invariant gf128_epsilon_less_than_min_positive
         assert epsilon() <= min_positive()
 
-    invariant gf128_exp_mant_ratio_is_extended
+    invariant gf128_exp_mant_ratio_is_phi_approx
         given ratio = (EXP_BITS as f64) / (MANT_BITS as f64)
-        then abs(ratio - 0.283) < 0.01
+        then abs(ratio - 0.608) < 0.01
 
     invariant gf128_high_low_consistency
         given gf = GF128{ .low = 0xFFFFFFFFFFFFFFFF, .high = 0x7FFFFFFFF }
