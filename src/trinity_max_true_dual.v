@@ -85,31 +85,22 @@ module trinity_max_true_dual (
     );
 
     // ------------------------------------------------------------------
-    // Cluster B replaced by holo_lut_pe (Platinum MST LUT PE, L-DPC25 V)
-    // 5-trit input drawn from host_in_pkt[9:0]; output folded into dbg
-    // mix so synth keeps the PE. Packet-bus c1_* signals tied off safely.
+    // Cluster B (16 cells)
     // ------------------------------------------------------------------
-    wire [9:0] holo_trit_idx = host_in_pkt[9:0];
-    wire       holo_oob;
-    wire [7:0] holo_result;
-
-    holo_lut_pe u_holo (
-        .clk_i      (clk),
-        .rst_ni     (rst_n),
-        .trit_idx_i (holo_trit_idx),
-        .oob_o      (holo_oob),
-        .result_o   (holo_result)
+    trinity_quad_mesh u_cluster_b (
+        .clk             (clk),
+        .rst_n           (rst_n),
+        .host_in_pkt     (host_in_pkt),
+        .host_in_valid   (c1_valid),
+        .host_in_ready   (c1_ready),
+        .host_out_pkt    (c1_out_pkt),
+        .host_out_valid  (c1_out_valid),
+        .host_out_ready  (c1_out_ready),
+        .dbg_tile0_result(c1_dbg)
     );
 
-    // Cluster B packet-bus signals tied off (host never targets cluster_sel=1
-    // when holo PE is mapped here; if it does, ready=1 + valid=0 drops packet).
-    assign c1_ready     = 1'b1;
-    assign c1_out_pkt   = {`TRN_PKT_W{1'b0}};
-    assign c1_out_valid = 1'b0;
-    assign c1_dbg       = {8'h00, holo_result};
+    assign dbg_tile0_result = c0_dbg;
 
-    assign dbg_tile0_result = c0_dbg ^ {8'h00, holo_result};
-
-    wire _unused_dual = &{1'b0, c1_dbg, holo_oob, 1'b0};
+    wire _unused_dual = &{1'b0, c1_dbg, 1'b0};
 
 endmodule

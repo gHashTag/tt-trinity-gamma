@@ -94,7 +94,6 @@ project:
     - "nca_entropy_monitor.v"
     - "strobe_seed_guard.v"
     - "phi_distance_oracle.v"
-    - "holo_lut_pe.sv"
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"
