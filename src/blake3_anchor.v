@@ -76,7 +76,8 @@ module blake3_anchor (
                 v[8]  <= IV0; v[9]  <= IV1; v[10] <= IV2; v[11] <= IV3;
                 v[12] <= 32'b0; v[13] <= 32'b0; v[14] <= 32'b0; v[15] <= 32'b0;
                 for (i = 0; i < 16; i = i + 1)
-                    m[i] <= m_in[32*i +: 32];
+                    // Verilog-2005 compatible: extract 32 bits using shift and mask
+                    m[i] <= (m_in >> (i * 32)) & 32'hFFFFFFFF;
                 round <= 3'd0;
                 step  <= 4'd0;
                 busy  <= 1'b1;

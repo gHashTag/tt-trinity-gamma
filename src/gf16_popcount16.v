@@ -39,8 +39,9 @@ module gf16_popcount16 #(
     genvar k;
     generate
         for (k = 0; k < 16; k = k + 1) begin : gen_decode
-            wire [1:0] ae = a_row[2*k +: 2];
-            wire [1:0] be = b_row[2*k +: 2];
+            // Verilog-2005 compatible: extract 2 bits using shift and mask
+            wire [1:0] ae = (a_row >> (k * 2)) & 2'b11;
+            wire [1:0] be = (b_row >> (k * 2)) & 2'b11;
             wire active = ~ae[1] & ~be[1];
             assign s1_same_comb[k] = active & ~(ae[0] ^ be[0]);
             assign s1_diff_comb[k] = active &  (ae[0] ^ be[0]);
