@@ -15,15 +15,15 @@
 yaml_version: 6
 
 project:
-  title:        "TRI-1 Gamma — Trinity γ-surface 8×4 32-PE softmax mesh"
+  title:        "TRI-1 Gamma — Trinity γ-surface 4×5 20-PE softmax mesh"
   author:       "Dmitrii Vasilev"
   discord:      "ghashtag"
   description:  >
     FLAGSHIP SKU of the TRI-1 Triad (Nano / Mid / MAX-TRUE), W15-TT-E
-    submission (TTSKY26b). 32 honest GF16(2^4) ternary MAC cells
-    arranged as 2 clusters × 4 banks × 4 tiles, each cluster being
-    a trinity_quad_mesh (= 4× trinity_mesh_2x2). Packet routing:
-    lane[3]=cluster, lane[2:1]=bank, dst[27:26]=tile.
+    submission (TTSKY26b). 20 honest GF16(2^4) ternary MAC cells
+    arranged as 1 quad_mesh (4 banks × 4 tiles = 16 PE) + 1 mesh_2x2
+    (1 bank × 4 tiles = 4 PE). Packet routing:
+    lane[3]=cluster (0=quad, 1=mesh_2x2), lane[2:1]=bank, dst[27:26]=tile.
     Carries the FULL Mid SUPER-CROWN module set + 6 PhD-anchored
     monitor singletons = 24 SUPER-CROWN modules total:
     phi_anchor_post, lucas_rom×7 (POST chain), vsa_matmul_8x8 / 16x16,
@@ -51,17 +51,17 @@ project:
   language:     "Verilog"
   clock_hz:     50000000
 
-  # FLAGSHIP footprint = 8×4 TT tiles = 32 TT tiles = 0.7047 mm² Sky130A.
-  # Honestly 2× Mid (8×2 = 16 TT tiles) — no silicon shortcuts.
-  # Largest allowed digital footprint per
-  # https://github.com/TinyTapeout/tt-support-tools/blob/main/tech/sky130A/tile_sizes.yaml
-  tiles:        "8x4"
+  # FLAGSHIP footprint = 4×5 TT tiles = 20 TT tiles = 0.44 mm² Sky130A.
+  # 20 honest GF16 PE = 1× trinity_quad_mesh (16 PE) + 1× trinity_mesh_2x2 (4 PE).
+  # Fitted to TTSKY26b single-design ceiling (max 20 tiles per project).
+  # See https://github.com/TinyTapeout/tt-support-tools/blob/main/tech/sky130A/tile_sizes.yaml
+  tiles:        "4x5"
 
   top_module:   "tt_um_trinity_max_true"
 
   source_files:
     - "tt_um_trinity_max_true.v"
-    - "trinity_max_true_dual.v"
+    - "trinity_max_true_20pe.v"
     - "trinity_quad_mesh.v"
     - "trinity_mesh_2x2.v"
     - "trinity_router_2x2.v"

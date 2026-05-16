@@ -88,8 +88,9 @@ module tt_um_trinity_max_true (
         .rcpt_valid_q    (mesh_rcpt_valid)
     );
 
-    // 2× trinity_quad_mesh = 32 honest GF16 cells (TRUE 2× Mid)
-    trinity_max_true_dual u_dual (
+    // 1× trinity_quad_mesh (16 PE) + 1× trinity_mesh_2x2 (4 PE) = 20 honest GF16 cells
+    // Fitted to TTSKY26b 4x5 = 20-tile single-design ceiling.
+    trinity_max_true_20pe u_20pe (
         .clk             (clk),
         .rst_n           (rst_n),
         .host_in_pkt     (host_in_pkt),
