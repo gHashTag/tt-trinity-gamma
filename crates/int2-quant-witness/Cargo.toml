@@ -1,0 +1,10 @@
+[package]
+name = "int2-quant-witness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "INT2 activation quantization witness for Wave 43 (W-106-G)"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+
+[lib]
+path = "src/lib.rs"

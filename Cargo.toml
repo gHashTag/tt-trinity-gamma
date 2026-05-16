@@ -21,5 +21,6 @@ members = [
     "crates/adiab-rc-witness",
     "crates/node-shrink-witness",
     "crates/moe-router-witness",
+    "crates/int2-quant-witness",
 ]
 resolver = "2"
