@@ -24,8 +24,8 @@ project:
     (cortical_column.v — LIF leaky-integrate-and-fire dynamics with 8-bit
     membrane potential, BitNet b1.58 ternary MLP hidden layer, GF16 dot4
     input projection, sparse PE accumulator; ~500 cells/column = ~4100 total)
-    + 20-PE GF16 mesh (1× trinity_quad_mesh 16 PE + 1× trinity_mesh_2x2 4 PE)
-    + 24 SUPER-CROWN modules (phi_anchor_post, lucas_rom×7, vsa_matmul_8x8,
+    + 20-PE GF16 mesh (1x trinity_quad_mesh 16 PE + 1x trinity_mesh_2x2 4 PE)
+    + 24 SUPER-CROWN modules (phi_anchor_post, lucas_rom x7, vsa_matmul_8x8,
     vsa_matmul_16x16, bitnet_encoder, bpb_counter, blake3_anchor,
     multi_tile_receipt, crc32_receipt, alu9_decoder, ring27_memory, hwrng_lfsr,
     phi_pll_div, wb_status_reg, wishbone_full, trinity_master_fsm,
@@ -33,14 +33,14 @@ project:
     cassini_post, plrm_counter, bpb_lower_bound_guard, nca_entropy_monitor,
     strobe_seed_guard, phi_distance_oracle)
     + D2D holo mesh 4-port N/E/S/W router (d2d_holo_mesh.v — adapted from
-    tt-trinity-holo TTSKY26c lineage; uio[3:0]=TX {w_tx,s_tx,e_tx,n_tx},
-    uio[7:4]=RX inputs; LAYER-FROZEN gate on w_tx per PhD Theorem 36.1 R18)
+    tt-trinity-holo TTSKY26c lineage; uio[3:0]=TX, uio[7:4]=RX inputs;
+    LAYER-FROZEN gate on w_tx per PhD Theorem 36.1 R18)
     + full Crown47 ROM (crown47_rom + crown47_rom_8bit)
     + TRI NET friend/foe handshake (GAMMA anchor 8'h93)
     + FHRR holo_lut_pe (VSA binding, Glava 32).
     TG-TRIAD-X canonical anchor 0x47C0 on {uio_out,uo_out} at reset
     (PhD Theorem 36.1, docs/phd/chapters/flos_70.tex).
-    R-SI-1: zero NEW `*` operators (legacy gf16_mul grandfathered per
+    R-SI-1: zero NEW * operators (legacy gf16_mul grandfathered per
     TRI_NET_SHUTTLE_TRIAD.md Rule 2 / tt-trinity-gf16#4).
     Anchor: phi^2 + phi^-2 = 3. DOI: 10.5281/zenodo.19227877.
     tt-trinity-holo D2D lineage (TTSKY26c, 1x2, r_marker_rom.v).
@@ -49,7 +49,7 @@ project:
   language:     "Verilog"
   clock_hz:     50000000
 
-  # 8x4 TT tiles = 32 tiles = 0.704 mm² Sky130A (MAX footprint).
+  # 8x4 TT tiles = 32 tiles = 0.704 mm2 Sky130A (MAX footprint).
   # Cell budget at 60% util ceiling = ~48000 cells.
   # Estimated: ~4100 (neuromorphic) + ~30000 (existing) = ~34100 total.
   # Valid sky130A tile sizes: 1x1,1x2,2x2,3x2,4x2,6x2,8x2,4x4,6x4,8x4.
@@ -59,7 +59,49 @@ project:
   top_module:   "tt_um_trinity_max_true"
 
   source_files:
-    - "src/*.v"
+    - "tt_um_trinity_max_true.v"
+    - "cortical_column.v"
+    - "trinity_cortex_8col.v"
+    - "d2d_holo_mesh.v"
+    - "trinity_max_true_20pe.v"
+    - "trinity_quad_mesh.v"
+    - "trinity_mesh_2x2.v"
+    - "trinity_router_2x2.v"
+    - "trinity_gf16_tile.v"
+    - "trinity_master_fsm.v"
+    - "gf16_mul.v"
+    - "gf16_add.v"
+    - "gf16_dot4.v"
+    - "gf16_dot8.v"
+    - "gf16_dot4_sparse.v"
+    - "gf16_popcount.v"
+    - "gf16_popcount16.v"
+    - "gf16_mesh_2x2_top.v"
+    - "phi_anchor_post.v"
+    - "lucas_rom.v"
+    - "vsa_matmul_8x8.v"
+    - "vsa_matmul_16x16.v"
+    - "bitnet_encoder.v"
+    - "bpb_counter.v"
+    - "blake3_anchor.v"
+    - "multi_tile_receipt.v"
+    - "crc32_receipt.v"
+    - "alu9_decoder.v"
+    - "ring27_memory.v"
+    - "hwrng_lfsr.v"
+    - "phi_pll_div.v"
+    - "wb_status_reg.v"
+    - "wishbone_full.v"
+    - "trinity_friend_foe.v"
+    - "cassini_post.v"
+    - "plrm_counter.v"
+    - "bpb_lower_bound_guard.v"
+    - "nca_entropy_monitor.v"
+    - "strobe_seed_guard.v"
+    - "phi_distance_oracle.v"
+    - "holo_lut_pe.v"
+    - "crown47_rom.v"
+    - "crown47_rom_8bit.v"
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"
@@ -85,4 +127,4 @@ pinout:
   uio[4]: "D2D n_rx — North RX (input from peer die)"
   uio[5]: "D2D e_rx — East RX (input from peer die)"
   uio[6]: "D2D s_rx — South RX (input from peer die)"
-  uio[7]: "D2D w_rx — West RX (input from peer die) / crown_mode enable when high + load_mode=0"
+  uio[7]: "D2D w_rx (input from peer die) / crown_mode enable when high + load_mode=0"
