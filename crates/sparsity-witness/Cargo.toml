@@ -1,0 +1,13 @@
+[package]
+name = "sparsity-witness"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+license = "Apache-2.0"
+description = "Wave-40 Lane FF'' — 80% mask-based sparsity witness for OP_SPARSE_MASK (chain 0xD0..0xED post-rectification)"
+repository = "https://github.com/gHashTag/tt-trinity-max-true"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
