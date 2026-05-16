@@ -1,0 +1,14 @@
+[package]
+name = "wl-boost-witness"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vasilev Dmitrii <admin@t27.ai>"]
+license = "Apache-2.0"
+description = "Wave-45 Lane KK'' — WORD-LINE BOOST + coupled V_DD reduction witness for OP_WL_BOOST=0xEF"
+
+[lib]
+path = "src/lib.rs"
+
+[[test]]
+name = "opcode"
+path = "tests/opcode.rs"

@@ -17,6 +17,7 @@ members = [
     "crates/drowsy-ret-witness",
     "crates/sparsity-witness",
     "crates/fbb-active-witness",
+    "crates/wl-boost-witness",
     "crates/node-shrink-witness",
 ]
 resolver = "2"
