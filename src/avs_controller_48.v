@@ -58,7 +58,7 @@ module avs_controller_48 (
         begin
             power = 8'd0;
             for (i = 0; i < 16; i = i + 1) begin
-                case (island_sel[2*i +: 2])
+                case ({island_sel[2*i+1], island_sel[2*i]})
                     2'd0: power = power + 8'd5;   // 0.75V: 5 mW
                     2'd1: power = power + 8'd10;  // 0.85V: 10 mW
                     2'd2: power = power + 8'd20;  // 0.95V: 20 mW

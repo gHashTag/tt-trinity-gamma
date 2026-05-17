@@ -141,21 +141,29 @@ module avs_controller_96 (
                 for (i = 0; i < 16; i = i + 1) begin
                     if (global_therm >= TEMP_CRIT) begin
                         // Emergency: minimum voltage
-                        voltage_level[(j*16+i)*2 +: 2] <= 2'b00;  // 0.75V
+                        voltage_level[(j*16+i)*2+1] <= 1'b0;
+                        voltage_level[(j*16+i)*2]   <= 1'b0;  // 0.75V
                     end else if (global_therm >= TEMP_WARNING) begin
                         // Thermal warning: reduce voltage
-                        if (voltage_level[(j*16+i)*2 +: 2] > 2'b01)
-                            voltage_level[(j*16+i)*2 +: 2] <= 2'b01;  // 0.85V
+                        if ({voltage_level[(j*16+i)*2+1], voltage_level[(j*16+i)*2]} > 2'b01) begin
+                            voltage_level[(j*16+i)*2+1] <= 1'b0;
+                            voltage_level[(j*16+i)*2]   <= 1'b1;  // 0.85V
+                        end
                     end else begin
                         // Normal operation: based on power demand
-                        if (power_req[j*16 + i] < POWER_LOW)
-                            voltage_level[(j*16+i)*2 +: 2] <= 2'b00;  // 0.75V
-                        else if (power_req[j*16 + i] < POWER_MED)
-                            voltage_level[(j*16+i)*2 +: 2] <= 2'b01;  // 0.85V
-                        else if (power_req[j*16 + i] < POWER_HIGH)
-                            voltage_level[(j*16+i)*2 +: 2] <= 2'b10;  // 0.95V
-                        else
-                            voltage_level[(j*16+i)*2 +: 2] <= 2'b11;  // 1.05V
+                        if (power_req[j*16 + i] < POWER_LOW) begin
+                            voltage_level[(j*16+i)*2+1] <= 1'b0;
+                            voltage_level[(j*16+i)*2]   <= 1'b0;  // 0.75V
+                        end else if (power_req[j*16 + i] < POWER_MED) begin
+                            voltage_level[(j*16+i)*2+1] <= 1'b0;
+                            voltage_level[(j*16+i)*2]   <= 1'b1;  // 0.85V
+                        end else if (power_req[j*16 + i] < POWER_HIGH) begin
+                            voltage_level[(j*16+i)*2+1] <= 1'b0;
+                            voltage_level[(j*16+i)*2]   <= 1'b1;  // 0.95V
+                        end else begin
+                            voltage_level[(j*16+i)*2+1] <= 1'b1;
+                            voltage_level[(j*16+i)*2]   <= 1'b1;  // 1.05V
+                        end
                     end
                 end
             end
