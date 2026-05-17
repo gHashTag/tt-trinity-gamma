@@ -80,6 +80,26 @@ silicon claims.
 - [ ] Once silicon returns: add `docs/silicon/` with measured power,
       TOPS/W, and the three demo workloads. **Do not pre-fill.**
 
+## Known pre-existing RTL issues (not caused by docs)
+
+Two pre-existing issues in `src/*.v` on `main` cause some CI jobs to fail
+on every PR (including the docs PR that introduced this file). They are
+**not** introduced by docs, and the right fix is a follow-up RTL PR:
+
+- **`src/gf_formats.v`** declares `localparam` outside of any module
+  (lines ~16–162). Causes `IVerilog canonical anchor test`, `Yosys
+  synthesis check`, and `gds` jobs to fail when the file is included
+  via the `src/*.v` glob. Fix path: wrap the parameter block in a dummy
+  module, or rename to `gf_formats.vh` and exclude from the glob.
+- **`src/lut_npu_81_entry.v`** uses Verilog-2005 indexed part-selects
+  on a wire (`trit_enc['sd1]` etc.) as l-values. Causes the same jobs
+  to fail at elaboration. Fix path: change `trit_enc` from `wire` to
+  `reg` or refactor to explicit bit indexing.
+
+Both have been observed failing on `main` HEAD on the same revisions
+they fail on the PR — they are inherited, not introduced. See PR #68
+discussion for the fix-path / scope decision.
+
 ## What this repo does **not** claim
 
 - ❌ Measured silicon TOPS/W. The README headline numbers are pre-silicon
