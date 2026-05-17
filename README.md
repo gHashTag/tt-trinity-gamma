@@ -14,6 +14,90 @@
 
 ---
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [What is γ-surface?](#-number-formats--5-native-arithmetic-domains)
+- [Number Formats](#-number-formats--5-native-arithmetic-domains)
+- [Extended Number Systems](#-extended-number-systems--from-branch-prs)
+- [Architecture](#-architecture--8-cortical-columns)
+- [Crown47](#-crown47--47-fundamental-constants-in-silicon)
+- [D2D Holographic Mesh](#-d2d-holographic-mesh)
+- [SUPER-CROWN Modules](#full-module-list)
+- [CLARA AI Safety Gaps](#darpa-clara-modules-gap-1--10)
+- [PhD-Anchored Monitors](#-phd-dissertation-context)
+- [Build & Test](#build--test)
+- [Pin Mapping](#-pinout)
+- [Development Guide](#development-guide)
+- [Contributing](#contributing)
+- [Troubleshooting](#troubleshooting)
+- [Competitive Analysis](#-competitive-differentiators--no-competitor-has-all-ten)
+- [Green AI Manifesto](#green-ai-manifesto)
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+```bash
+# Install Verilog tools
+brew install iverilog cocotb
+
+# Clone all three TRI-NET repos
+git clone https://github.com/gHashTag/tt-trinity-gamma
+git clone https://github.com/gHashTag/tt-trinity-euler
+git clone https://github.com/gHashTag/tt-trinity-phi
+```
+
+### Simulation
+
+```bash
+cd tt-trinity-gamma/test
+iverilog -o /tmp/sim_gf16 \
+  ../src/gf16_add.v ../src/gf16_mul.v \
+  ../src/gf16_dot4.v sim/tb_gf16.v
+/tmp/sim_gf16
+
+# Expected: PASS T1-T4 (GF16 arithmetic + K3 ALU)
+```
+
+### GDS Synthesis
+
+```bash
+git push
+# Triggers .github/workflows/gds.yaml
+# OpenLane2 (SKY130A) → DRC + LVS + STA → uploads gds_artifact
+```
+
+---
+
+## What is γ-surface?
+
+**γ-surface** is the neuromorphic cortex layer of Trinity TRI-NET — three sacred constants embodied in silicon:
+
+| Neuron | Constant | Tiles | CLARA Gaps | Role |
+|--------|----------|-------|------------|------|
+| φ-anchor | φ ≈ 1.61803 | 1×1 | 1/10 (Gap-4) | Lucas POST, bounded rationality |
+| e-engine | e ≈ 2.71828 | 8×2 | 10/10 | SUPER-CROWN + CLARA + D2D |
+| **γ-surface** | **γ ≈ 0.57721** | **8×4** | **10/10 ✅** | **Neuromorphic cortex, full mesh, 9 formats** |
+
+**γ ≈ 0.57721** (Euler-Mascheroni constant) is the fundamental limit of harmonic series divergence, governing the neuromorphic dynamics and energy efficiency of the cortex.
+
+---
+
+## Sacred Formula
+
+```
+V = n × 3^k × π^m × φ^p × e^q × γ^r × C^t × G^u
+```
+
+This chip is the **γ^r** factor — harmonic series divergence constant.
+
+**Anchor:** φ² + φ⁻² = 3 · DOI [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)
+
+---
+
 ## 📐 Number Formats — 5 Native Arithmetic Domains
 
 GAMMA is unique among open-PDK designs in natively supporting **five distinct number formats** simultaneously in silicon, each with zero standalone multipliers (R-SI-1). This is a key **DARPA CLARA Gap-2** differentiator.
@@ -591,6 +675,187 @@ Glava 36 (Theorem 36.1 — TG-TRIAD-X) proves that a multi-die holographic subst
 6. **Planck Collaboration** (2020). Planck 2018 VI. *A&A* 641, A6. [doi:10.1051/0004-6361/201833910](https://doi.org/10.1051/0004-6361/201833910)
 7. **DESI Collaboration** (2024). DESI 2024 VI. *JCAP* 2025(02), 021. [doi:10.1088/1475-7516/2025/02/021](https://doi.org/10.1088/1475-7516/2025/02/021)
 8. **Vasilev, D.** (2026). QB-CHIPS-PHD-ROADMAP-2026-05-15-001. [DOI 10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)
+
+---
+
+## Build & Test
+
+### Local Simulation
+
+```bash
+cd tt-trinity-gamma/test
+
+# GF16 arithmetic test
+iverilog -o /tmp/sim_gf16 \
+  ../src/gf16_add.v ../src/gf16_mul.v \
+  ../src/gf16_dot4.v sim/tb_gf16.v
+vvp /tmp/sim_gf16
+
+# K3 ternary ALU test
+iverilog -o /tmp/sim_k3 \
+  ../src/k3_alu.v sim/tb_k3_alu.v
+vvp /tmp/sim_k3
+
+# VSA matrix multiplication test
+iverilog -o /tmp/sim_vsa \
+  ../src/vsa_matmul_8x8.v sim/tb_vsa.v
+vvp /tmp/sim_vsa
+```
+
+Expected output:
+```
+PASS T1: GF16 add test (commutative)
+PASS T2: GF16 mul test (associative)
+PASS T3: GF16 dot4 = 0x47C0 (canonical)
+PASS T4: K3 AND truth table (9/9)
+```
+
+### GDS Synthesis
+
+```bash
+git push
+# → triggers .github/workflows/gds.yaml
+# → OpenLane2 (SKY130A) → DRC + LVS + STA → uploads gds_artifact
+```
+
+---
+
+## Development Guide
+
+### R-SI Compliance Rules
+
+| Rule | Statement | How to Verify |
+|------|-----------|---------------|
+| R-SI-1 | Zero `*` operators in RTL | `grep -n '\*' src/*.v` |
+| R-SI-2 | Zero DSP/multiplier macros | OpenLane2 reports |
+| R-SI-3 | WNS ≥ 0 ns @ 50 MHz | OpenLane2 STA |
+| R-SI-4 | DRC-clean | OpenLane2 KLayout DRC |
+| R-SI-5 | LVS-clean | OpenLane2 LVS |
+| R-SI-6 | Apache-2.0 only | `grep -i proprietary` (should be empty) |
+
+### Adding New Modules
+
+1. Create module in `src/` with Verilog-2005 syntax
+2. Add testbench in `test/` or `sim/`
+3. Run local simulation: `iverilog -o tb.out src/*.v test/tb.v && vvp tb.out`
+4. Update `info.yaml` if pin usage changes
+5. Submit PR with format: `feat(<scope>): <description>`
+
+### Number Format Integration
+
+1. Choose format from 9 supported (GF16, K3, Q8.8, b1.58, etc.)
+2. Follow existing module patterns in `src/`
+3. Ensure zero `*` operators (R-SI-1)
+4. Add format-specific test vectors
+5. Document format in this README
+
+### Commit Message Format
+
+```
+<type>(<scope>): brief description
+
+Detailed description explaining the change.
+
+Closes #<issue>
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+```
+
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `perf`, `clara`
+
+---
+
+## Contributing
+
+We welcome contributions! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`make test` or `iverilog` simulation)
+5. Commit your changes (`git commit -m 'feat(...): ...'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Code Review Checklist
+
+- [ ] All tests pass locally
+- [ ] New modules have testbenches
+- [ ] R-SI compliance verified (especially R-SI-1)
+- [ ] Commit messages follow format
+- [ ] Documentation updated
+- [ ] Number format documented in README
+
+---
+
+## Troubleshooting
+
+### GF16 Test Failure
+
+If `0x47C0` is not emitted:
+
+1. Check GF16 encoding:
+   ```bash
+   iverilog -t null -I src src/gf16_dot4.v
+   ```
+
+2. Verify synthesis: `yosys -p "read_verilog src/gf16_mul.v; proc; stat"`
+
+3. Check polynomial: must use `x⁴+x+1` (0x13) for GF(2⁴)
+
+### K3 ALU Failure
+
+1. Verify truth table matches Kleene semantics:
+   - AND = min(a,b), OR = max(a,b), NOT = sign-negate
+2. Check encoding: T=01, U=00, F=10
+3. Run standalone: `vvp /tmp/sim_k3 +verbose`
+
+### GDS DRC Errors
+
+```bash
+# Check OpenLane2 reports
+gh run view -R openlane2_output
+
+# Run OpenLane2 locally
+docker run -it --rm -v $(pwd):/work -w /work \
+  openlane2/openlane2:eula bash
+openlane --config ./sky130A/config.tcl --run ./run_gds.tcl
+```
+
+### Crown47 ROM Read Errors
+
+1. Verify address range: 0x00–0x2E (47 entries)
+2. Check Q8.8 decoding: `real_value = (mantissa/256) × 2^exp`
+3. Verify first entry: `0x070112` → α⁻¹ = 137.036
+
+---
+
+## Green AI Manifesto
+
+### Honest Performance Disclosure (R5-HONEST)
+
+| Metric | Measured (SKY130 130nm) | Architecture target (22FDX 22nm projection) |
+|---|---|---|
+| TOPS/W | proof-of-concept node | 28-120 TOPS/W (peer-review pending) |
+| Energy/op | educational node | competitive vs Hailo/Mythic at advanced node |
+
+The SKY130A demonstrator validates **architecture**, not absolute silicon performance.
+
+### Green AI Alignment
+
+- **Ternary {−1, 0, +1}** — ~10× energy/op vs FP16 at equivalent accuracy
+- **0 DSP / 0 `*`** — R-SI-1 RTL constraint eliminates multiplier switching energy
+- **Edge inference** — no datacenter transit, no PUE overhead
+- **Neuromorphic cortex** — sparsity-aware, event-driven activation
+- **Open-source RTL** — reproducible silicon eliminates duplicated tape-out waste
+
+### The Bazaar, not the Cathedral
+
+> *"Many heads are inevitably better than one."*
+> — Eric S. Raymond, [The Cathedral and the Bazaar (1997)](http://www.catb.org/~esr/writings/cathedral-bazaar/)
+
+This repository is open under Apache-2.0 with **no field-of-endeavor restriction**.
+Fork it. Improve it. Build with it.
 
 ---
 
