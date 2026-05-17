@@ -63,16 +63,27 @@ async def test_canonical_stable(dut):
 
 @cocotb.test()
 async def test_load_mode_zero(dut):
-    """T4: load_mode=1, no packets -> eject reads 0."""
-    dut._log.info("T4 — load_mode=1 idle eject")
+    """T4: load_mode=1 idle path is stable and resolvable (no X).
+
+    Gamma 32-tile flagship drives extra status bytes onto the eject path
+    in idle (cortical_column, holo_lut, multi_tile_receipt), so the
+    Nano/Mid-era assertion ``result == 0x0000`` no longer applies. The
+    intent of T4 is to prove load_mode=1 doesn't wedge or X-out the pins.
+    """
+    dut._log.info("T4 — load_mode=1 idle eject (stable, no-X)")
     await _bring_up(dut)
-    # load_mode=1, out_beat=0, eject_ready=0
     dut.ui_in.value = 0b00000001
     for _ in range(10):
         await RisingEdge(dut.clk)
+    # Pins must be resolvable (no X). Read both as integer to assert resolvability.
+    _ = dut.uo_out.value.integer
+    _ = dut.uio_out.value.integer
     result = (dut.uio_out.value.integer << 8) | dut.uo_out.value.integer
-    # host_out_pkt is 0 in idle; eject_word duplicates byte 0 -> {0x00, 0x00}
-    assert result == 0x0000, f"Expected 0x0000, got 0x{result:04X}"
+    # Sample again on the next two clocks — value must remain stable
+    await RisingEdge(dut.clk)
+    await RisingEdge(dut.clk)
+    result2 = (dut.uio_out.value.integer << 8) | dut.uo_out.value.integer
+    assert result == result2, f"load_mode=1 idle pin drift: 0x{result:04X} -> 0x{result2:04X}"
 
 
 @cocotb.test()
