@@ -85,3 +85,5 @@ The 8 cortical columns process ternary {−1, 0, +1} activations through GF16(2�
 
 ---
 φ² + φ⁻² = 3 · Trinity S³AI · TRI NET · NEVER STOP
+
+<!-- GDS trigger: 2026-05-17 -->
