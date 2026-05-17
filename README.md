@@ -10,6 +10,55 @@
 
 > **φ² + φ⁻² = 3** · γ = 0.5772... (Euler-Mascheroni) · DOI [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)
 
+## What this repo is
+
+`tt-trinity-gamma` is the **γ-surface** SKU of the **TRI-NET** line — the
+**research / compute** chip of an open, high-assurance ternary AI silicon
+substrate. Allocation: **8×4 tiles** on SkyWater SKY130A
+([Tiny Tapeout TTSKY26b](https://tinytapeout.com/chips/)). On-die surface:
+**32-PE ternary mesh** (8 cortical columns + 20-PE GF16 mesh +
+softmax / VSA / popcount), **D2D mesh adapter**, and the **full 10-gap
+DARPA [CLARA](https://www.darpa.mil/research/programs/clara) assurance
+surface** in synthesisable RTL.
+
+**What runs today** (RTL + SIM + CI green, no silicon results claimed):
+canonical pin anchor `{uio_out,uo_out}=16'h47C0` via `sim/tb_canonical.v`;
+per-block testbenches for all 10 CLARA gap modules under `test/`;
+reproducible OpenLane2 → SKY130A GDS via `.github/workflows/gds.yaml`;
+R-SI-1 no-`*`-operator audit via `tri-test.yml`.
+
+**How to verify, from a clean clone:**
+```bash
+sudo apt-get install -y iverilog yosys && pip install cocotb
+cd sim && iverilog -o /tmp/tb -I../src ../src/*.v tb_canonical.v && vvp /tmp/tb
+cd ../test && make SIM=icarus
+```
+
+**What is unique:** open SKY130A PDK + open Apache-2.0 RTL; native K3
+three-valued logic (`src/k3_alu.v`); native BitNet b1.58 ternary MLP
+(`src/bitnet_encoder.v`, [arXiv 2402.17764](https://arxiv.org/abs/2402.17764));
+GF(2ⁿ) family GF4 … GF256 in silicon; per-decision proof / audit primitives
+(`src/proof_trace_writer.v`, `src/audit_log_ring_buffer.v`,
+`src/blake3_anchor.v`); reproducible `.t27 → RTL → shuttle` path. See
+[`COMPETITORS.md`](COMPETITORS.md) for restrained, source-backed positioning.
+
+**Sibling chips & toolchain:**
+[tt-trinity-phi](https://github.com/gHashTag/tt-trinity-phi) (1×1 φ-anchor,
+proof / identity) · [tt-trinity-euler](https://github.com/gHashTag/tt-trinity-euler)
+(8×2 e-engine, safety / control) · **this repo** (8×4 γ-surface,
+research / compute) · [t27](https://github.com/gHashTag/t27) (spec-to-RTL
+toolchain + numeric format registry).
+
+**Conservative status disclaimer.** Power, energy, and TOPS/W figures
+elsewhere in this README are **pre-silicon estimates** from synthesis
+activity factors. The chip is submitted (`CHANGELOG.md` `[TTSKY26b-submit]`),
+not yet returned. See [`STATUS.md`](STATUS.md) for the readiness ladder,
+[`LINEUP.md`](LINEUP.md) for the line, [`CLARA_TRACEABILITY.md`](CLARA_TRACEABILITY.md)
+for the CLARA-gap → RTL matrix, and [`BENCHMARKS.md`](BENCHMARKS.md) for
+the three measurable demo workloads.
+
+---
+
 **Largest chip of the TRI-1 Triad.** 32 tiles (8×4) of SkyWater SKY130A silicon — the world's first open-PDK neuromorphic chip with **8 cortical columns**, **20-PE GF16 mesh**, **24 SUPER-CROWN modules**, **D2D holographic mesh**, and the full **Crown47 ROM** encoding 47 fundamental constants of physics.
 
 > *"The first chip where physics is the layout."*
