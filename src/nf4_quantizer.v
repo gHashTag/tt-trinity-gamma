@@ -54,7 +54,7 @@ module nf4_quantizer (
             default: scale = 16'h4000;
         endcase
 
-        // Scale the input (R-SI-1 compliant: use shift instead of * operator)
+        // Scale the input (R-SI-1: shift instead of *)
         case (scale_idx)
             4'd0: scaled = {{1{fp16_in[15]}}, fp16_in[15:1]};   // >> 1 (0.5)
             4'd1: scaled = {{2{fp16_in[15]}}, fp16_in[15:2]};   // >> 2 (0.25)

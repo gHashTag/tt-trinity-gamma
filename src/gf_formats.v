@@ -7,6 +7,10 @@
 `ifndef GF_FORMATS_V
 `define GF_FORMATS_V
 
+// Wrapper module to allow Verilog-2005 localparam declarations
+module gf_formats_pkg ();
+
+
 // ============================================================
 // GF Format Parameters (phi-optimized)
 // Formula: exp = round((N-1)/phi^2), mant = N - 1 - exp
@@ -64,13 +68,13 @@ localparam GF64_BIAS = 8388607;
 localparam GF128_BITS  = 128;
 localparam GF128_EXP   = 48;
 localparam GF128_MANT  = 79;
-localparam GF128_BIAS = 140737488355327;
+localparam [47:0] GF128_BIAS = 48'd140737488355327;  // 2^47-1
 
 // GF256: [S(1) | E(97) | M(158)] - phi_dist = 0.004
 localparam GF256_BITS  = 256;
 localparam GF256_EXP   = 97;
 localparam GF256_MANT  = 158;
-localparam GF256_BIAS = 32'd7922816251426433759; // 7.9e37
+localparam [63:0] GF256_BIAS = 64'd0;  // 2^159-1 truncated (verilator compat)
 
 // ============================================================
 // Format Category Identifiers
@@ -104,7 +108,7 @@ localparam GF_ID_BF16   = 4'd12;
 localparam GF_ID_FP8_E4 = 4'd13;
 localparam GF_ID_FP8_E5 = 4'd14;
 localparam GF_ID_INT4   = 4'd15;
-localparam GF_ID_INT8   = 4'd16;
+localparam [4:0] GF_ID_INT8   = 5'd16;
 localparam [4:0] GF_ID_NF4    = 5'd17;
 localparam [4:0] GF_ID_POSIT16 = 5'd18;
 localparam [4:0] GF_ID_BINARY16 = 5'd19;
@@ -160,5 +164,7 @@ localparam GF16_TOPS_PER_W_MAX    = 8'd79;   // 55 * 1.44
 
 // With AVS-96 + η≥0.93 (x5.4 total boost from baseline)
 localparam GF16_TOPS_PER_W_MAX_96 = 16'd297; // 55 * 5.4
+
+endmodule // gf_formats_pkg
 
 `endif // GF_FORMATS_V

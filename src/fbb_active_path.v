@@ -69,8 +69,8 @@ module fbb_active_path (
                 end
             end
 
-            // Leakage monitoring
-            avg_leakage <= (avg_leakage * 3 + leakage_mon) / 4;
+            // Leakage monitoring (R-SI-1: replace *3 with shift-add)
+            avg_leakage <= (((avg_leakage<<1) + avg_leakage) + leakage_mon) >> 2;
 
             // Leakage threshold check
             if (avg_leakage >= LEAKAGE_CRIT) begin
@@ -146,8 +146,11 @@ module fbb_active_path (
         end
     end
 
-    // FBB efficiency calculation
-    // Leakage reduction ~ (FBB_level / 400)^2
-    wire [7:0] efficiency = (fbb_level[7:0] * fbb_level[7:0]) >> 8;
+    // FBB efficiency calculation (R-SI-1: use tri_mant_mul for squaring)
+    wire [15:0] fbb_eff_prod;
+    tri_mant_mul #(.W(8)) u_fbb_eff (
+        .a(fbb_level[7:0]), .b(fbb_level[7:0]), .product(fbb_eff_prod)
+    );
+    wire [7:0] efficiency = fbb_eff_prod[15:8];
 
 endmodule

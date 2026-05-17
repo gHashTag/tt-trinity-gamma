@@ -2,6 +2,7 @@
 // t27/rtl_gen/avs_reconf.v
 // AVS Reconfiguration Controller (Sacred opcode 0xE4)
 // Dynamic voltage scaling reconfiguration
+// Verilog-2005: region_mode as flat 16-bit bus (8x2 bits)
 
 `default_nettype none
 module avs_reconf (
@@ -12,7 +13,7 @@ module avs_reconf (
     input  wire [1:0]   voltage_mode,   // 00=ultra-low, 01=low, 10=normal, 11=high
     input  wire        reconf_req,     // Reconfiguration request
     output reg  [7:0]   active_regions, // Bitmask of active regions
-    output reg  [1:0]   region_mode[7:0], // Mode per region
+    output reg  [15:0]  region_mode_flat, // Mode per region, flat bus [2i+1:2i] = region i
     output reg         reconf_done,    // Reconfiguration complete
     output reg  [7:0]   reconf_status   // Status code
 );
@@ -40,8 +41,7 @@ module avs_reconf (
         if (!rst_n) begin
             state <= 3'd0;
             active_regions <= 8'hFF;
-            for (i = 0; i < 8; i = i + 1)
-                region_mode[i] <= V_NORMAL;
+            region_mode_flat <= {8{V_NORMAL}};  // All regions in NORMAL mode
             reconf_done <= 1'b0;
             reconf_status <= STS_IDLE;
             target_region <= 8'd0;
@@ -63,8 +63,17 @@ module avs_reconf (
                 end
 
                 3'd1: begin
-                    // Apply reconfiguration
-                    region_mode[target_region[2:0]] <= target_mode;
+                    // Apply reconfiguration (update target region's 2 bits in flat bus)
+                    case (target_region[2:0])
+                        3'd0: region_mode_flat[1:0]   <= target_mode;
+                        3'd1: region_mode_flat[3:2]   <= target_mode;
+                        3'd2: region_mode_flat[5:4]   <= target_mode;
+                        3'd3: region_mode_flat[7:6]   <= target_mode;
+                        3'd4: region_mode_flat[9:8]   <= target_mode;
+                        3'd5: region_mode_flat[11:10] <= target_mode;
+                        3'd6: region_mode_flat[13:12] <= target_mode;
+                        3'd7: region_mode_flat[15:14] <= target_mode;
+                    endcase
                     timeout_counter <= 8'd10;
                     state <= 3'd2;
                 end

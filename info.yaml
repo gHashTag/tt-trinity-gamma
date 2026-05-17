@@ -150,6 +150,7 @@ project:
     - "avs_controller_48.v"
     - "avs_controller_96.v"
     - "avs_reconf.v"
+    - "tri_mant_mul.v"
     - "fbb_active_path.v"
     - "purkinje_thermal_gate.v"
     # v1.0.0 sacred opcodes (0xDF, 0xE1-0xED)

@@ -11,7 +11,7 @@ module gf256_add (
 );
 
     localparam BIAS    = 97'd79228162514264337593543950335;
-    localparam EXP_MAX = 97'd158456325028528675187087900672;
+    localparam [97:0] EXP_MAX = 98'd158456325028528675187087900672;
 
     wire        sign_a = a[255];
     wire [96:0] exp_a  = a[254:158];
