@@ -27,7 +27,22 @@ module gf16_mul (
     wire result_sign = sign_a ^ sign_b;
     wire [9:0] full_mant_a = {1'b1, mant_a};
     wire [9:0] full_mant_b = {1'b1, mant_b};
-    wire [19:0] mant_prod  = full_mant_a * full_mant_b;
+
+    // R-SI-1: 10x10 unsigned multiply implemented as a shift-and-add
+    // partial-product sum (no arithmetic '*' operator). Logically identical
+    // to full_mant_a * full_mant_b; synthesis will recover an efficient form.
+    wire [19:0] pp0  = full_mant_b[0] ? {10'b0, full_mant_a}        : 20'b0;
+    wire [19:0] pp1  = full_mant_b[1] ? {9'b0,  full_mant_a, 1'b0}  : 20'b0;
+    wire [19:0] pp2  = full_mant_b[2] ? {8'b0,  full_mant_a, 2'b0}  : 20'b0;
+    wire [19:0] pp3  = full_mant_b[3] ? {7'b0,  full_mant_a, 3'b0}  : 20'b0;
+    wire [19:0] pp4  = full_mant_b[4] ? {6'b0,  full_mant_a, 4'b0}  : 20'b0;
+    wire [19:0] pp5  = full_mant_b[5] ? {5'b0,  full_mant_a, 5'b0}  : 20'b0;
+    wire [19:0] pp6  = full_mant_b[6] ? {4'b0,  full_mant_a, 6'b0}  : 20'b0;
+    wire [19:0] pp7  = full_mant_b[7] ? {3'b0,  full_mant_a, 7'b0}  : 20'b0;
+    wire [19:0] pp8  = full_mant_b[8] ? {2'b0,  full_mant_a, 8'b0}  : 20'b0;
+    wire [19:0] pp9  = full_mant_b[9] ? {1'b0,  full_mant_a, 9'b0}  : 20'b0;
+    wire [19:0] mant_prod = pp0 + pp1 + pp2 + pp3 + pp4
+                          + pp5 + pp6 + pp7 + pp8 + pp9;
     wire [6:0]  exp_sum    = {1'b0, exp_a} + {1'b0, exp_b};
 
     reg [6:0]  raw_exp;

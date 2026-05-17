@@ -60,7 +60,15 @@ module alu9_decoder (
             4'd0: begin sr = 0;                                end  // NOP
             4'd1: begin sr = sa + sb;                          end  // ADD
             4'd2: begin sr = sa - sb;                          end  // SUB
-            4'd3: begin sr = sa * sb;                          end  // MUL (ternary, range -1..1)
+            4'd3: begin  // MUL (ternary, range -1..1)
+                // R-SI-1 compliant: ternary mul on {-1,0,+1} via XOR/NOR
+                if (sa == 0 || sb == 0)
+                    sr = 0;
+                else if (sa == sb)
+                    sr = 1;   // -1*-1 = 1, 1*1 = 1
+                else
+                    sr = -1;  // -1*1 = -1, 1*-1 = -1
+            end
             4'd4: begin sr = (sa < sb) ? sa : sb;              end  // AND (min)
             4'd5: begin sr = (sa > sb) ? sa : sb;              end  // OR  (max)
             4'd6: begin sr = -sa;                              end  // NOT (negate)
