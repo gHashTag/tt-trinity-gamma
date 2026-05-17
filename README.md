@@ -1,6 +1,8 @@
 # 🌌 TRI-1 Gamma — Trinity γ-surface · MAX-TRUE NEUROMORPHIC FLAGSHIP
 
 [![GDS](https://github.com/gHashTag/tt-trinity-gamma/actions/workflows/gds.yaml/badge.svg)](https://github.com/gHashTag/tt-trinity-gamma/actions/workflows/gds.yaml)
+[![R-SI-1](https://img.shields.io/badge/R--SI--1-0%20%2A%20ops-brightgreen)](docs/R-SI-1.md)
+[![Verilog-2005](https://img.shields.io/badge/Verilog--2005-OK-brightgreen)](docs/VERILOG-2005.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19227877-blue)](https://doi.org/10.5281/zenodo.19227877)
 [![Shuttle](https://img.shields.io/badge/shuttle-TTSKY26b-green)](https://app.tinytapeout.com/shuttles/ttsky26b)
