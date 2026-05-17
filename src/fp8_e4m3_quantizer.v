@@ -21,7 +21,7 @@ module fp8_e4m3_quantizer (
     wire [2:0]  mant8 = mant16[9:7];
 
     reg  [4:0]  exp_clamped;
-    reg  [2:0]  mant_rounded;
+    reg  [3:0]  mant_rounded;
     reg  [3:0]  sticky;
 
     always @(*) begin
@@ -52,9 +52,9 @@ module fp8_e4m3_quantizer (
                 mant_rounded = mant8;
 
             // Handle mantissa overflow
-            if (mant_rounded == 3'd8 && exp_clamped < 4'd14) begin
+            if (mant_rounded == 4'd8 && exp_clamped < 4'd14) begin
                 exp_clamped = exp_clamped + 4'd1;
-                mant_rounded = 3'd0;
+                mant_rounded = 4'd0;
             end
 
             fp8_out = {sign, exp_clamped[3:0], mant_rounded[2:0]};

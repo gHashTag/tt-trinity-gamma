@@ -41,9 +41,11 @@ module lut_npu_81_entry (
         // ... (actual 81 entries from bitnet.cpp)
         
         // Fill remaining with identity mapping
-        integer i;
-        for (i = 7; i < NUM_ENTRIES; i = i + 1) begin
-            lut_rom[i] = i[1:0];  // Placeholder
+        begin : fill_loop
+            integer i;
+            for (i = 7; i < NUM_ENTRIES; i = i + 1) begin
+                lut_rom[i] = i[1:0];  // Placeholder
+            end
         end
     end
 

@@ -105,9 +105,9 @@ localparam GF_ID_FP8_E4 = 4'd13;
 localparam GF_ID_FP8_E5 = 4'd14;
 localparam GF_ID_INT4   = 4'd15;
 localparam GF_ID_INT8   = 4'd16;
-localparam GF_ID_NF4    = 4'd17;
-localparam GF_ID_POSIT16 = 4'd18;
-localparam GF_ID_BINARY16 = 4'd19;
+localparam [4:0] GF_ID_NF4    = 5'd17;
+localparam [4:0] GF_ID_POSIT16 = 5'd18;
+localparam [4:0] GF_ID_BINARY16 = 5'd19;
 
 // ============================================================
 // Special encodings

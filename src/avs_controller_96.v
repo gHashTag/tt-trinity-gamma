@@ -18,10 +18,10 @@ module avs_controller_96 (
 );
 
     // Voltage levels in millivolts (for simulation)
-    localparam V750  = 8'd750;   // Ultra-low power
-    localparam V850  = 8'd850;   // Low power
-    localparam V950  = 8'd950;   // Normal
-    localparam V1050 = 8'd1050;  // High performance
+    localparam [10:0] V750  = 11'd750;   // Ultra-low power
+    localparam [10:0] V850  = 11'd850;   // Low power
+    localparam [10:0] V950  = 11'd950;   // Normal
+    localparam [10:0] V1050 = 11'd1050;  // High performance
 
     // Power thresholds
     localparam POWER_LOW    = 6'd10;

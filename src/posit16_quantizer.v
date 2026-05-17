@@ -24,6 +24,7 @@ module posit16_quantizer (
     reg  [2:0]   rs;
     reg  [4:0]   exp_bits;
     reg  [5:0]   frac_bits;
+    reg  [4:0]   remaining_exp;
 
     always @(*) begin
         if (exp16 == 5'd31) begin
@@ -87,14 +88,12 @@ module posit16_quantizer (
             // Extract remaining exponent bits
             // Available bits after sign (1) + RS (1) + regime-1 (N-1)
             // Total remaining for exp+frac = 15 - (1+1+N-1) = 14-N
-            reg [4:0] remaining_exp;
             if (regime == 3'd0) remaining_exp = exponent[3:0];
             else if (regime == 3'd1) remaining_exp = exponent[2:0];
             else if (regime == 3'd2) remaining_exp = exponent[1:0];
             else remaining_exp = {1'b0, exponent[0]};
 
             // Available fraction bits
-            reg [5:0] frac_bits;
             if (regime == 3'd0) frac_bits = fraction[9:4];
             else if (regime == 3'd1) frac_bits = fraction[9:5];
             else if (regime == 3'd2) frac_bits = fraction[9:6];
@@ -121,6 +120,11 @@ module posit16_dequantizer (
 
     reg  [4:0]  exp16;
     reg  [9:0]  mant16;
+    reg  [2:0]  regime_count;
+    reg         regime_sign;
+    reg  [4:0]  exp_bits;
+    reg  [9:0]  frac_bits;
+    reg  [5:0]  bit_offset;
 
     always @(*) begin
         if (posit_mant == 15'd0) begin
@@ -131,8 +135,6 @@ module posit16_dequantizer (
             fp16_out = {sign, 5'd31, 10'd0};
         end else begin
             // Decode regime (find first run of identical bits)
-            reg [2:0] regime_count;
-            reg      regime_sign;
 
             // Find regime sign (first bit after pos-14)
             regime_sign = posit_mant[14];
@@ -149,22 +151,27 @@ module posit16_dequantizer (
             end
 
             // Extract exponent and fraction
-            reg [4:0] exp_bits;
-            reg [9:0] frac_bits;
-            reg [5:0]  bit_offset;
-
-            bit_offset = {3'd0, regime_count} + 5'd2;
-
-            if (bit_offset < 5'd14) begin
-                exp_bits = posit_mant[14:bit_offset];
-                if (bit_offset + 5'd4 < 5'd14)
-                    frac_bits = {5'd0, posit_mant[bit_offset+5'd4:bit_offset]};
-                else
+            // bit_offset = regime_count + 2; regime_count in {0,1,2}
+            // Use case to avoid variable part-select (not legal in Verilog-2005)
+            case (regime_count)
+                3'd0: begin  // bit_offset=2: exp=[14:2] (13 bits), frac=[10:2] (9 bits)
+                    exp_bits  = {1'b0, posit_mant[14:11]};  // top 4 exp bits
+                    frac_bits = {1'b0, posit_mant[9:1]};    // top 9 frac bits
+                end
+                3'd1: begin  // bit_offset=3: exp=[14:3] (12 bits), frac=[9:3] (7 bits)
+                    exp_bits  = {1'b0, posit_mant[14:11]};  // top 4 exp bits
+                    frac_bits = {3'd0, posit_mant[9:3]};    // top 7 frac bits
+                end
+                3'd2: begin  // bit_offset=4: exp=[14:4] (11 bits), frac=[8:4] (5 bits)
+                    exp_bits  = {1'b0, posit_mant[14:11]};  // top 4 exp bits
+                    frac_bits = {5'd0, posit_mant[9:5]};    // top 5 frac bits
+                end
+                default: begin
+                    exp_bits  = 5'd0;
                     frac_bits = 10'd0;
-            end else begin
-                exp_bits = 5'd0;
-                frac_bits = 10'd0;
-            end
+                end
+            endcase
+            bit_offset = {3'd0, regime_count} + 5'd2; // kept for reference only
 
             // Convert to FP16
             if (regime_sign) begin
