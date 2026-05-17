@@ -80,25 +80,23 @@ silicon claims.
 - [ ] Once silicon returns: add `docs/silicon/` with measured power,
       TOPS/W, and the three demo workloads. **Do not pre-fill.**
 
-## Known pre-existing RTL issues (not caused by docs)
+## RTL elaboration / R-SI-1 status
 
-Two pre-existing issues in `src/*.v` on `main` cause some CI jobs to fail
-on every PR (including the docs PR that introduced this file). They are
-**not** introduced by docs, and the right fix is a follow-up RTL PR:
+As of `origin/main` `2eeb3b2`, RTL elaboration and R-SI-1 are clean
+on the base this PR targets:
 
-- **`src/gf_formats.v`** declares `localparam` outside of any module
-  (lines ~16–162). Causes `IVerilog canonical anchor test`, `Yosys
-  synthesis check`, and `gds` jobs to fail when the file is included
-  via the `src/*.v` glob. Fix path: wrap the parameter block in a dummy
-  module, or rename to `gf_formats.vh` and exclude from the glob.
-- **`src/lut_npu_81_entry.v`** uses Verilog-2005 indexed part-selects
-  on a wire (`trit_enc['sd1]` etc.) as l-values. Causes the same jobs
-  to fail at elaboration. Fix path: change `trit_enc` from `wire` to
-  `reg` or refactor to explicit bit indexing.
+- `iverilog -t null -I src src/*.v` — elaborates clean (zero errors).
+- `bash tools/check_no_star.sh src/` — `R-SI-1 PASS: no new * operators`.
+- `sim/tb_canonical.v` — `3 PASS, 0 FAIL`, canonical `0x47C0` anchor
+  stable across 20 cycles.
 
-Both have been observed failing on `main` HEAD on the same revisions
-they fail on the PR — they are inherited, not introduced. See PR #68
-discussion for the fix-path / scope decision.
+Two RTL bugs that were present on earlier revisions of `main`
+(`gf_formats.v` localparam outside any module, `lut_npu_81_entry.v`
+indexed part-select on a `wire` as an l-value) have been resolved
+upstream: `gf_formats.v` now wraps its parameter block in
+`module gf_formats_pkg`, and `lut_npu_81_entry.v` uses a packed
+12-bit `trit_in_flat` bus. The earlier follow-up note in this file
+flagged them; that follow-up is now closed.
 
 ## What this repo does **not** claim
 
