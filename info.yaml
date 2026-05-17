@@ -102,6 +102,17 @@ project:
     - "holo_lut_pe.v"
     - "crown47_rom.v"
     - "crown47_rom_8bit.v"
+    # DARPA CLARA AI Safety Gaps (10)
+    - "redteam_filter.v"
+    - "k3_alu.v"
+    - "datalog_engine_mini.v"
+    - "restraint_ctrl.v"
+    - "explainability_unit.v"
+    - "asp_solver_mini.v"
+    - "composition_kernel.v"
+    - "proof_trace_writer.v"
+    - "sat_solver_mini.v"
+    - "audit_log_ring_buffer.v"
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"
