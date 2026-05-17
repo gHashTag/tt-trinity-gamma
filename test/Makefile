@@ -4,7 +4,8 @@ SIM ?= icarus
 FST ?= -fst
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = tt_um_trinity_max_true.v trinity_max_true_dual.v trinity_quad_mesh.v trinity_mesh_2x2.v trinity_router_2x2.v trinity_gf16_tile.v trinity_master_fsm.v gf16_mul.v gf16_add.v gf16_dot4.v gf16_dot8.v phi_anchor_post.v lucas_rom.v vsa_matmul_8x8.v vsa_matmul_16x16.v bitnet_encoder.v bpb_counter.v blake3_anchor.v multi_tile_receipt.v crc32_receipt.v alu9_decoder.v ring27_memory.v hwrng_lfsr.v phi_pll_div.v wb_status_reg.v wishbone_full.v
+# Pick up every synthesisable module in src/ (testbenches live in test/).
+PROJECT_SOURCES = $(notdir $(wildcard $(SRC_DIR)/*.v))
 
 ifneq ($(GATES),yes)
 SIM_BUILD = sim_build/rtl
