@@ -1,0 +1,62 @@
+name: SKY130 nightly · Sacred ALU 352-LUT (S-177, G-83)
+# Wave v25 HOLD-B continuous-R5 closure
+# Anchor: phi^2 + phi^-2 = 3 · DOI 10.5281/zenodo.19227877
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # daily 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  packages: read
+
+jobs:
+  sky130-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240   # 4h hard cap (matches run_sky130_actual.sh MAX_HOURS)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run frozen SKY130 toolchain (Docker image)
+        id: run
+        run: |
+          docker pull ghcr.io/ghashtag/tt-trinity-gf16/sky130-toolchain:v25-frozen
+          docker run --rm \
+            -v "${{ github.workspace }}":/workspace:ro \
+            -v "${{ github.workspace }}/runs":/runs \
+            -e RUN_DIR=/runs/${{ github.run_id }} \
+            -e MAX_HOURS=4 \
+            ghcr.io/ghashtag/tt-trinity-gf16/sky130-toolchain:v25-frozen \
+            sacred_alu_352_lut
+
+      - name: Verify verdict.json
+        run: |
+          v=$(find runs -name verdict.json | tail -1)
+          test -f "$v" || { echo "::error::verdict.json missing"; exit 1; }
+          cat "$v"
+          jq -e '.anchor == "phi^2+phi^-2=3"' "$v" >/dev/null
+          echo "VERDICT=$v" >> "$GITHUB_ENV"
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sky130-run-${{ github.run_id }}
+          path: runs/${{ github.run_id }}
+          retention-days: 30
+
+      - name: File regression issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 SKY130 nightly regression · run ${context.runId}`,
+              body: `Nightly SKY130 toolchain run failed.\n\n- run: ${context.runId}\n- ref: ${context.sha}\n- anchor: \`phi^2+phi^-2=3\`\n\nG-83 / G-84 may be falsified — please inspect uploaded artifact \`sky130-run-${context.runId}\`.\n\ncc trinity-fpga#61`,
+              labels: ['sky130', 'regression', 'wave:v25']
+            });
