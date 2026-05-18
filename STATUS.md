@@ -115,4 +115,7 @@ flagged them; that follow-up is now closed.
 - [`CLARA_TRACEABILITY.md`](CLARA_TRACEABILITY.md) — DARPA CLARA Gap → RTL mapping
 - [`COMPETITORS.md`](COMPETITORS.md) — restrained competitor positioning with sources
 - [`BENCHMARKS.md`](BENCHMARKS.md) — three demo workloads with pre-silicon numbers
+- [`D2D_PROTOCOL.md`](D2D_PROTOCOL.md) — chip-to-chip / D2D protocol index for TRI-NET
+- [`GF16_BFLOAT16_NMSE.md`](GF16_BFLOAT16_NMSE.md) — GF16 vs bfloat16 NMSE comparison protocol
+- [`TRIPLE_DECK_STATUS.md`](TRIPLE_DECK_STATUS.md) — RBB → FBB → CAP_BOOST status (mostly plan-only on γ)
 - [`CHANGELOG.md`](CHANGELOG.md) — wave / submission history

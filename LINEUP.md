@@ -81,11 +81,67 @@ silicon.
 | Software | Research substrate; no commercial driver / compiler stack. |
 | Differentiation vs Hailo / Axelera / Coral / QC AI100 / MediaTek NPU | See [`COMPETITORS.md`](COMPETITORS.md) — restrained, evidence-backed. |
 
+## TRI-NET API (external integration) — P1
+
+External tooling talks to γ-surface through three documented surfaces:
+
+| Surface | Spec in this repo | Role |
+|---------|-------------------|------|
+| Tiny Tapeout pin map | [`docs/PINOUT.md`](docs/PINOUT.md), [`docs/API.md`](docs/API.md) | Physical pin / register interface for the γ chip alone |
+| Trinity Interconnect Protocol v1.0 | [`docs/INTERCONNECT_PROTOCOL_V1.md`](docs/INTERCONNECT_PROTOCOL_V1.md) | Wire-level protocol shared across the three TRI-NET chips on TTSKY26b |
+| D2D / mesh hooks (γ endpoint) | [`D2D_PROTOCOL.md`](D2D_PROTOCOL.md) | Index of D2D RTL and audit hooks on the γ-side |
+
+A bridge implementer (FPGA, MCU, ASIC) needs only those three to talk
+to γ without access to γ's RTL. No production driver / SDK is shipped
+from this repo — γ is a research substrate (see
+[`STATUS.md`](STATUS.md) §What this repo does not claim).
+
+## Whitepaper / value proposition — P1
+
+The line-wide whitepaper and value-proposition material is anchored on:
+
+- **DOI [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)**
+  — Trinity Stack provenance bundle (interconnect protocol + sibling
+  manifests, frozen at TTSKY26b).
+- **TG-TRIAD-X anchor `0x47C0`** — the only end-to-end pin-level
+  invariant claimed across the line; defined in PhD Theorem 36.1 and
+  verified in this repo via `sim/tb_canonical.v`.
+- **DARPA CLARA Gap → RTL traceability** —
+  [`CLARA_TRACEABILITY.md`](CLARA_TRACEABILITY.md).
+- **Competitor positioning** —
+  [`COMPETITORS.md`](COMPETITORS.md) (restrained, source-cited).
+
+Value proposition, in one sentence: γ-surface is the *largest* of the
+three TRI-NET dies and the place where the ternary compute substrate,
+the GF16 vs bfloat16 numeric comparison harness
+([`GF16_BFLOAT16_NMSE.md`](GF16_BFLOAT16_NMSE.md)), and the full
+10-gap CLARA RTL co-exist on a reproducible open-PDK silicon.
+
+## 22FDX TOPS/W projection and Zenodo bundle — P2 (projection / plan only)
+
+The README headline numbers (`75 / 405` TOPS/W) are **SKY130A
+pre-silicon estimates**. A future port to **GlobalFoundries 22FDX**
+(planar FD-SOI, supports RBB and FBB body-bias natively) would be a
+candidate for re-projection.
+
+| Item | Status |
+|------|--------|
+| 22FDX cell-count / area re-projection | **Plan only** — no 22FDX synthesis is checked into this repo. |
+| 22FDX TOPS/W projection | **Plan only** — to be derived from a 22FDX activity-factor model once a synth run lands. |
+| Zenodo bundle readiness | DOI [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877) is live for the TTSKY26b SKY130A submission. A 22FDX bundle would be a **new DOI**, not an update of this one. |
+
+R5 honesty: nothing in this repo asserts that a 22FDX-ported γ-surface
+exists or has been characterised. The PDK we have evidence for is
+SKY130A.
+
 ## See also
 
 - [`STATUS.md`](STATUS.md) — readiness levels and conservative gate state for this SKU
 - [`CLARA_TRACEABILITY.md`](CLARA_TRACEABILITY.md) — DARPA CLARA Gap → RTL mapping
 - [`BENCHMARKS.md`](BENCHMARKS.md) — three measurable demo workloads
 - [`COMPETITORS.md`](COMPETITORS.md) — competitor positioning with public sources
+- [`D2D_PROTOCOL.md`](D2D_PROTOCOL.md) — chip-to-chip / D2D protocol index
+- [`GF16_BFLOAT16_NMSE.md`](GF16_BFLOAT16_NMSE.md) — GF16 vs bfloat16 NMSE protocol
+- [`TRIPLE_DECK_STATUS.md`](TRIPLE_DECK_STATUS.md) — RBB → FBB → CAP_BOOST status
 - [Tiny Tapeout chips](https://tinytapeout.com/chips/) — shuttle catalogue (TTSKY26b)
 - [DARPA CLARA](https://www.darpa.mil/research/programs/clara)

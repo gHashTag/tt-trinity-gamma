@@ -82,6 +82,11 @@ numbers in the README and `info.yaml` are *baseline / AVS-96* modelling
 estimates from synthesis activity factors — they are committed for
 falsifiability but not yet measured.
 
+**Numeric-format comparison.** For the GF16 vs bfloat16 NMSE protocol
+that binds the BitNet b1.58 workload to a falsifiable `Δ_dB` number,
+see [`GF16_BFLOAT16_NMSE.md`](GF16_BFLOAT16_NMSE.md). The harness
+itself is not yet checked in — that doc is the spec, not a result.
+
 ---
 
 ## Demo 2 — Adversarial / safety path
@@ -212,3 +217,6 @@ estimate in the tables above. Do **not** pre-fill it.
 - DARPA CLARA — <https://www.darpa.mil/research/programs/clara>
 - Tiny Tapeout chips — <https://tinytapeout.com/chips/>
 - [`STATUS.md`](STATUS.md), [`CLARA_TRACEABILITY.md`](CLARA_TRACEABILITY.md), [`COMPETITORS.md`](COMPETITORS.md)
+- [`D2D_PROTOCOL.md`](D2D_PROTOCOL.md) — D2D / chip-to-chip protocol index (Demo 3)
+- [`GF16_BFLOAT16_NMSE.md`](GF16_BFLOAT16_NMSE.md) — Numeric-format comparison harness for Demo 1
+- [`TRIPLE_DECK_STATUS.md`](TRIPLE_DECK_STATUS.md) — Dynamic-power envelope status (RBB → FBB → CAP_BOOST)
