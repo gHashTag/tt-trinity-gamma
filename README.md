@@ -94,6 +94,45 @@ bash scripts/check_trinet_specs.sh
 
 ---
 
+## TRI-NET Positioning
+
+> **TRI-NET — verifiable open silicon stack for trustworthy AI: identity (Φ), reasoning (E), inference (Γ). One math anchor, three chips, zero closed IP.**
+
+### Γ Inference Layer — Neuromorphic Surface
+
+`tt-trinity-gamma` is the **inference and compute surface** of the TRI-NET stack. As the largest die (8×4 tiles, 105 modules), Gamma's mission is provably measurable AI compute: 8 cortical LIF columns with biologically-inspired leaky-integrate-and-fire dynamics, a 20-PE GF16 mesh (`trinity_quad_mesh` 16 PE + `trinity_mesh_2x2` 4 PE), FHRR holographic binding (`holo_lut_pe`, Glava 32), and the complete GF4–GF256 multiplier portfolio — the only die in the triad with full Galois-field multiplication across all widths. The 24 SUPER-CROWN modules include all of Euler's symbolic AI safety stack plus 6 PhD-anchored monitors: `cassini_post`, `plrm_counter`, `bpb_lower_bound_guard`, `nca_entropy_monitor`, `strobe_seed_guard`, and `phi_distance_oracle`. Dual-library zoning (`sky130_fd_sc_hd` + `hdll`) yields approximately 30% leakage reduction, and dual adaptive voltage scaling (`AVS-48` + `AVS-96` + `avs_reconf`) allows dynamic switching between performance and efficiency modes.
+
+In the TRI-NET trust model, Gamma answers the question: **"I can perform AI inference with verifiable energy consumption and auditable outputs."** All 10 DARPA CLARA Safety Gaps are implemented on-die (inherited from Euler's reasoning layer), and 6 additional PhD-anchored monitors provide continuous runtime attestation of entropy, sparsity, and distance metrics. Gamma's multi-tile BLAKE3 receipt (`multi_tile_receipt`) chains back to Euler's signing infrastructure and ultimately to Phi's root-of-trust identity proof.
+
+### Cross-Die Anchor 0x47C0 — Theorem 36.1
+
+Every TRI-NET die asserts `{uio_out, uo_out} = 0x47C0` on reset. This value is not a magic constant — it is derived from first principles: φ²+φ⁻²=3 (the Lucas L₂ identity) implies `dot4(1,2,3,4) = 0x47C0` in GF16. This derivation is formalised as **PhD Theorem 36.1** (Chapter 36, `flos_70.tex`) — the TG-TRIAD-X theorem proving that a multi-die holographic substrate with LAYER-FROZEN cross-die hash produces deterministic cross-chip ledger outputs. Gamma is the physical instantiation of this theorem at maximum tile footprint. DOI: [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877).
+
+*"Cortex you can measure."*
+
+### Sibling Chips
+
+| Chip | Role | Repository |
+|---|---|---|
+| **Φ Phi** | Identity Layer — Root of Trust | [tt-trinity-phi](https://github.com/gHashTag/tt-trinity-phi) |
+| **E Euler** | Reasoning Layer — Verifiable AI Safety (10 CLARA Gaps) | [tt-trinity-euler](https://github.com/gHashTag/tt-trinity-euler) |
+| **Γ Gamma** (this repo) | Inference Layer — Neuromorphic Surface | [tt-trinity-gamma](https://github.com/gHashTag/tt-trinity-gamma) |
+
+### TRI-NET vs. Alternatives — What Others Cannot Offer
+
+| Property | TRI-NET | Tenstorrent | Etched | Groq |
+|---|---|---|---|---|
+| Open RTL (Apache-2.0) | ✅ | partial | ❌ | ❌ |
+| Math-anchored boot (Lucas POST) | ✅ | ❌ | ❌ | ❌ |
+| CLARA AI Safety Gaps (hardware) | ✅ 10 gaps | ❌ | ❌ | ❌ |
+| On-die DePIN token accumulator | ✅ | ❌ | ❌ | ❌ |
+| Cross-die canonical anchor 0x47C0 | ✅ Theorem 36.1 | ❌ | ❌ | ❌ |
+| Sub-$50 SKU | ✅ Phi ~$2.50 | ❌ | ❌ | ❌ |
+
+TRI-NET competes on **verifiability/$**, not TOPS/$. Performance reference: ~1 GOPS @ ~50 MHz @ ~1 W ternary (projected).
+
+---
+
 **Largest chip of the TRI-1 Triad.** 32 tiles (8×4) of SkyWater SKY130A silicon — the world's first open-PDK neuromorphic chip with **8 cortical columns**, **20-PE GF16 mesh**, **24 SUPER-CROWN modules**, **D2D holographic mesh**, and the full **Crown47 ROM** encoding 47 fundamental constants of physics.
 
 > *"The first chip where physics is the layout."*
