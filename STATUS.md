@@ -119,4 +119,5 @@ flagged them; that follow-up is now closed.
 - [`GF16_BFLOAT16_NMSE.md`](GF16_BFLOAT16_NMSE.md) — GF16 vs bfloat16 NMSE comparison protocol
 - [`TRIPLE_DECK_STATUS.md`](TRIPLE_DECK_STATUS.md) — RBB → FBB → CAP_BOOST status (mostly plan-only on γ)
 - [`SCIENTIFIC_IMPROVEMENT_PLAN.md`](SCIENTIFIC_IMPROVEMENT_PLAN.md) — TRI-NET 2026 plan (γ-side view)
+- [`.github/issues/`](.github/issues/) — 1 EPIC + 16 sub-issue files; local plan IDs, not GitHub issue numbers
 - [`CHANGELOG.md`](CHANGELOG.md) — wave / submission history

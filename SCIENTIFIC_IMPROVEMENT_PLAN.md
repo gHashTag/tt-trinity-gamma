@@ -17,6 +17,21 @@
 
 Last reviewed: 2026-05-18.
 
+## Issue pack
+
+The 16 plan items below are mirrored as markdown files under
+[`.github/issues/`](.github/issues/) with the EPIC at
+[`.github/issues/00_EPIC_2026.md`](.github/issues/00_EPIC_2026.md)
+and per-item files `01_CL-01.md` … `16_OS-03.md`. The
+[`.github/issues/ISSUES_SUMMARY.md`](.github/issues/ISSUES_SUMMARY.md)
+index documents the file format and the create-script contract.
+
+To materialise the pack as real GitHub issues, a maintainer runs
+`bash .github/issues/create_issues.sh --dry-run` to preview, then
+`--confirm` to create. The `#N` style numbers used in the pack are
+**local plan IDs**, not GitHub issue numbers — no GitHub issue
+exists for any plan item until the script is run.
+
 ## Plan-of-record
 
 | Item ID | Track | What γ-surface ships | Status today |
