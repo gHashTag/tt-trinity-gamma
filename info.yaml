@@ -171,6 +171,8 @@ project:
     - "gf32_to_fp32.v"
     # $TRI token accumulator (DePIN proof-of-compute)
     - "tri_token_accumulator.v"
+    # Trinity TRI silicon: champion BPB oracle (TTSKY26c prep)
+    - "champion_bpb_oracle.v"
 
 pinout:
   ui[0]: "load_mode (0=canonical 0x47C0 default, 1=packet path + status_byte)"

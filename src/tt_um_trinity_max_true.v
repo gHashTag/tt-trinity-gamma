@@ -678,6 +678,20 @@ module tt_um_trinity_max_true (
     assign uio_oe  = !ui_in[0] ? 8'hFF : 8'b0000_1111;
 
     // Silence lint
+
+    // ----------------------------------------------------------------
+    // Trinity TRI silicon: champion BPB oracle (TTSKY26c prep)
+    // Pure combinational ROM. R-SI-1 clean. Output folded into _unused.
+    // sel reuses ui_in[7:6] (also in _unused tie-off).
+    // ----------------------------------------------------------------
+    wire [15:0] bpb_oracle_data;
+    wire        bpb_oracle_valid;
+    champion_bpb_oracle u_bpb_oracle (
+        .sel       (ui_in[7:6]),
+        .data_out  (bpb_oracle_data),
+        .valid     (bpb_oracle_valid)
+    );
+
     wire _unused = &{1'b0, mesh_dbg_tile0, ena,
                      uio_in[3:2], uio_in[0],
                      mesh_rcpt_checksum, mesh_rcpt_job_id,
@@ -704,6 +718,7 @@ module tt_um_trinity_max_true (
                      d2d_n_rx_q, d2d_e_rx_q, d2d_s_rx_q, d2d_w_rx_q,
                      holo_out, holo_valid_out,
                      tri_overflow,
+                     bpb_oracle_data, bpb_oracle_valid,
                      1'b0};
 
 endmodule
