@@ -102,11 +102,11 @@ bash scripts/check_trinet_specs.sh
 
 `tt-trinity-gamma` is the **inference and compute surface** of the TRI-NET stack. As the largest die (8×4 tiles, 105 modules), Gamma's mission is provably measurable AI compute: 8 cortical LIF columns with biologically-inspired leaky-integrate-and-fire dynamics, a 20-PE GF16 mesh (`trinity_quad_mesh` 16 PE + `trinity_mesh_2x2` 4 PE), FHRR holographic binding (`holo_lut_pe`, Glava 32), and the complete GF4–GF256 multiplier portfolio — the only die in the triad with full Galois-field multiplication across all widths. The 24 SUPER-CROWN modules include all of Euler's symbolic AI safety stack plus 6 PhD-anchored monitors: `cassini_post`, `plrm_counter`, `bpb_lower_bound_guard`, `nca_entropy_monitor`, `strobe_seed_guard`, and `phi_distance_oracle`. Dual-library zoning (`sky130_fd_sc_hd` + `hdll`) yields approximately 30% leakage reduction, and dual adaptive voltage scaling (`AVS-48` + `AVS-96` + `avs_reconf`) allows dynamic switching between performance and efficiency modes.
 
-In the TRI-NET trust model, Gamma answers the question: **"I can perform AI inference with verifiable energy consumption and auditable outputs."** All 10 DARPA CLARA Safety Gaps are implemented on-die (inherited from Euler's reasoning layer), and 6 additional PhD-anchored monitors provide continuous runtime attestation of entropy, sparsity, and distance metrics. Gamma's multi-tile BLAKE3 receipt (`multi_tile_receipt`) chains back to Euler's signing infrastructure and ultimately to Phi's root-of-trust identity proof.
+In the TRI-NET trust model, Gamma answers the question: **"I can perform AI inference with verifiable energy consumption and auditable outputs."** All 10 DARPA CLARA Safety Gaps are implemented on-die (inherited from Euler's reasoning layer), and 6 additional PhD-anchored monitors provide continuous runtime attestation of entropy, sparsity, and distance metrics. Gamma's multi-tile BLAKE3 receipt (`multi_tile_receipt`) chains back to Euler's signing infrastructure and ultimately to Phi's root-of-trust identity anchor (the deterministic 0x47C0 POST fingerprint).
 
 ### Cross-Die Anchor 0x47C0 — Theorem 36.1
 
-Every TRI-NET die asserts `{uio_out, uo_out} = 0x47C0` on reset. This value is not a magic constant — it is derived from first principles: φ²+φ⁻²=3 (the Lucas L₂ identity) implies `dot4(1,2,3,4) = 0x47C0` in GF16. This derivation is formalised as **PhD Theorem 36.1** (Chapter 36, `flos_70.tex`) — the TG-TRIAD-X theorem proving that a multi-die holographic substrate with LAYER-FROZEN cross-die hash produces deterministic cross-chip ledger outputs. Gamma is the physical instantiation of this theorem at maximum tile footprint. DOI: [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877).
+Every TRI-NET die asserts `{uio_out, uo_out} = 0x47C0` on reset. This value is not a magic constant — it is derived from first principles: φ²+φ⁻²=3 (the Lucas L₂ identity) implies `dot4(1,2,3,4) = 0x47C0` in GF16. This derivation is formalised as **PhD Theorem 36.1** (Chapter 36, `flos_70.tex`) — the TG-TRIAD-X result, which states that a multi-die holographic substrate with a LAYER-FROZEN cross-die hash yields deterministic cross-chip outputs given identical inputs. In hardware, 0x47C0 functions as a deterministic POST / build-provenance fingerprint (a liveness/provenance check, **not** a cryptographic proof of correctness); a returned die emitting a value ≠ 0x47C0 would refute shared provenance. Gamma is the maximum-footprint die in this family. DOI: [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877).
 
 *"Cortex you can measure."*
 
@@ -723,7 +723,7 @@ After reset: `{uio_out[3:0], uo_out}` = **0x47C0** (φ-anchor, Q8.8 domain)
 ## 🎓 PhD Dissertation Context
 
 **Author:** Dmitrii Vasilev · ORCID [0009-0008-4294-6159](https://orcid.org/0009-0008-4294-6159)  
-**Institution:** Saint Petersburg State University (СПбГУ)  
+**Institution:** Saint Petersburg State University (SPbGU)  
 **Defence:** **2026-06-15**  
 **DOI:** [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)
 
@@ -731,7 +731,7 @@ After reset: `{uio_out[3:0], uo_out}` = **0x47C0** (φ-anchor, Q8.8 domain)
 
 > *"One brain, many dies, one frozen hash."*
 
-Glava 36 (Theorem 36.1 — TG-TRIAD-X) proves that a multi-die holographic substrate with LAYER-FROZEN cross-die hash produces **deterministic cross-chip ledger outputs**. GAMMA is the physical instantiation of this theorem.
+Glava 36 (Theorem 36.1 — TG-TRIAD-X) states that a multi-die holographic substrate with a LAYER-FROZEN cross-die hash yields **deterministic cross-chip outputs given identical inputs** — the proof is the external Coq/PhD artefact (DOI [10.5281/zenodo.19227877](https://doi.org/10.5281/zenodo.19227877)), and the silicon's 0x47C0 anchor is the provenance fingerprint that reproduces it, not an on-chip proof. GAMMA is the maximum-footprint die in this family.
 
 ### 14 Falsifiability Witnesses (R7, Appendix B)
 
