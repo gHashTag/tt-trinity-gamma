@@ -72,7 +72,11 @@ module alu9_decoder (
             4'd4: begin sr = (sa < sb) ? sa : sb;              end  // AND (min)
             4'd5: begin sr = (sa > sb) ? sa : sb;              end  // OR  (max)
             4'd6: begin sr = -sa;                              end  // NOT (negate)
-            4'd7: begin sr = sa ^ sb;                          end  // BIND (XOR on sign)
+            4'd7: begin  // BIND = ternary product (bipolar, invertible)
+                if (sa == 0 || sb == 0) sr = 0;
+                else if (sa == sb)      sr = 1;
+                else                    sr = -1;
+            end
             4'd8: begin                                              // BUNDLE (sign-of-sum)
                 if (sa + sb > 0)      sr = 1;
                 else if (sa + sb < 0) sr = -1;
