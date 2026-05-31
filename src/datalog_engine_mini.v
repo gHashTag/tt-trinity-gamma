@@ -61,7 +61,8 @@ module datalog_engine_mini (
     // Outputs
     output reg  [15:0] fact_mask,
     output reg         converged,
-    output reg  [3:0]  iter_count
+    output reg  [3:0]  iter_count,
+    output reg         capped
 );
 
     // -------------------------------------------------------------------
@@ -326,6 +327,7 @@ module datalog_engine_mini (
             fact_mask     <= 16'h0;
             prev_fact_mask <= 16'h0;
             converged     <= 1'b0;
+            capped        <= 1'b0;
             iter_count    <= 4'h0;
             pass_count    <= 4'h0;
             // Initialize clause memory
@@ -345,6 +347,7 @@ module datalog_engine_mini (
             case (state)
                 ST_IDLE: begin
                     converged  <= 1'b0;
+                    capped     <= 1'b0;
                     iter_count <= 4'h0;
                     pass_count <= 4'h0;
                     if (start) begin
@@ -364,7 +367,8 @@ module datalog_engine_mini (
                         converged <= 1'b1;
                         state     <= ST_DONE;
                     end else if (pass_count == 4'h7) begin
-                        // Max 8 iterations — halt regardless
+                        // Max 8 iterations — halt regardless (NOT a true fixpoint)
+                        capped    <= 1'b1;
                         converged <= 1'b1;
                         state     <= ST_DONE;
                     end else begin
