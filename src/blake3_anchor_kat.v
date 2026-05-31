@@ -86,7 +86,7 @@ module blake3_anchor_kat (
                 v[14]<={25'd0, blk_len}; // block length in bytes
                 v[15]<=FLAGS;
                 for (i = 0; i < 16; i = i + 1)
-                    m[i] <= (m_in >> (i*32)) & 32'hFFFFFFFF;
+                    m[i] <= (m_in >> (i << 5)) & 32'hFFFFFFFF; // i*32 (R-SI-1: shift, no `*`)
                 round <= 4'd0; step <= 4'd0; busy <= 1'b1;
             end else if (busy) begin
                 if (round < 7) begin

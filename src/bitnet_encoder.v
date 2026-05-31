@@ -104,7 +104,7 @@ module bitnet_encoder (
                                 // FIX: apply per-neuron ternary weight W2[j][k] (was absent
                                 // -> all 8 outputs identical / rank-1). ternary product of
                                 // sign(h1[k]) with w_gen weight.
-                                w2 = w_gen(10'd512 + j[3:0]*6'd32 + k[5:0]);
+                                w2 = w_gen(10'd512 + ({6'd0, j[3:0]} << 5) + k[5:0]); // j*32 (R-SI-1: shift, no `*`)
                                 if ((|h1[k]) && !w2[1]) begin
                                     if (h1[k][15] == w2[0]) dot = dot + 1;
                                     else                    dot = dot - 1;
