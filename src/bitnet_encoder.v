@@ -68,6 +68,7 @@ module bitnet_encoder (
 
     integer k, j;
     reg signed [15:0] dot;
+    reg [1:0] w2;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -100,8 +101,14 @@ module bitnet_encoder (
                         for (j = 0; j < 8; j = j + 1) begin
                             dot = 0;
                             for (k = 0; k < 32; k = k + 1) begin
-                                if (h1[k][15]) dot = dot - 1;
-                                else if (|h1[k]) dot = dot + 1;
+                                // FIX: apply per-neuron ternary weight W2[j][k] (was absent
+                                // -> all 8 outputs identical / rank-1). ternary product of
+                                // sign(h1[k]) with w_gen weight.
+                                w2 = w_gen(10'd512 + ({6'd0, j[3:0]} << 5) + k[5:0]); // j*32 (R-SI-1: shift, no `*`)
+                                if ((|h1[k]) && !w2[1]) begin
+                                    if (h1[k][15] == w2[0]) dot = dot + 1;
+                                    else                    dot = dot - 1;
+                                end
                             end
                             y_acc[j] <= dot;
                             // Verilog-2005 compatible: assign byte by byte

@@ -86,8 +86,8 @@ module sat_solver_mini (
     // Stack entry: {assign_val[7:0], assign_set[7:0], decided_var[2:0], tried_both[0]}
     // Total: 8 + 8 + 3 + 1 = 20 bits per entry
     // -----------------------------------------------------------------------
-    reg [19:0] bt_stack [0:2];
-    reg [1:0]  bt_depth;  // 0..3
+    reg [19:0] bt_stack [0:7];
+    reg [3:0]  bt_depth;  // 0..8
 
     // -----------------------------------------------------------------------
     // FSM states
@@ -103,7 +103,7 @@ module sat_solver_mini (
     // -----------------------------------------------------------------------
     // Working registers
     // -----------------------------------------------------------------------
-    reg [3:0]  iter_cnt;
+    reg [5:0]  iter_cnt;
     reg        conflict;      // set when a clause is all-false
     reg        changed;       // set when unit prop made progress
     reg        all_satisfied; // set when all valid clauses are satisfied
@@ -686,7 +686,7 @@ module sat_solver_mini (
             all_satisfied <= 1'b0;
             bt_stack[0] <= 20'h0;
             bt_stack[1] <= 20'h0;
-            bt_stack[2] <= 20'h0;
+            bt_stack[2] <= 20'h0; bt_stack[3] <= 20'h0; bt_stack[4] <= 20'h0; bt_stack[5] <= 20'h0; bt_stack[6] <= 20'h0; bt_stack[7] <= 20'h0;
             // Initialize clause memory
             for (k = 0; k < 16; k = k + 1)
                 clause_mem[k] <= 24'h0;
@@ -761,7 +761,7 @@ module sat_solver_mini (
                         state      <= ST_DONE;
                     end else if (any_conflict) begin
                         state <= ST_BACKTRACK;
-                    end else if (bt_depth < 2'd3) begin
+                    end else if (bt_depth < 4'd8) begin
                         // Push stack frame: {assign_val, assign_set, dec_var, tried_both=0}
                         bt_stack[bt_depth] <= {assign_val, assign_set, dec_var, 1'b0};
                         bt_depth <= bt_depth + 2'd1;
@@ -769,7 +769,7 @@ module sat_solver_mini (
                         assign_set[dec_var] <= 1'b1;
                         assign_val[dec_var] <= 1'b1;
                         state <= ST_PROPAGATE;
-                    end else if (iter_cnt >= 4'd7) begin
+                    end else if (iter_cnt >= 6'd40) begin
                         // 8-cycle cap AND stack full — declare UNSAT
                         unsat <= 1'b1;
                         done  <= 1'b1;
@@ -799,7 +799,7 @@ module sat_solver_mini (
                         unsat <= 1'b1;
                         done  <= 1'b1;
                         state <= ST_DONE;
-                    end else if (iter_cnt >= 4'd7) begin
+                    end else if (iter_cnt >= 6'd40) begin
                         // Cycle cap reached
                         unsat <= 1'b1;
                         done  <= 1'b1;
