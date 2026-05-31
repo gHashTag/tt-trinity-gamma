@@ -35,6 +35,7 @@ run gf16  "gf16_sweep.v gf16_mul_gen.v"
 run gf20_24_32 "gf_wide2.v gf20_mul_gen.v gf24_mul_gen.v gf32_mul_gen.v"
 run gf64_128_256 "gf_big_sanity.v gf64_mul_gen.v gf128_mul_gen.v gf256_mul_gen.v"
 run adders_addition "adder_gate.v gf8_add_fixed.v gf12_add_fixed.v"
+run posit16 "posit16_gate.v posit16_quantizer_fixed.v"
 
 echo ">> exact-reference random sweep (gf64/128/256 vs Python Fraction)"
 mkdir -p /tmp/gf16sim
@@ -61,5 +62,5 @@ if iverilog -g2012 -o "$WORK/q43.vvp" fp8_dump.v fp8_e4m3_quantizer.v 2>"$WORK/q
 else echo "  [quantizers] COMPILE FAIL"; cat "$WORK/q.cerr"; fail=1; fi
 
 echo
-if [ "$fail" -eq 0 ]; then echo "GF AUDIT: ALL PASS ✅ (mul + add + quantizers)"; else echo "GF AUDIT: FAILURES ❌"; fi
+if [ "$fail" -eq 0 ]; then echo "GF AUDIT: ALL PASS ✅ (mul + add + quantizers + posit16)"; else echo "GF AUDIT: FAILURES ❌"; fi
 exit $fail
