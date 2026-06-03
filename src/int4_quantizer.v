@@ -12,26 +12,13 @@ module int4_quantizer (
     output reg  [3:0]    int4_out      // Int4 output [S(1) \| D(3)]
 );
 
-    reg signed [15:0] scale;
     reg signed [15:0] scaled;
     reg signed [15:0] zeroed;
     reg signed [15:0] clamped;
-    reg [3:0]          quant;
+    // NB: removed dead 'scale' LUT (scaling uses the shift below, not '*') and the
+    // never-driven 'quant' reg -- both were unused leftovers (FIX 2026-06).
 
     always @(*) begin
-        // Compute scale = 2^scale_exp (simplified LUT)
-        case (scale_exp)
-            4'd0:  scale = 16'h8000;  // 1.0
-            4'd1:  scale = 16'h4000;  // 0.5
-            4'd2:  scale = 16'h2000;  // 0.25
-            4'd3:  scale = 16'h1000;  // 0.125
-            4'd4:  scale = 16'h0800;  // 0.0625 (1/16)
-            4'd5:  scale = 16'h0400;  // 0.03125 (1/32)
-            4'd6:  scale = 16'h0200;  // 0.015625 (1/64)
-            4'd7:  scale = 16'h0100;  // 0.0078125 (1/128)
-            default: scale = 16'h0800;
-        endcase
-
         // Scale: scaled = fp16_in >> scale_exp (R-SI-1: shift instead of *)
         case (scale_exp)
             4'd0:  scaled = fp16_in;
@@ -74,42 +61,21 @@ module int4_dequantizer (
     output reg  signed [15:0] fp16_out   // FP16 output
 );
 
-    reg signed [15:0] scale;
     reg signed [3:0]  int4_signed;
-    reg signed [15:0] dequant;
 
     always @(*) begin
-        // Compute scale
-        case (scale_exp)
-            4'd0:  scale = 16'h8000;  // 1.0
-            4'd1:  scale = 16'h4000;  // 0.5
-            4'd2:  scale = 16'h2000;  // 0.25
-            4'd3:  scale = 16'h1000;  // 0.125
-            4'd4:  scale = 16'h0800;  // 0.0625
-            4'd5:  scale = 16'h0400;  // 0.03125
-            4'd6:  scale = 16'h0200;  // 0.015625
-            4'd7:  scale = 16'h0100;  // 0.0078125
-            default: scale = 16'h0800;
-        endcase
-
         // Sign-extend 3-bit magnitude to 4-bit signed
         if (int4_in[3])
             int4_signed = -{1'b0, int4_in[2:0]};
         else
             int4_signed = {1'b0, int4_in[2:0]};
 
-        // Dequant: fp16_out = int4_signed << scale_exp (R-SI-1: shift instead of *)
-        case (scale_exp)
-            4'd0:  fp16_out = int4_signed;
-            4'd1:  fp16_out = {int4_signed[14:0], 1'b0};
-            4'd2:  fp16_out = {int4_signed[13:0], 2'b0};
-            4'd3:  fp16_out = {int4_signed[12:0], 3'b0};
-            4'd4:  fp16_out = {int4_signed[11:0], 4'b0};
-            4'd5:  fp16_out = {int4_signed[10:0], 5'b0};
-            4'd6:  fp16_out = {int4_signed[9:0],  6'b0};
-            4'd7:  fp16_out = {int4_signed[8:0],  7'b0};
-            default: fp16_out = {int4_signed[11:0], 4'b0};
-        endcase
+        // Dequant: fp16_out = int4_signed << scale_exp  (R-SI-1: shift, no '*').
+        // FIX (2026-06): the per-case form `{int4_signed[14:0], k'b0}` read up to 15
+        // bits from the 4-bit int4_signed (out-of-range, undefined) AND the concat
+        // dropped the sign. Sign-extend to 16 bits, then arithmetic-shift-left by
+        // scale_exp -- correct for negative values, no out-of-range select, no '*'.
+        fp16_out = {{12{int4_signed[3]}}, int4_signed} <<< scale_exp;
     end
 
 endmodule
