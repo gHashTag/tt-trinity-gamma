@@ -17,6 +17,7 @@ SRC  = os.path.join(HERE, "..", "src")
 TOL_ULP = Fraction(1, 2)        # round-to-nearest ties-to-zero: <= 0.5 ULP
 
 RUNGS = {  # name: (total, E, M)
+    "gf12": (12, 4, 7),
     "gf20": (20, 7, 12), "gf24": (24, 9, 14), "gf32": (32, 12, 19),
     "gf64": (64, 24, 39), "gf128": (128, 48, 79),
 }

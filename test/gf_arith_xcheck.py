@@ -80,8 +80,15 @@ def main():
         print("SKIP: iverilog/vvp not found.")
         return 0
     broken = []
+    skipped = 0
     print(f"{'rung':6s} {'want':>16} {'ADD':>16} {'MUL':>16}  verdict")
     for rung, (E, M) in RUNGS.items():
+        if bias(E) == 0:
+            skipped += 1
+            # bias 0 (gf4): "1.0 = exp=bias" collides with the zero code, so this
+            # exponent probe is meaningless -- gf4 is checked by gf4_exhaustive.py.
+            print(f"{rung:6s} {'(skip: bias 0; see gf4_exhaustive.py)':>52}")
+            continue
         r = probe(rung, E, M)
         if r is None:
             print(f"{rung:6s}  (compile/run error)")
@@ -95,10 +102,11 @@ def main():
         if not (add_ok and mul_ok):
             broken.append(rung)
         print(f"{rung:6s} {want:>16} {r.get('ADD'):>16} {r.get('MUL'):>16}  {verdict}")
+    probed = len(RUNGS) - skipped
     print("\n" + "=" * 60)
-    print(f"{len(RUNGS)-len(broken)}/{len(RUNGS)} rungs correct; "
-          f"broken: {', '.join(broken) if broken else 'none'}")
-    print("Reference for a correct fix: gf16 (the only [Verified] rung).")
+    print(f"{probed-len(broken)}/{probed} probed rungs correct; "
+          f"broken: {', '.join(broken) if broken else 'none'} "
+          f"({skipped} skipped: bias 0, see gf4_exhaustive.py)")
     return len(broken)
 
 

@@ -22,6 +22,7 @@ SRC  = os.path.join(HERE, "..", "src")
 
 # name: (total, E, M, NAN, PINF, NINF, ZERO)  -- constants copied verbatim
 RUNGS = {
+    "gf12":  (12,  4,  7, "12'hFF1", "12'h7F0", "12'hFF0", "12'h000"),
     "gf20":  (20,  7, 12, "20'hFF801", "20'h7F800", "20'hFF800", "20'h00000"),
     "gf24":  (24,  9, 14, "24'hFFF801", "24'h7FF800", "24'hFFF800", "24'h000000"),
     "gf32":  (32, 12, 19, "32'hFFFFF801", "32'h7FFF8000", "32'hFFFFF800", "32'h00000000"),

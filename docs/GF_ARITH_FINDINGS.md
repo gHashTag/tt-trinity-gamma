@@ -25,16 +25,42 @@ which validates the check.
   finite-normal pairs/rung against an EXACT-RATIONAL reference (needed because
   gf64/gf128 overflow IEEE double) -- max 0.500 ULP on every rung.
 
-`gf_arith_xcheck.py` now reports **7/9 correct** (gf8, gf16, gf20, gf24, gf32,
-gf64, gf128). Remaining: **gf4** (add) and **gf12** (add+mul).
+- **GF12** (`gf12_add` + `gf12_mul`): mul had the same width bug as gf20-128
+  (`mant_product` `[14:0]` not `[15:0]`); add had a too-narrow `final_exp` so the
+  underflow test flushed every valid exponent >= 8 to zero (1.0+1.0 -> exp 8 -> 0).
+  Both regenerated (add via `gen_gf_add_fix.py`, mul via `gen_gf_mul_fix.py`) and
+  cross-checked: probe OK, mul sweep 0.500 ULP, add sweep 0.625 ULP.
+- **GF4** (`gf4_add` + `gf4_mul`): degenerate format (bias 0 -> only finite
+  exponent is 0; representable set {+-0,+-1.25,+-1.5,+-1.75,+-Inf,NaN}, 1.0 is a
+  hole). `gf4_mul` had been a non-float toy (`mant_a+mant_b`) with an is_inf test
+  aliased to zero. Both rewritten as round-to-nearest into that grid and verified
+  EXHAUSTIVELY (256/256 pairs) by `test/gf4_exhaustive.py`. The exponent probe
+  cannot test gf4 (its "1.0 = exp=bias" collides with the zero code), so it now
+  skips bias-0 rungs and gf4 relies on the exhaustive test.
+
+**The whole ladder is now verified.** `gf_arith_xcheck.py` reports **8/8 probed
+rungs correct** (gf8, gf12, gf16, gf20, gf24, gf32, gf64, gf128) and gf4 passes
+its 256/256 exhaustive check. A CI job (`goldenfloat-arith` in
+`.github/workflows/test.yaml`) runs the probe + both exhaustive checks + both
+value sweeps on every push.
+
+### Caveat: gf16_add legacy imprecision (not fixed)
+The value sweep also revealed that **gf16_add** -- the silicon-`[Verified]` rung --
+is itself imprecise: its truncating alignment loses the guard bit, so e.g.
+`0.5009765625 + (-1.0)` returns `-0.5` instead of the exactly-representable
+`-0.4990234375` (`0xbbfe`), up to ~512 ULP on cancellation. The fixed gf8/gf12
+add units use guard/round/sticky and stay < 1 ULP, i.e. they are MORE accurate
+than the reference rung. gf16 is left untouched here because it is the
+silicon-validated unit; bringing it onto the guard/round/sticky path (it can reuse
+`gen_gf_add_fix.py`) is a candidate follow-up.
 
 ## Per-rung verdict (mantissa=0 exponent probe: 1+1 and 2*1 must give exp = bias+1)
 
 | rung | add | mul | note |
 | --- | :-: | :-: | --- |
-| gf4   | ❌ | ✅ | add exp wrong |
+| **gf4**  | ✅ | ✅ | **FIXED 2026-06** -- 256/256 exhaustive (degenerate fmt) |
 | **gf8** | ✅ | ✅ | **FIXED 2026-06** -- 65536/65536 exhaustive, <=1 ULP |
-| gf12  | ❌ | ❌ | still broken (add+mul) -- next target |
+| **gf12** | ✅ | ✅ | **FIXED 2026-06** -- add 0.625 ULP, mul 0.5 ULP |
 | **gf16** | ✅ | ✅ | the `[Verified]` reference |
 | **gf20** | ✅ | ✅ | **mul FIXED 2026-06** -- sweep 0.5 ULP |
 | **gf24** | ✅ | ✅ | **mul FIXED 2026-06** -- sweep 0.5 ULP |
@@ -102,15 +128,19 @@ The special-value prologue and constants are preserved verbatim (their conforman
 is a separate question). Verified by the exponent probe + `test/gf_mul_sweep.py`
 (7200 finite-normal pairs/rung vs an exact-rational reference; max 0.5 ULP each).
 
-## Recommended fix (remaining rungs)
+## Status: ladder complete; follow-ups
 
-1. Use GF16 / the new GF8 as templates (GF8 is the right template for the small
-   rungs: it adds proper guard/sticky rounding that a 4-bit mantissa needs).
-2. Remaining: **gf4** (add) and **gf12** (add+mul). gf4 and gf12 are <= 12 bits, so
-   gf4 is exhaustively checkable and gf12 nearly so (2^24 mul pairs; sampled add).
-   Re-run `test/gf_arith_xcheck.py` after each.
-3. Treat `gf_arith_xcheck.py` as the regression gate; wire it into CI only once
-   all rungs pass (it currently exits non-zero = number of broken rungs; now 2).
+All gf4..gf128 add/mul units are now fixed and verified, and the suite is a CI gate
+(`goldenfloat-arith`). Two open items remain, both orthogonal to the datapath:
+
+1. **gf16_add legacy imprecision** (see caveat above) -- reuse `gen_gf_add_fix.py`
+   to bring the silicon-`[Verified]` rung onto the guard/round/sticky path, if a
+   re-validation of that rung is in scope.
+2. **GF256 bias open conjecture** -- its stored exponent bias does not reconcile
+   with `2^(E-1)-1`; pin the convention from the t27 spec before cross-checking it.
+3. **gfN special-value encodings** -- several rungs' NaN/Inf constants look
+   inconsistent (an "Inf" whose mantissa field is nonzero, which the unit's own
+   `is_inf` test would read as NaN). Audit against the canonical spec.
 
 GF256 is excluded from the probe: its stored exponent bias is itself
 `[Open conjecture]` (does not reconcile with `2^(E-1)-1`), a separate issue.

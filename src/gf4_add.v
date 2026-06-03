@@ -2,7 +2,17 @@
 // t27/rtl_gen/gf4_add.v
 // GoldenFloat4 Addition Unit - Extreme Compression
 // Layout: [S(1) | E(1) | M(2)] - BIAS = 0
-// φ-distance: 0.118 (not optimal, but minimal bits)
+//
+// GF4 is degenerate: with bias 0 the only finite exponent is e=0 (e=1 is the
+// special code), so EVERY finite value shares exponent 2^0 and the representable
+// set is just {+-0, +-1.25, +-1.5, +-1.75, +-Inf, NaN} -- the significand is
+// {1,mant} = 4+mant in quarter units (e0m0 is zero, so 1.0 is NOT representable;
+// the smallest nonzero magnitude is 1.25). This makes "add" a round-to-nearest
+// into that tiny grid (spacing 0.25, overflow above 1.875). Rewritten 2026-06 to
+// do exactly that and verified exhaustively (256/256 pairs) by test/gf4_exhaustive
+// .py; the generic exponent probe (test/gf_arith_xcheck.py) skips gf4 because its
+// "1.0 = exp=bias" assumption collides with the zero code when bias=0.
+// Encodings: +0=0x0 -0=0x8 +Inf=0x4 -Inf=0xC NaN=0xE; 1.25/1.5/1.75 = m=1/2/3.
 
 `default_nettype none
 module gf4_add (
@@ -11,9 +21,6 @@ module gf4_add (
     output reg  [3:0] result
 );
 
-    localparam BIAS    = 1'd0;
-    localparam EXP_MAX = 1'd1;
-
     wire        sign_a = a[3];
     wire        exp_a  = a[2];
     wire [1:0]  mant_a = a[1:0];
@@ -21,102 +28,55 @@ module gf4_add (
     wire        exp_b  = b[2];
     wire [1:0]  mant_b = b[1:0];
 
-    wire is_zero_a    = (exp_a == 1'd0) && (mant_a == 2'd0);
-    wire is_zero_b    = (exp_b == 1'd0) && (mant_b == 2'd0);
-    wire is_special_a = (exp_a == EXP_MAX);
-    wire is_special_b = (exp_b == EXP_MAX);
-    wire is_inf_a     = is_special_a && (mant_a == 2'd0);
-    wire is_inf_b     = is_special_b && (mant_b == 2'd0);
-    wire is_nan_a     = is_special_a && (mant_a != 2'd0);
-    wire is_nan_b     = is_special_b && (mant_b != 2'd0);
+    wire is_zero_a = (exp_a == 1'b0) && (mant_a == 2'd0);
+    wire is_zero_b = (exp_b == 1'b0) && (mant_b == 2'd0);
+    wire is_inf_a  = (exp_a == 1'b1) && (mant_a == 2'd0);
+    wire is_inf_b  = (exp_b == 1'b1) && (mant_b == 2'd0);
+    wire is_nan_a  = (exp_a == 1'b1) && (mant_a != 2'd0);
+    wire is_nan_b  = (exp_b == 1'b1) && (mant_b != 2'd0);
 
-    wire a_larger = (exp_a > exp_b) || ((exp_a == exp_b) && (mant_a >= mant_b));
-
-    reg [1:0]  big_exp, result_exp;
-    reg [2:0]  big_fm, small_fm;
-    reg [3:0]  sum_m;
-    reg        big_sign, small_sign, result_sign;
-    reg [2:0]  norm;
-    reg        cancel;
+    // Signed significands in quarter units (4 + mant -> 4..7); range -7..7.
+    reg signed [5:0] sva, svb, sum;
+    reg [5:0] mag;          // |sum| in quarter units, 0..14
+    reg       rsign;
 
     always @(*) begin
-        cancel = 0;
-        result_exp = 0;
-        norm = 0;
-        result_sign = 0;
-        big_exp = 0;
-        big_fm = 0;
-        big_sign = 0;
-        small_fm = 0;
-        small_sign = 0;
-        sum_m = 0;
+        sva = 0; svb = 0; sum = 0; mag = 0; rsign = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 4'hE;  // NaN pattern for GF4
+            result = 4'hE;
         else if (is_inf_a && is_inf_b && (sign_a != sign_b))
-            result = 4'hE;  // NaN
+            result = 4'hE;                                  // Inf - Inf = NaN
         else if (is_inf_a)
-            result = sign_a ? 4'hC : 4'h4;  // Inf
+            result = sign_a ? 4'hC : 4'h4;
         else if (is_inf_b)
-            result = sign_b ? 4'hC : 4'h4;  // Inf
+            result = sign_b ? 4'hC : 4'h4;
         else if (is_zero_a && is_zero_b)
-            result = 4'h0;  // Zero
+            result = 4'h0;
         else if (is_zero_a)
             result = b;
         else if (is_zero_b)
             result = a;
         else begin
-            if (a_larger) begin
-                big_exp    = exp_a;
-                big_fm     = {1'b1, mant_a};
-                big_sign   = sign_a;
-                small_fm   = {1'b1, mant_b};
-                small_sign = sign_b;
+            sva = sign_a ? -$signed({3'b000, 1'b1, mant_a}) : $signed({3'b000, 1'b1, mant_a});
+            svb = sign_b ? -$signed({3'b000, 1'b1, mant_b}) : $signed({3'b000, 1'b1, mant_b});
+            sum = sva + svb;
+            if (sum == 0) begin
+                result = 4'h0;
             end else begin
-                big_exp    = exp_b;
-                big_fm     = {1'b1, mant_b};
-                big_sign   = sign_b;
-                small_fm   = {1'b1, mant_a};
-                small_sign = sign_a;
-            end
-
-            result_exp = big_exp;
-
-            if (big_sign == small_sign) begin
-                sum_m = {1'b0, big_fm} + {1'b0, small_fm};
-                result_sign = big_sign;
-            end else begin
-                sum_m = {1'b0, big_fm} - {1'b0, small_fm};
-                result_sign = big_sign;
-                if (sum_m == 4'd0)
-                    cancel = 1;
-            end
-
-            if (!cancel) begin
-                if (sum_m[3]) begin
-                    norm = sum_m[2:0];
-                end else if (sum_m[2]) begin
-                    norm = {sum_m[2:1], 1'b0};
-                    result_exp = result_exp - 1'b1;
-                end else if (sum_m[1]) begin
-                    norm = {sum_m[1], 2'b00};
-                    result_exp = result_exp - 2'b10;
-                end else if (sum_m[0]) begin
-                    norm = {1'b1, 3'b000};
-                    result_exp = result_exp - 2'b11;
-                end else begin
-                    norm = 3'b0;
-                    result_exp = result_exp - 2'b10;
-                end
-
-                if (result_exp[1])
-                    result = result_sign ? 4'h8 : 4'h0;  // Underflow
-                else if (result_exp[0] >= EXP_MAX)
-                    result = result_sign ? 4'hC : 4'h4;  // Overflow to Inf
+                rsign = sum[5];
+                mag   = sum[5] ? $unsigned(-sum) : $unsigned(sum);   // 0..14 quarters
+                // round to nearest grid point {0,5,6,7} quarters; >=8 -> Inf
+                if (mag <= 6'd2)
+                    result = rsign ? 4'h8 : 4'h0;           // -> 0
+                else if (mag <= 6'd5)
+                    result = {rsign, 1'b0, 2'b01};          // 1.25
+                else if (mag == 6'd6)
+                    result = {rsign, 1'b0, 2'b10};          // 1.5
+                else if (mag == 6'd7)
+                    result = {rsign, 1'b0, 2'b11};          // 1.75
                 else
-                    result = {result_sign, result_exp, norm[1:0]};
-            end else begin
-                result = 4'h0;  // Cancel to zero
+                    result = rsign ? 4'hC : 4'h4;           // overflow -> Inf
             end
         end
     end

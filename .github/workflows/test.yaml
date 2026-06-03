@@ -41,6 +41,24 @@ jobs:
           cd test
           make SIM=icarus
 
+  goldenfloat-arith:
+    name: GoldenFloat rung arithmetic cross-check
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install IVerilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog python3
+
+      - name: Cross-check gfN add/mul (probe + exhaustive + value sweeps)
+        run: |
+          python3 test/gf_arith_xcheck.py   # exponent probe, 8/8 + gf4 skipped
+          python3 test/gf4_exhaustive.py    # gf4: all 256 pairs (add+mul)
+          python3 test/gf8_exhaustive.py    # gf8: all 65536 pairs (add+mul)
+          python3 test/gf_add_sweep.py      # gf8/gf12 add vs exact-rational ref
+          python3 test/gf_mul_sweep.py      # gf12..gf128 mul vs exact-rational ref
+
   yosys-rsi1-audit:
     name: R-SI-1 audit (Yosys)
     runs-on: ubuntu-24.04
