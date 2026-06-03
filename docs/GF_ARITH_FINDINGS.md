@@ -179,17 +179,29 @@ cancellation + overflow):
 | unit | original (shipped silicon) | gf16_v2 (corrected) |
 | --- | --- | --- |
 | gf16_add | up to **512 ULP**; > 0.5 ULP on 753 pairs | <= **0.5 ULP** |
-| gf16_mul (in-range) | up to **512 ULP** | <= **0.5 ULP** |
-| gf16_mul (overflow) | **0 / 81** produce Inf (all flush to 0) | **81 / 81** -> Inf |
+| gf16_mul (rounding overflow) | **~0.072% of NORMAL products HALVED** (see below) | correct |
+| gf16_mul (format overflow) | **0 / 81** produce Inf (all flush to 0) | **81 / 81** -> Inf |
 
-**Respin risk assessment:** the errors concentrate in two regimes the stress set
-targets on purpose -- (a) subtractive cancellation of near-equal operands, and
-(b) products that overflow the format. The fabricated die was validated on
-near-1.0 MNIST / IGLA workloads, which avoid both regimes (no large cancellation,
-no overflow), so the latent bugs are **unlikely to affect the shipped chip's
-intended use** -- but any workload that cancels or overflows in gf16 would be wrong.
-`gf16_v2_*` is the drop-in correction for a future tapeout; no other rung is
-affected (gf4..gf256 are all fixed and verified).
+### gf16_mul rounding-overflow defect (ACTIVE on silicon -- found loop 127)
+`gf16_mul` declares `mant_rounded` as `[8:0]` (M=9 bits, not M+1), so `mant_out + 1`
+WRAPS when the rounded mantissa is all-ones (`0x1FF`), and the overflow test
+`mant_rounded[9]` reads a nonexistent bit (verilator `SELRANGE`, always 0). When a
+product mantissa rounds up across a binade boundary, the exponent is NOT
+incremented -> the result is **one binade too small (exactly halved)**.
+`test/gf16_mul_silicon_bug.py` sweeps all 512x512 mantissa pairs at unit exponent
+(the normalized-operand regime a MAC runs) vs the corrected `gf16_v2_mul`:
+**189 / 262144 = 0.072%** of products differ, and **all 189 are exactly halved**
+(e.g. `1.002 x 1.996 = 2.0` returns `1.0`).
+
+**Respin risk -- REVISED:** this defect hits NORMAL near-1.0 products, so unlike the
+cancellation/format-overflow caveats it is **NOT avoided by the validated MNIST/IGLA
+workload** -- about 0.07% of gf16 multiplies on the shipped die are silently halved,
+which perturbs every dot-product / MAC accumulation by a small, data-dependent
+amount. The accuracy impact is likely small (a sparse 2x error on individual terms,
+diluted in a sum) but it is real and on-path, which **strengthens the case for a
+respin** relative to the earlier (cancellation/overflow-only) assessment.
+`gf16_v2_mul` is the drop-in correction (verified, `test/gf16_v2_verify.py`); no
+other rung is affected (gf4..gf256 all fixed and verified).
 
 ## Status: ladder complete
 
