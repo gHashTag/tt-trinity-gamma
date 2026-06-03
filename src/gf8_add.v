@@ -1,7 +1,19 @@
 // SPDX-License-Identifier: Apache-2.0
 // t27/rtl_gen/gf8_add.v
 // GoldenFloat8 Addition Unit
-// Layout: [S(1) | E(3) | M(4)] - BIAS = 3
+// Layout: [S(1) | E(3) | M(4)] - BIAS = 3, value = (-1)^S (1 + M/16) 2^(E-3).
+//
+// Rewritten 2026-06. The previous version mapped the post-add leading bit to the
+// wrong position and the wrong exponent direction (sum_m[5] -> exp-1, sum_m[4] ->
+// exp-2), so e.g. 1.0 + 1.0 produced 0.5 instead of 2.0. This version implements
+// a proper float add: significands carry 3 guard bits, alignment captures a
+// sticky bit, the post-add leading 1 is found by priority and renormalized to a
+// fixed position, and the 4-bit result mantissa is rounded to nearest, ties to
+// even. (The 3 guard bits matter for a 4-bit mantissa: a naive truncating align,
+// as in the wider gf16 unit, loses up to ~16 ULP on subtractive cancellation;
+// here the max error over all inputs is < 1 ULP -- see test/gf8_exhaustive.py,
+// 65536/65536 pairs vs an independent value-based reference.)
+// Specials: NaN=0xF1, +/-Inf=0x70/0xF0, +/-0=0x00/0x80.
 
 `default_nettype none
 module gf8_add (
@@ -10,8 +22,7 @@ module gf8_add (
     output reg  [7:0]  result
 );
 
-    localparam BIAS    = 3'd3;
-    localparam EXP_MAX = 3'd7;
+    localparam EXP_MAX = 3'd7;   // add works with raw exponents; bias cancels
 
     wire        sign_a = a[7];
     wire [2:0]  exp_a  = a[6:4];
@@ -31,37 +42,24 @@ module gf8_add (
 
     wire a_larger = (exp_a > exp_b) || ((exp_a == exp_b) && (mant_a >= mant_b));
 
-    reg [3:0]  big_exp, shift, result_exp;
-    reg [5:0]  big_fm, small_fm;
-    reg [6:0]  sum_m;
     reg        big_sign, small_sign, result_sign;
-    reg [4:0]  norm;
-    reg        g_bit, r_bit, s_bit;
-    reg [4:0]  rounded;
-    reg [3:0]  final_exp;
-    reg [3:0]  final_mant;
-    reg [7:0]  fr;
-    reg        cancel;
+    reg [2:0]  big_exp, small_exp;
+    reg [3:0]  big_m, small_m;
+    reg [7:0]  big_ext, small_ext, shifted;  // {1'b1, mant[3:0], 3 guard bits}
+    reg [3:0]  shamt;
+    reg        sticky_shift;
+    reg [8:0]  sum_m;                        // 9-bit: room for add carry
+    reg signed [6:0] rexp;                   // running exponent (can go negative)
+    reg [3:0]  mant4;
+    reg        g, r, s, round_up;
+    reg [4:0]  mant_round;                   // 5-bit: catches mantissa overflow
 
     always @(*) begin
-        cancel = 0;
-        result_exp = 0;
-        norm = 0;
-        g_bit = 0;
-        r_bit = 0;
-        s_bit = 0;
-        rounded = 0;
-        final_exp = 0;
-        final_mant = 0;
-        fr = 0;
-        result_sign = 0;
-        big_exp = 0;
-        big_fm = 0;
-        big_sign = 0;
-        small_fm = 0;
-        small_sign = 0;
-        shift = 0;
-        sum_m = 0;
+        big_sign = 0; small_sign = 0; result_sign = 0;
+        big_exp = 0; small_exp = 0; big_m = 0; small_m = 0;
+        big_ext = 0; small_ext = 0; shifted = 0; shamt = 0; sticky_shift = 0;
+        sum_m = 0; rexp = 0; mant4 = 0; g = 0; r = 0; s = 0; round_up = 0;
+        mant_round = 0;
 
         if (is_nan_a || is_nan_b)
             result = 8'hF1;
@@ -79,91 +77,87 @@ module gf8_add (
             result = a;
         else begin
             if (a_larger) begin
-                big_exp    = {1'b0, exp_a};
-                big_fm     = {1'b1, mant_a};
-                big_sign   = sign_a;
-                small_fm   = {1'b1, mant_b};
-                small_sign = sign_b;
+                big_sign  = sign_a; big_exp  = exp_a; big_m  = mant_a;
+                small_sign= sign_b; small_exp= exp_b; small_m= mant_b;
             end else begin
-                big_exp    = {1'b0, exp_b};
-                big_fm     = {1'b1, mant_b};
-                big_sign   = sign_b;
-                small_fm   = {1'b1, mant_a};
-                small_sign = sign_a;
+                big_sign  = sign_b; big_exp  = exp_b; big_m  = mant_b;
+                small_sign= sign_a; small_exp= exp_a; small_m= mant_a;
             end
 
-            shift = big_exp - {1'b0, (a_larger ? exp_b : exp_a)};
-            result_exp = big_exp;
+            big_ext   = {1'b1, big_m,   3'b000};
+            small_ext = {1'b1, small_m, 3'b000};
+            shamt     = {1'b0, big_exp} - {1'b0, small_exp};   // 0..6
 
-            case (shift)
-                4'd0:  small_fm = small_fm;
-                4'd1:  small_fm = {1'b0, small_fm[4:1]};
-                4'd2:  small_fm = {2'b00, small_fm[4:2]};
-                4'd3:  small_fm = {3'b000, small_fm[4:3]};
-                4'd4:  small_fm = {4'b0000, small_fm[4]};
-                default: small_fm = 6'd0;
-            endcase
-
-            if (big_sign == small_sign) begin
-                sum_m = {1'b0, big_fm} + {1'b0, small_fm};
-                result_sign = big_sign;
+            // Align the smaller operand, capturing the OR of the bits shifted
+            // out as a sticky bit (needed for correct round-to-nearest).
+            if (shamt >= 4'd8) begin
+                shifted = 8'd0;
+                sticky_shift = |small_ext;
             end else begin
-                sum_m = {1'b0, big_fm} - {1'b0, small_fm};
-                result_sign = big_sign;
-                if (sum_m == 7'd0)
-                    cancel = 1;
+                shifted = small_ext >> shamt;
+                sticky_shift = |(small_ext & ((8'd1 << shamt) - 8'd1));
             end
 
-            if (!cancel) begin
-                if (sum_m[6]) begin
-                    result_exp = result_exp + 4'd1;
-                    norm  = sum_m[5:1];
-                    g_bit = sum_m[0];
-                    r_bit = 1'b0;
-                    s_bit = 1'b0;
+            result_sign = big_sign;
+            rexp = $signed({4'b0, big_exp});
+
+            if (big_sign == small_sign)
+                sum_m = {1'b0, big_ext} + {1'b0, shifted};
+            else
+                sum_m = {1'b0, big_ext} - {1'b0, shifted};  // big >= small in mag
+
+            if (sum_m == 9'd0) begin
+                result = 8'h00;                              // exact cancellation
+            end else begin
+                // Renormalize: bring the leading 1 to bit7; mantissa is the next
+                // 4 bits, with guard/round/sticky below.
+                if (sum_m[8]) begin
+                    rexp = rexp + 7'sd1;
+                    mant4 = sum_m[7:4]; g = sum_m[3]; r = sum_m[2];
+                    s = (|sum_m[1:0]) | sticky_shift;
+                end else if (sum_m[7]) begin
+                    mant4 = sum_m[6:3]; g = sum_m[2]; r = sum_m[1];
+                    s = sum_m[0] | sticky_shift;
+                end else if (sum_m[6]) begin
+                    rexp = rexp - 7'sd1;
+                    mant4 = sum_m[5:2]; g = sum_m[1]; r = sum_m[0]; s = sticky_shift;
                 end else if (sum_m[5]) begin
-                    norm = sum_m[5:1];
-                    result_exp = result_exp - 4'd1;
+                    rexp = rexp - 7'sd2;
+                    mant4 = sum_m[4:1]; g = sum_m[0]; r = 1'b0; s = sticky_shift;
                 end else if (sum_m[4]) begin
-                    norm = {sum_m[4:1], 1'b0};
-                    result_exp = result_exp - 4'd2;
+                    rexp = rexp - 7'sd3;
+                    mant4 = sum_m[3:0]; g = 1'b0; r = 1'b0; s = sticky_shift;
                 end else if (sum_m[3]) begin
-                    norm = {sum_m[3:1], 2'b00};
-                    result_exp = result_exp - 4'd3;
+                    rexp = rexp - 7'sd4;
+                    mant4 = {sum_m[2:0], 1'b0}; s = sticky_shift;
                 end else if (sum_m[2]) begin
-                    norm = {sum_m[2:1], 3'b000};
-                    result_exp = result_exp - 4'd4;
+                    rexp = rexp - 7'sd5;
+                    mant4 = {sum_m[1:0], 2'b00}; s = sticky_shift;
                 end else if (sum_m[1]) begin
-                    norm = {sum_m[1], 4'b0000};
-                    result_exp = result_exp - 4'd5;
+                    rexp = rexp - 7'sd6;
+                    mant4 = {sum_m[0], 3'b000}; s = sticky_shift;
                 end else begin
-                    norm = {1'b1, 4'b0000};
-                    result_exp = result_exp - 4'd6;
+                    rexp = rexp - 7'sd7;
+                    mant4 = 4'b0000; s = sticky_shift;
                 end
 
-                if (g_bit && (r_bit || s_bit))
-                    rounded = norm + 5'd1;
-                else
-                    rounded = norm;
-
-                if (rounded < norm) begin
-                    final_exp  = result_exp + 4'd1;
-                    final_mant = 4'd0;
+                round_up   = g && (r || s || mant4[0]);      // nearest, ties even
+                mant_round = {1'b0, mant4} + (round_up ? 5'd1 : 5'd0);
+                if (mant_round[4]) begin                     // mantissa overflow
+                    rexp  = rexp + 7'sd1;
+                    mant4 = 4'd0;
                 end else begin
-                    final_exp  = result_exp;
-                    final_mant = norm[3:0];
+                    mant4 = mant_round[3:0];
                 end
 
-                if (final_exp[3])
-                    fr = result_sign ? 8'h80 : 8'h00;
-                else if (final_exp[2:0] >= EXP_MAX)
-                    fr = result_sign ? 8'hF0 : 8'h70;
+                if (rexp < 0)
+                    result = result_sign ? 8'h80 : 8'h00;            // underflow
+                else if (rexp >= 7)
+                    result = result_sign ? 8'hF0 : 8'h70;            // overflow
+                else if (rexp == 0 && mant4 == 4'd0)
+                    result = result_sign ? 8'h80 : 8'h00;            // 0.125 hole
                 else
-                    fr = {result_sign, final_exp[2:0], final_mant};
-
-                result = fr;
-            end else begin
-                result = 8'h00;
+                    result = {result_sign, rexp[2:0], mant4};
             end
         end
     end

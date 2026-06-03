@@ -3,22 +3,31 @@
 ## Summary
 
 A semantic cross-check of the `gfN_add` / `gfN_mul` units in `src/` found that
-**only GF16 is correct**; every other rung (gf4, gf8, gf12, gf20, gf24, gf32,
-gf64, gf128) has a broken add and/or mul. GF16 is the only rung carrying the
-`[Verified]` tag (FPGA + MNIST + IGLA RACE); the others are `[Spec] + RTL` and had
-never been semantically cross-checked against the float arithmetic they implement.
+originally **only GF16 was correct**; every other rung (gf4, gf8, gf12, gf20,
+gf24, gf32, gf64, gf128) had a broken add and/or mul. GF16 is the only rung
+carrying the `[Verified]` tag (FPGA + MNIST + IGLA RACE); the others are
+`[Spec] + RTL` and had never been semantically cross-checked against the float
+arithmetic they implement.
 
 This was found by `test/gf_arith_xcheck.py` (rung-size-agnostic exponent probe;
 exact for every rung, no host-float overflow). The same method **passes GF16**,
 which validates the check.
+
+**Status update (2026-06): GF8 is now fixed and exhaustively verified.** Both
+`gf8_add` and `gf8_mul` were rewritten and cross-checked over all 65536 (a,b)
+input pairs against an independent value-based reference (`test/gf8_exhaustive.py`):
+**65536/65536 pass**, max error **0.719 ULP (add) / 0.500 ULP (mul)** -- i.e.
+faithful round-to-nearest. `gf_arith_xcheck.py` now reports 2/9 correct (gf16, gf8).
+The remaining seven rungs (gf4, gf12, gf20, gf24, gf32, gf64, gf128) are still
+broken and are the next targets.
 
 ## Per-rung verdict (mantissa=0 exponent probe: 1+1 and 2*1 must give exp = bias+1)
 
 | rung | add | mul | note |
 | --- | :-: | :-: | --- |
 | gf4   | ❌ | ✅ | add exp wrong |
-| gf8   | ❌ | ❌ | add gives 0.5 for 1+1; mul gives 4.0 for 2*1 |
-| gf12  | ❌ | ❌ | |
+| **gf8** | ✅ | ✅ | **FIXED 2026-06** -- 65536/65536 exhaustive, <=1 ULP |
+| gf12  | ❌ | ❌ | (was add+mul broken) |
 | **gf16** | ✅ | ✅ | the `[Verified]` reference |
 | gf20  | ✅ | ❌ | mul off-by-one (half) |
 | gf24  | ✅ | ❌ | mul off-by-one (half) |
@@ -26,9 +35,9 @@ which validates the check.
 | gf64  | ✅ | ❌ | mul off-by-one |
 | gf128 | ✅ | ❌ | mul off-by-one |
 
-A fuller value-domain sweep of gf8 (all 65536 pairs vs an independent
-decode->fp32->op->encode reference) showed add 134/256 and mul 148/256 sampled
-pairs wrong, with results systematically ~4x too small.
+The original gf8 was the worst case (both broken): a fuller value-domain sweep
+showed add 134/256 and mul 148/256 sampled pairs wrong, results systematically
+~4x too small. The fix is described under "GF8 fix" below.
 
 ## Root cause (example: `src/gf8_mul.v`)
 
@@ -53,14 +62,33 @@ GF16 is right.
 - Status: the broken rungs are `[Spec] + RTL`, not `[Verified]` — consistent with
   never having been silicon/MNIST-checked.
 
-## Recommended fix
+## GF8 fix (2026-06, done)
 
-1. Use GF16's (correct) align/normalize/round logic as the template.
-2. Fix one rung at a time, starting with gf8 (8-bit -> full 65536-pair exhaustive
-   cross-check feasible), re-running `test/gf_arith_xcheck.py` plus a value-domain
-   sweep after each.
+- `gf8_mul`: the implicit-1 mantissa product is now a full 10-bit value (was
+  truncated in a `[8:0]` reg); normalize is `prod[9] -> exp+1` else stay, with the
+  mantissa taken from the bits just below the leading 1 and guard/round/sticky
+  below that; round-to-nearest ties-to-zero, exactly like `gf16_mul`.
+- `gf8_add`: significands carry 3 guard bits, alignment captures a sticky bit, the
+  post-add leading 1 is found by priority and renormalized, and the 4-bit mantissa
+  is rounded to nearest, ties-to-even. (A naive truncating align -- as the wider
+  gf16 unit uses -- loses up to ~16 ULP on subtractive cancellation at a 4-bit
+  mantissa; the guard bits bring it to < 1 ULP.)
+- Verification: `test/gf8_exhaustive.py` drives all 65536 (a,b) pairs through both
+  units (iverilog) and compares each result, in ULPs, to an independent value-based
+  reference (decode -> exact float -> op). 65536/65536 pass; max error 0.719 ULP
+  (add), 0.500 ULP (mul). The reference is non-circular: it checks the produced
+  numeric value, not the RTL's bit slicing. Specials (NaN / +-Inf / +-0 / the
+  e0m0=zero "0.125 hole" / round-to-Inf at the top binade) are all checked.
+
+## Recommended fix (remaining rungs)
+
+1. Use GF16 / the new GF8 as templates (GF8 is the right template for the small
+   rungs: it adds proper guard/sticky rounding that a 4-bit mantissa needs).
+2. Fix one rung at a time, re-running `test/gf_arith_xcheck.py` after each, plus --
+   for any rung <= 16 bits -- a full exhaustive value-domain sweep modeled on
+   `test/gf8_exhaustive.py`.
 3. Treat `gf_arith_xcheck.py` as the regression gate; wire it into CI only once
-   all rungs pass (it currently exits non-zero = number of broken rungs).
+   all rungs pass (it currently exits non-zero = number of broken rungs; now 7).
 
 GF256 is excluded from the probe: its stored exponent bias is itself
 `[Open conjecture]` (does not reconcile with `2^(E-1)-1`), a separate issue.
