@@ -16,11 +16,29 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SRC  = os.path.join(HERE, "..", "src")
 G = 3  # guard bits below the significand
 
-# name: (total, E, M, NAN, PINF, NINF, ZERO, NEGZERO)
+# name: (total, E, M). Special constants are DERIVED (Inf = exp-all-ones & mant==0;
+# NaN = exp-all-ones & mant!=0; +-0 = +-(exp0,mant0)). The gf12 constants hardcoded
+# previously were wrong (its "Inf" 0x700 is exp=14, a finite value, not exp=15).
 RUNGS = {
-    "gf8":  (8,  3, 4, "8'hF1", "8'h70", "8'hF0", "8'h00", "8'h80"),
-    "gf12": (12, 4, 7, "12'hF01", "12'h700", "12'hF00", "12'h000", "12'h800"),
+    "gf8":  (8,  3, 4),
+    "gf12": (12, 4, 7),
+    "gf20": (20, 7, 12),
+    "gf24": (24, 9, 14),
+    "gf32": (32, 12, 19),
+    "gf64": (64, 24, 39),
+    "gf128": (128, 48, 79),
 }
+# NB: gf16_add is intentionally NOT regenerated -- it is the silicon-[Verified]
+# rung; its source must match the fabricated die. Its known legacy imprecision is
+# documented in docs/GF_ARITH_FINDINGS.md.
+
+def specials(total, E, M):
+    emax = (1 << E) - 1
+    pinf = emax << M
+    sgn  = 1 << (total - 1)
+    lit  = lambda v: "%d'h%X" % (total, v)
+    # NAN, PINF, NINF, ZERO, NEGZERO
+    return lit(sgn | pinf | 1), lit(pinf), lit(sgn | pinf), lit(0), lit(sgn)
 
 def norm_chain(M, E):
     """Emit the priority renormalize if/else chain for sum_m, leading bit p."""
@@ -194,7 +212,8 @@ endmodule
 """
 
 def emit(name, write=True):
-    total, E, M, NAN, PINF, NINF, ZERO, NEGZERO = RUNGS[name]
+    total, E, M = RUNGS[name]
+    NAN, PINF, NINF, ZERO, NEGZERO = specials(total, E, M)
     EW = 1 + M + G
     f = TEMPLATE.format(
         name=name, total=total, E=E, M=M, G=G,
@@ -217,4 +236,7 @@ if __name__ == "__main__":
     if "--check-gf8" in sys.argv:
         emit("gf8")            # overwrite gf8_add with the generated version
     else:
-        emit("gf12")
+        for n in RUNGS:
+            if n == "gf8":     # gf8_add is hand-written + exhaustively verified
+                continue
+            emit(n)

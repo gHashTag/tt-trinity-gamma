@@ -20,8 +20,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SRC  = os.path.join(HERE, "..", "src")
 TOL_ULP = Fraction(1)            # faithful rounding (G=3 guard bits -> <1 ULP)
 
-RUNGS = {  # name: (total, E, M)
-    "gf8": (8, 3, 4), "gf12": (12, 4, 7),
+RUNGS = {  # name: (total, E, M)  -- all the regenerated (GRS) add units
+    "gf8": (8, 3, 4), "gf12": (12, 4, 7), "gf20": (20, 7, 12),
+    "gf24": (24, 9, 14), "gf32": (32, 12, 19), "gf64": (64, 24, 39),
+    "gf128": (128, 48, 79),
 }
 
 def bias(E):   return 2 ** (E - 1) - 1
@@ -41,8 +43,23 @@ def flog2(x):
     e = n.bit_length() - d.bit_length()
     return e if (Fraction(2) ** e <= x) else e - 1
 
-def min_nonzero(E, M): return Fraction(2 ** M + 1, 2 ** M) * Fraction(2) ** (0 - bias(E))
-def overflow(E, M):    return Fraction(2) ** (emax(E) - 1 - bias(E) + 1)
+# NB: the overflow/underflow bounds are 2^(2^(E-1)) and 2^(-bias) -- for the large
+# rungs (gf64/gf128) these are multi-million-digit integers, so materialize them
+# only when the exponent is small (<= SAFE_EXP). For the large rungs the mid-range
+# sweep never reaches those regions, so a coarse flog2 comparison is exact enough.
+SAFE_EXP = 4096
+
+def is_overflow(atrue, E, M):
+    oexp = emax(E) - bias(E)                            # = 2^(E-1)
+    if oexp <= SAFE_EXP:
+        return atrue >= Fraction(2) ** oexp
+    return flog2(atrue) >= oexp
+
+def is_underflow(atrue, E, M):
+    b = bias(E)
+    if b <= SAFE_EXP:
+        return atrue < Fraction(2 ** M + 1, 2 ** M) * Fraction(1, 1 << b)
+    return flog2(atrue) < -b
 
 def mant_samples(M):
     top = 2 ** M
@@ -92,15 +109,16 @@ def check(true, out, E, M):
     atrue = abs(true)
     if true == 0:
         return do[0] == "zero", Fraction(0)
-    if atrue >= overflow(E, M):
+    le = flog2(atrue)
+    if is_overflow(atrue, E, M):
         return do[0] == "special", Fraction(0)   # overflow -> Inf/NaN region
-    if atrue < min_nonzero(E, M):
+    if is_underflow(atrue, E, M):
         return do[0] == "zero" or do[0] == "num", Fraction(0)  # underflow boundary
     if do[0] != "num":
         return False, Fraction(10 ** 9)
     if (do[1] < 0) != (true < 0):
         return False, Fraction(10 ** 9)
-    ulp = Fraction(2) ** (flog2(atrue) - M)
+    ulp = Fraction(2) ** (le - M)
     return abs(do[1] - true) <= ulp * TOL_ULP, abs(do[1] - true) / ulp
 
 def run_rung(name):

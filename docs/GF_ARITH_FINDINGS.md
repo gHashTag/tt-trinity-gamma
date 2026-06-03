@@ -128,6 +128,30 @@ The special-value prologue and constants are preserved verbatim (their conforman
 is a separate question). Verified by the exponent probe + `test/gf_mul_sweep.py`
 (7200 finite-normal pairs/rung vs an exact-rational reference; max 0.5 ULP each).
 
+## Special-value (Inf/NaN/overflow) fix (2026-06, done)
+
+A follow-up audit found the rung units' Inf/NaN *constants* were wrong on
+gf12/20/24/32/64/128: the emitted "Inf" had a nonzero mantissa field, so by the
+decode convention (`Inf = exp-all-ones & mant==0`) it actually decoded as NaN and
+did not round-trip -- i.e. overflow produced a NaN-shaped value. (gf4/gf8/gf16 were
+already correct.) Additionally the gf20-128 *add* units still carried those wrong
+constants and gf64/gf128 add mis-handled overflow.
+
+Fix: both generators now DERIVE the special constants from `(W,E,M)`
+(`PINF=EXP_MAX<<M`, `NINF=sign|PINF`, `NaN=sign|PINF|1`), and all `[Spec]` add
+units (gf12/20/24/32/64/128) were regenerated with the verified GRS algorithm.
+New `test/gf_specials.py` drives Inf/NaN/overflow through every rung and checks the
+result decodes to the right kind (and that overflow rounds to a *round-trippable*
+Inf). All rungs pass; the add value sweep now also covers gf20-128 (<= 0.667 ULP).
+
+### Caveat: gf16_mul latent overflow (informational, not fixed)
+The specials check also shows gf16_mul flushes a very-large product to **zero**
+instead of Inf (its `final_exp[6]` test aliases a large positive exponent to the
+underflow path). Like the gf16_add imprecision, this is never exercised by
+near-1.0 workloads; gf16 is the silicon-`[Verified]` rung and is left untouched
+(its source must match the fabricated die). `gf_specials.py` reports gf16's
+overflow cases as INFORMATIONAL.
+
 ## Status: ladder complete; follow-ups
 
 All gf4..gf128 add/mul units are now fixed and verified, and the suite is a CI gate
@@ -138,9 +162,8 @@ All gf4..gf128 add/mul units are now fixed and verified, and the suite is a CI g
    re-validation of that rung is in scope.
 2. **GF256 bias open conjecture** -- its stored exponent bias does not reconcile
    with `2^(E-1)-1`; pin the convention from the t27 spec before cross-checking it.
-3. **gfN special-value encodings** -- several rungs' NaN/Inf constants look
-   inconsistent (an "Inf" whose mantissa field is nonzero, which the unit's own
-   `is_inf` test would read as NaN). Audit against the canonical spec.
+3. **gfN special-value encodings** -- DONE (see "Special-value fix" above); only
+   gf16's latent mul-overflow remains, deferred with gf16_add as a silicon caveat.
 
 GF256 is excluded from the probe: its stored exponent bias is itself
 `[Open conjecture]` (does not reconcile with `2^(E-1)-1`), a separate issue.

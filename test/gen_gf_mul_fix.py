@@ -20,17 +20,27 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC  = os.path.join(HERE, "..", "src")
 
-# name: (total, E, M, NAN, PINF, NINF, ZERO)  -- constants copied verbatim
+# name: (total, E, M). Special-value constants are DERIVED below from the decode
+# convention (Inf = exp-all-ones & mant==0; NaN = exp-all-ones & mant!=0), because
+# the constants previously hardcoded here were wrong for gf12/20/24/32/64/128 --
+# their "Inf" had a nonzero mantissa field, so it actually decoded as NaN and did
+# not round-trip. gf8/gf16 (correct) match the derived values exactly.
 RUNGS = {
-    "gf12":  (12,  4,  7, "12'hFF1", "12'h7F0", "12'hFF0", "12'h000"),
-    "gf20":  (20,  7, 12, "20'hFF801", "20'h7F800", "20'hFF800", "20'h00000"),
-    "gf24":  (24,  9, 14, "24'hFFF801", "24'h7FF800", "24'hFFF800", "24'h000000"),
-    "gf32":  (32, 12, 19, "32'hFFFFF801", "32'h7FFF8000", "32'hFFFFF800", "32'h00000000"),
-    "gf64":  (64, 24, 39, "64'hFFFFFFFFFF801", "64'h7FFFFFFFF800",
-              "64'hFFFFFFFFFF800", "64'h0000000000000000"),
-    "gf128": (128, 48, 79, "128'hFFFFFFFFFFFFFFFFFFFFF801", "128'h7FFFFFFFFFFFFFFFF800",
-              "128'hFFFFFFFFFFFFFFFFFFFFF800", "128'h000000000000000000000000"),
+    "gf12":  (12,  4,  7),
+    "gf20":  (20,  7, 12),
+    "gf24":  (24,  9, 14),
+    "gf32":  (32, 12, 19),
+    "gf64":  (64, 24, 39),
+    "gf128": (128, 48, 79),
 }
+
+def specials(total, E, M):
+    """Return (NAN, PINF, NINF, ZERO) as sized Verilog hex literals."""
+    emax = (1 << E) - 1
+    pinf = emax << M
+    sgn  = 1 << (total - 1)
+    lit  = lambda v: "%d'h%X" % (total, v)
+    return lit(sgn | pinf | 1), lit(pinf), lit(sgn | pinf), lit(0)
 
 TEMPLATE = """// SPDX-License-Identifier: Apache-2.0
 // t27/rtl_gen/{name}_mul.v
@@ -139,7 +149,8 @@ endmodule
 """
 
 def emit(name):
-    total, E, M, NAN, PINF, NINF, ZERO = RUNGS[name]
+    total, E, M = RUNGS[name]
+    NAN, PINF, NINF, ZERO = specials(total, E, M)
     W = M + 1
     f = TEMPLATE.format(
         name=name, total=total, E=E, M=M,

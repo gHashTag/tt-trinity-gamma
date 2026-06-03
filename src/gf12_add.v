@@ -57,15 +57,15 @@ module gf12_add (
         guard = 0; round_b = 0; sticky = 0; round_up = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 12'hF01;
+            result = 12'hF81;
         else if (is_inf_a && is_inf_b && (sign_a != sign_b))
-            result = 12'hF01;
+            result = 12'hF81;
         else if (is_inf_a)
-            result = sign_a ? 12'hF00 : 12'h700;
+            result = sign_a ? 12'hF80 : 12'h780;
         else if (is_inf_b)
-            result = sign_b ? 12'hF00 : 12'h700;
+            result = sign_b ? 12'hF80 : 12'h780;
         else if (is_zero_a && is_zero_b)
-            result = 12'h000;
+            result = 12'h0;
         else if (is_zero_a)
             result = b;
         else if (is_zero_b)
@@ -99,7 +99,7 @@ module gf12_add (
                 sum_m = {1'b0, big_ext} - {1'b0, shifted};
 
             if (sum_m == 0) begin
-                result = 12'h000;
+                result = 12'h0;
             end else begin
                 if (sum_m[11]) begin
                     rexp = rexp + 6'sd1;
@@ -170,11 +170,11 @@ module gf12_add (
                 end
 
                 if (rexp < 0)
-                    result = result_sign ? 12'h800 : 12'h000;
+                    result = result_sign ? 12'h800 : 12'h0;
                 else if (rexp >= EXP_MAX_S)
-                    result = result_sign ? 12'hF00 : 12'h700;
+                    result = result_sign ? 12'hF80 : 12'h780;
                 else if (rexp == 0 && mant_out == 7'd0)
-                    result = result_sign ? 12'h800 : 12'h000;
+                    result = result_sign ? 12'h800 : 12'h0;
                 else
                     result = {result_sign, rexp[3:0], mant_out};
             end

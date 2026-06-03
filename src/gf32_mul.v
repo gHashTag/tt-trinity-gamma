@@ -52,15 +52,15 @@ module gf32_mul (
         mant_rounded = 0; guard = 0; round_b = 0; sticky = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 32'hFFFFF801;
+            result = 32'hFFF80001;
         else if (is_inf_a && is_zero_b)
-            result = 32'hFFFFF801;
+            result = 32'hFFF80001;
         else if (is_inf_b && is_zero_a)
-            result = 32'hFFFFF801;
+            result = 32'hFFF80001;
         else if (is_inf_a || is_inf_b)
-            result = result_sign ? 32'hFFFFF800 : 32'h7FFF8000;
+            result = result_sign ? 32'hFFF80000 : 32'h7FF80000;
         else if (is_zero_a || is_zero_b)
-            result = 32'h00000000;
+            result = 32'h0;
         else begin
             raw_exp = $signed({2'b00, exp_a}) + $signed({2'b00, exp_b}) - BIAS_S;
 
@@ -91,11 +91,11 @@ module gf32_mul (
             end
 
             if (final_exp < 0)
-                result = 32'h00000000;                        // underflow
+                result = 32'h0;                        // underflow
             else if (final_exp >= EXP_MAX_S)
-                result = result_sign ? 32'hFFFFF800 : 32'h7FFF8000;  // overflow
+                result = result_sign ? 32'hFFF80000 : 32'h7FF80000;  // overflow
             else if (final_exp == 0 && final_mant == 19'd0)
-                result = 32'h00000000;                        // exp0/mant0 is the zero code
+                result = 32'h0;                        // exp0/mant0 is the zero code
             else
                 result = {result_sign, final_exp[11:0], final_mant};
         end

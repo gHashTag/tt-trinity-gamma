@@ -52,15 +52,15 @@ module gf12_mul (
         mant_rounded = 0; guard = 0; round_b = 0; sticky = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 12'hFF1;
+            result = 12'hF81;
         else if (is_inf_a && is_zero_b)
-            result = 12'hFF1;
+            result = 12'hF81;
         else if (is_inf_b && is_zero_a)
-            result = 12'hFF1;
+            result = 12'hF81;
         else if (is_inf_a || is_inf_b)
-            result = result_sign ? 12'hFF0 : 12'h7F0;
+            result = result_sign ? 12'hF80 : 12'h780;
         else if (is_zero_a || is_zero_b)
-            result = 12'h000;
+            result = 12'h0;
         else begin
             raw_exp = $signed({2'b00, exp_a}) + $signed({2'b00, exp_b}) - BIAS_S;
 
@@ -91,11 +91,11 @@ module gf12_mul (
             end
 
             if (final_exp < 0)
-                result = 12'h000;                        // underflow
+                result = 12'h0;                        // underflow
             else if (final_exp >= EXP_MAX_S)
-                result = result_sign ? 12'hFF0 : 12'h7F0;  // overflow
+                result = result_sign ? 12'hF80 : 12'h780;  // overflow
             else if (final_exp == 0 && final_mant == 7'd0)
-                result = 12'h000;                        // exp0/mant0 is the zero code
+                result = 12'h0;                        // exp0/mant0 is the zero code
             else
                 result = {result_sign, final_exp[3:0], final_mant};
         end

@@ -52,15 +52,15 @@ module gf64_mul (
         mant_rounded = 0; guard = 0; round_b = 0; sticky = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 64'hFFFFFFFFFF801;
+            result = 64'hFFFFFF8000000001;
         else if (is_inf_a && is_zero_b)
-            result = 64'hFFFFFFFFFF801;
+            result = 64'hFFFFFF8000000001;
         else if (is_inf_b && is_zero_a)
-            result = 64'hFFFFFFFFFF801;
+            result = 64'hFFFFFF8000000001;
         else if (is_inf_a || is_inf_b)
-            result = result_sign ? 64'hFFFFFFFFFF800 : 64'h7FFFFFFFF800;
+            result = result_sign ? 64'hFFFFFF8000000000 : 64'h7FFFFF8000000000;
         else if (is_zero_a || is_zero_b)
-            result = 64'h0000000000000000;
+            result = 64'h0;
         else begin
             raw_exp = $signed({2'b00, exp_a}) + $signed({2'b00, exp_b}) - BIAS_S;
 
@@ -91,11 +91,11 @@ module gf64_mul (
             end
 
             if (final_exp < 0)
-                result = 64'h0000000000000000;                        // underflow
+                result = 64'h0;                        // underflow
             else if (final_exp >= EXP_MAX_S)
-                result = result_sign ? 64'hFFFFFFFFFF800 : 64'h7FFFFFFFF800;  // overflow
+                result = result_sign ? 64'hFFFFFF8000000000 : 64'h7FFFFF8000000000;  // overflow
             else if (final_exp == 0 && final_mant == 39'd0)
-                result = 64'h0000000000000000;                        // exp0/mant0 is the zero code
+                result = 64'h0;                        // exp0/mant0 is the zero code
             else
                 result = {result_sign, final_exp[23:0], final_mant};
         end

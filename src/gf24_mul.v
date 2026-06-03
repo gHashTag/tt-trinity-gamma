@@ -52,15 +52,15 @@ module gf24_mul (
         mant_rounded = 0; guard = 0; round_b = 0; sticky = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 24'hFFF801;
+            result = 24'hFFC001;
         else if (is_inf_a && is_zero_b)
-            result = 24'hFFF801;
+            result = 24'hFFC001;
         else if (is_inf_b && is_zero_a)
-            result = 24'hFFF801;
+            result = 24'hFFC001;
         else if (is_inf_a || is_inf_b)
-            result = result_sign ? 24'hFFF800 : 24'h7FF800;
+            result = result_sign ? 24'hFFC000 : 24'h7FC000;
         else if (is_zero_a || is_zero_b)
-            result = 24'h000000;
+            result = 24'h0;
         else begin
             raw_exp = $signed({2'b00, exp_a}) + $signed({2'b00, exp_b}) - BIAS_S;
 
@@ -91,11 +91,11 @@ module gf24_mul (
             end
 
             if (final_exp < 0)
-                result = 24'h000000;                        // underflow
+                result = 24'h0;                        // underflow
             else if (final_exp >= EXP_MAX_S)
-                result = result_sign ? 24'hFFF800 : 24'h7FF800;  // overflow
+                result = result_sign ? 24'hFFC000 : 24'h7FC000;  // overflow
             else if (final_exp == 0 && final_mant == 14'd0)
-                result = 24'h000000;                        // exp0/mant0 is the zero code
+                result = 24'h0;                        // exp0/mant0 is the zero code
             else
                 result = {result_sign, final_exp[8:0], final_mant};
         end
