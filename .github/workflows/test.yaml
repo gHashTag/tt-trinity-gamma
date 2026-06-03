@@ -59,6 +59,7 @@ jobs:
           python3 test/gf_add_sweep.py      # gf8..gf128 add vs exact-rational ref
           python3 test/gf_mul_sweep.py      # gf12..gf128 mul vs exact-rational ref
           python3 test/gf_specials.py       # Inf/NaN/overflow round-trip, all rungs
+          python3 test/gf16_v2_verify.py    # corrected gf16_v2 faithful vs exact ref
 
   yosys-rsi1-audit:
     name: R-SI-1 audit (Yosys)

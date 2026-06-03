@@ -149,11 +149,13 @@ module {name}_mul (
 endmodule
 """
 
-def emit(name):
-    total, E, M = RUNGS[name]
+def build(name, total=None, E=None, M=None):
+    """Return the Verilog text for a rung. Params override RUNGS (for variants)."""
+    if total is None:
+        total, E, M = RUNGS[name]
     NAN, PINF, NINF, ZERO = specials(total, E, M)
     W = M + 1
-    f = TEMPLATE.format(
+    return TEMPLATE.format(
         name=name, total=total, E=E, M=M,
         hi=total - 1, ehi=E - 1, mhi=M - 1, mw=M,
         ehia=total - 2, esh=E - 1, esw=E + 1,
@@ -165,6 +167,9 @@ def emit(name):
         m2m=2 * M, mp1=M + 1, mm1=M - 1, mm2=M - 2, mm3=M - 3, m2mm1=2 * M - 1,
         NAN=NAN, PINF=PINF, NINF=NINF, ZERO=ZERO,
     )
+
+def emit(name):
+    f = build(name)
     path = os.path.join(SRC, name + "_mul.v")
     with open(path, "w") as fh:
         fh.write(f)
