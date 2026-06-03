@@ -195,13 +195,24 @@ incremented -> the result is **one binade too small (exactly halved)**.
 
 **Respin risk -- REVISED:** this defect hits NORMAL near-1.0 products, so unlike the
 cancellation/format-overflow caveats it is **NOT avoided by the validated MNIST/IGLA
-workload** -- about 0.07% of gf16 multiplies on the shipped die are silently halved,
-which perturbs every dot-product / MAC accumulation by a small, data-dependent
-amount. The accuracy impact is likely small (a sparse 2x error on individual terms,
-diluted in a sum) but it is real and on-path, which **strengthens the case for a
-respin** relative to the earlier (cancellation/overflow-only) assessment.
-`gf16_v2_mul` is the drop-in correction (verified, `test/gf16_v2_verify.py`); no
-other rung is affected (gf4..gf256 all fixed and verified).
+workload**. End-to-end measurement on the MAC primitive (`test/impact_gf16_mul.py`,
+20000 representative near-1.0 4-term dot products vs an exact reference) quantifies
+it:
+
+| gf16_dot4 variant | NMSE | RMS rel error |
+| --- | --- | --- |
+| **A shipped** (gf16_mul + gf16_add) | 1.49e-4 | **~1.22%** |
+| B mul-fixed (gf16_v2_mul + gf16_add) | 1.29e-6 | ~0.11% |
+| C fully-fixed (gf16_v2_*) | 5.33e-7 | ~0.07% (gf16 floor) |
+
+Fixing the mul alone (A->B) cuts dot-product NMSE **~115x** (RMS 1.22% -> 0.11%) --
+the mul defect **dominates** the MAC error even though it hits only 0.27% of dots,
+because HALVING a term is a huge per-term error. (The gf16_add truncating alignment
+hits 56% of dots but with tiny per-dot error, a small further B->C gain -- note this
+also corrects the earlier claim that the add imprecision is "avoided by near-1.0
+workloads": it is high-frequency but low-amplitude.) An ~11x dot-product accuracy
+degradation from a single one-bit-too-narrow register **materially strengthens the
+respin case**. `gf16_v2_mul` is the verified drop-in (`test/gf16_v2_verify.py`).
 
 ## Status: ladder complete
 
