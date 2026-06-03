@@ -76,3 +76,16 @@ jobs:
           yosys -p "read_verilog -I src src/*.v; \
                     hierarchy -top tt_um_trinity_max_true; \
                     proc; opt; stat" | grep '\$mul' || echo "No multipliers found (R-SI-1 compliant)"
+
+  width-defect-gate:
+    name: Width/range defect gate
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Verilator
+        run: sudo apt-get update && sudo apt-get install -y verilator python3
+
+      - name: No new 'field one bit too narrow' defects (value-overflow / out-of-range select)
+        run: python3 test/width_gate.py
