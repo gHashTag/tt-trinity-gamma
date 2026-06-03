@@ -27,6 +27,7 @@ RUNGS = {
     "gf32": (32, 12, 19),
     "gf64": (64, 24, 39),
     "gf128": (128, 48, 79),
+    "gf256": (256, 97, 158),
 }
 # NB: gf16_add is intentionally NOT regenerated -- it is the silicon-[Verified]
 # rung; its source must match the fabricated die. Its known legacy imprecision is

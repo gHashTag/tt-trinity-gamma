@@ -29,11 +29,12 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 SRC = os.path.join(ROOT, "src")
 
 # rung -> (exponent bits E, mantissa bits M). bias = 2^(E-1) - 1.
-# gf256 omitted: its stored bias is itself [Open conjecture] (see family doc).
+# (gf256's bias IS 2^96-1 = 2^(E-1)-1; the earlier "open conjecture" was wrong --
+#  the real bug was EXP_MAX set to 2^97 not 2^97-1, now fixed, so gf256 is included.)
 RUNGS = {
     "gf4": (1, 2), "gf8": (3, 4), "gf12": (4, 7), "gf16": (6, 9),
     "gf20": (7, 12), "gf24": (9, 14), "gf32": (12, 19), "gf64": (24, 39),
-    "gf128": (48, 79),
+    "gf128": (48, 79), "gf256": (97, 158),
 }
 
 

@@ -152,18 +152,28 @@ near-1.0 workloads; gf16 is the silicon-`[Verified]` rung and is left untouched
 (its source must match the fabricated die). `gf_specials.py` reports gf16's
 overflow cases as INFORMATIONAL.
 
+## GF256 fix (2026-06, done)
+
+The earlier "GF256 bias is an open conjecture" note was **wrong**. GF256 is
+`[S(1) | E(97) | M(158)]` and its stored `BIAS = 79228162514264337593543950335 =
+2^96-1 = 2^(E-1)-1` -- exactly the family convention. The real bug was `EXP_MAX`,
+set to `2^97` (158456325028528675187087900672) when a 97-bit exponent field can
+only reach `2^97-1`; `exp == EXP_MAX` was therefore NEVER true, so Inf/NaN
+detection was dead and the all-ones exponent was treated as finite. gf256_mul also
+had the usual `mant_product` width truncation.
+
+Fix: regenerated `gf256_add` / `gf256_mul` via the generators (which derive
+`EXP_MAX = 2^E-1` and the correct special constants). GF256 is now in the probe
+(9/9 OK), the value sweeps (mul 0.500 ULP, add 0.667 ULP over thousands of pairs),
+and the specials check (8/8). The whole ladder gf4..gf256 is verified.
+
 ## Status: ladder complete; follow-ups
 
-All gf4..gf128 add/mul units are now fixed and verified, and the suite is a CI gate
-(`goldenfloat-arith`). Two open items remain, both orthogonal to the datapath:
+All gf4..gf256 add/mul units are fixed and verified, and the suite is a CI gate
+(`goldenfloat-arith`). The only remaining item is orthogonal to the datapath:
 
-1. **gf16_add legacy imprecision** (see caveat above) -- reuse `gen_gf_add_fix.py`
-   to bring the silicon-`[Verified]` rung onto the guard/round/sticky path, if a
-   re-validation of that rung is in scope.
-2. **GF256 bias open conjecture** -- its stored exponent bias does not reconcile
-   with `2^(E-1)-1`; pin the convention from the t27 spec before cross-checking it.
-3. **gfN special-value encodings** -- DONE (see "Special-value fix" above); only
-   gf16's latent mul-overflow remains, deferred with gf16_add as a silicon caveat.
-
-GF256 is excluded from the probe: its stored exponent bias is itself
-`[Open conjecture]` (does not reconcile with `2^(E-1)-1`), a separate issue.
+1. **gf16 (silicon-`[Verified]` rung)** has two latent bugs -- gf16_add ~512-ULP
+   imprecise on cancellation, gf16_mul flushes very-large products to zero instead
+   of Inf. Left untouched so its source matches the fabricated die; fix via a
+   separate `gf16_*_v2` module (reusing the generators) if a future tapeout wants
+   the corrected behaviour. Everything else is done.

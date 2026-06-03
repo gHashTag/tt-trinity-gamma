@@ -23,7 +23,7 @@ TOL_ULP = Fraction(1)            # faithful rounding (G=3 guard bits -> <1 ULP)
 RUNGS = {  # name: (total, E, M)  -- all the regenerated (GRS) add units
     "gf8": (8, 3, 4), "gf12": (12, 4, 7), "gf20": (20, 7, 12),
     "gf24": (24, 9, 14), "gf32": (32, 12, 19), "gf64": (64, 24, 39),
-    "gf128": (128, 48, 79),
+    "gf128": (128, 48, 79), "gf256": (256, 97, 158),
 }
 
 def bias(E):   return 2 ** (E - 1) - 1

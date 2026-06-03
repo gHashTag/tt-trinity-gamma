@@ -1,3 +1,18 @@
+// SPDX-License-Identifier: Apache-2.0
+// t27/rtl_gen/gf256_mul.v
+// GoldenFloat256 Multiplication Unit -- [S(1) | E(97) | M(158)], bias 2^(E-1)-1.
+// value = (-1)^S (1 + M/2^158) 2^(E-bias).
+//
+// Rewritten 2026-06 (test/gen_gf_mul_fix.py). The previous version declared
+// mant_product 2 bits too narrow (316 bits, not 318), truncating the leading
+// bit of the (M+1)x(M+1) product, and bumped the exponent on rounding without
+// incrementing the mantissa -- products came out ~half magnitude (1.0*1.0 -> 0.5).
+// This version uses the verified gf16_mul/gf8_mul algorithm: full 318-bit product,
+// normalize (prod[317] -> exp+1 else stay), mantissa = the 158 bits below the leading
+// 1, round-to-nearest ties-to-zero (guard & (round | sticky)). Cross-checked by
+// test/gf_arith_xcheck.py and test/gf_mul_sweep.py. Special-value encodings are
+// preserved from the original unit (their conformance is a separate question).
+
 `default_nettype none
 module gf256_mul (
     input  wire [255:0] a,
@@ -5,80 +20,84 @@ module gf256_mul (
     output reg  [255:0] result
 );
 
-    // GF256: 1 sign + 97 exp + 158 mant = 256 bits
-    localparam BIAS    = 97'd79228162514264337593543950335;
-    localparam [97:0] EXP_MAX = 98'd158456325028528675187087900672;
+    localparam [96:0] EXP_MAX = 158456325028528675187087900671;
+    localparam signed [98:0] BIAS_S    = 99'sd79228162514264337593543950335;
+    localparam signed [98:0] EXP_MAX_S = 99'sd158456325028528675187087900671;
 
-    wire        sign_a = a[255];
-    wire [96:0] exp_a  = a[254:158];
-    wire [157:0] mant_a = a[157:0];
-    wire        sign_b = b[255];
-    wire [96:0] exp_b  = b[254:158];
-    wire [157:0] mant_b = b[157:0];
+    wire             sign_a = a[255];
+    wire [96:0]   exp_a  = a[254:158];
+    wire [157:0]   mant_a = a[157:0];
+    wire             sign_b = b[255];
+    wire [96:0]   exp_b  = b[254:158];
+    wire [157:0]   mant_b = b[157:0];
 
     wire is_zero_a = (exp_a == 97'd0) && (mant_a == 158'd0);
     wire is_zero_b = (exp_b == 97'd0) && (mant_b == 158'd0);
     wire is_inf_a  = (exp_a == EXP_MAX) && (mant_a == 158'd0);
     wire is_inf_b  = (exp_b == EXP_MAX) && (mant_b == 158'd0);
-    wire is_nan_a = (exp_a == EXP_MAX) && (mant_a != 158'd0);
-    wire is_nan_b = (exp_b == EXP_MAX) && (mant_b != 158'd0);
+    wire is_nan_a  = (exp_a == EXP_MAX) && (mant_a != 158'd0);
+    wire is_nan_b  = (exp_b == EXP_MAX) && (mant_b != 158'd0);
 
     wire result_sign = sign_a ^ sign_b;
 
-    reg [96:0] exp_product;
-    reg [315:0] mant_product;
-    reg [157:0] normalized_mant;
-    reg [97:0] product_exp;
-    reg       carry_out;
+    wire [317:0] full_prod = {1'b1, mant_a} * {1'b1, mant_b};  // 318-bit
+
+    reg signed [98:0] raw_exp, final_exp;
+    reg [157:0] mant_out, final_mant;
+    reg [158:0]  mant_rounded;            // M+1 bits, catches mantissa overflow
+    reg           guard, round_b, sticky;
 
     always @(*) begin
+        raw_exp = 0; final_exp = 0; mant_out = 0; final_mant = 0;
+        mant_rounded = 0; guard = 0; round_b = 0; sticky = 0;
+
         if (is_nan_a || is_nan_b)
-            result = 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF801;
+            result = 256'hFFFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000001;
         else if (is_inf_a && is_zero_b)
-            result = 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF801;
+            result = 256'hFFFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000001;
         else if (is_inf_b && is_zero_a)
-            result = 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF801;
+            result = 256'hFFFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000001;
         else if (is_inf_a || is_inf_b)
-            result = result_sign ? 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800 : 256'h7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800;
+            result = result_sign ? 256'hFFFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000000 : 256'h7FFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000000;
         else if (is_zero_a || is_zero_b)
-            result = 256'h0000000000000000000000000000000000000000000000000000000000000000;
+            result = 256'h0;
         else begin
-            exp_product = {1'b0, exp_a} + {1'b0, exp_b} - BIAS;
-            mant_product = {1'b1, mant_a} * {1'b1, mant_b};
+            raw_exp = $signed({2'b00, exp_a}) + $signed({2'b00, exp_b}) - BIAS_S;
 
-            // Product normalization: find leading bits
-            if (mant_product[315] || mant_product[314]) begin
-                product_exp = exp_product + 98'd2;
-                normalized_mant = mant_product[315:158];
-                carry_out = mant_product[157];
-            end else if (mant_product[313]) begin
-                product_exp = exp_product + 98'd1;
-                normalized_mant = mant_product[314:157];
-                carry_out = mant_product[156];
-            end else if (mant_product[312]) begin
-                product_exp = exp_product;
-                normalized_mant = mant_product[313:156];
-                carry_out = mant_product[155];
-            end else begin
-                product_exp = exp_product - 98'd1;
-                normalized_mant = mant_product[312:155];
-                carry_out = mant_product[154];
+            if (full_prod[317]) begin                 // product in [2,4) -> exp+1
+                raw_exp  = raw_exp + 1;
+                mant_out = full_prod[316:159];
+                guard    = full_prod[158];
+                round_b  = full_prod[157];
+                sticky   = |full_prod[156:0];
+            end else begin                              // product in [1,2)
+                mant_out = full_prod[315:158];
+                guard    = full_prod[157];
+                round_b  = full_prod[156];
+                sticky   = |full_prod[155:0];
             end
 
-            if (carry_out) begin
-                product_exp = product_exp + 98'd1;
-                if (normalized_mant == 158'h3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)
-                    result = result_sign ? 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800 : 256'h7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800;
-                else
-                    result = {result_sign, product_exp[96:0], normalized_mant[157:0]};
+            if (guard && (round_b || sticky))
+                mant_rounded = {1'b0, mant_out} + 1'b1;
+            else
+                mant_rounded = {1'b0, mant_out};
+
+            if (mant_rounded[158]) begin               // mantissa overflow
+                final_exp  = raw_exp + 1;
+                final_mant = 0;
             end else begin
-                if (product_exp[97] || (product_exp[96:0] >= EXP_MAX))
-                    result = result_sign ? 256'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800 : 256'h7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800;
-                else if (product_exp[96:0] == 97'd0)
-                    result = {result_sign, 97'd0, 158'd0};
-                else
-                    result = {result_sign, product_exp[96:0], normalized_mant[157:0]};
+                final_exp  = raw_exp;
+                final_mant = mant_rounded[157:0];
             end
+
+            if (final_exp < 0)
+                result = 256'h0;                        // underflow
+            else if (final_exp >= EXP_MAX_S)
+                result = result_sign ? 256'hFFFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000000 : 256'h7FFFFFFFFFFFFFFFFFFFFFFFC000000000000000000000000000000000000000;  // overflow
+            else if (final_exp == 0 && final_mant == 158'd0)
+                result = 256'h0;                        // exp0/mant0 is the zero code
+            else
+                result = {result_sign, final_exp[96:0], final_mant};
         end
     end
 
