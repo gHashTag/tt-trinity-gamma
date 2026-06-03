@@ -13,13 +13,20 @@ This was found by `test/gf_arith_xcheck.py` (rung-size-agnostic exponent probe;
 exact for every rung, no host-float overflow). The same method **passes GF16**,
 which validates the check.
 
-**Status update (2026-06): GF8 is now fixed and exhaustively verified.** Both
-`gf8_add` and `gf8_mul` were rewritten and cross-checked over all 65536 (a,b)
-input pairs against an independent value-based reference (`test/gf8_exhaustive.py`):
-**65536/65536 pass**, max error **0.719 ULP (add) / 0.500 ULP (mul)** -- i.e.
-faithful round-to-nearest. `gf_arith_xcheck.py` now reports 2/9 correct (gf16, gf8).
-The remaining seven rungs (gf4, gf12, gf20, gf24, gf32, gf64, gf128) are still
-broken and are the next targets.
+**Status update (2026-06): 7/9 rungs now fixed and verified.**
+- **GF8** (`gf8_add` + `gf8_mul`): rewritten and cross-checked over all 65536 (a,b)
+  pairs vs an independent value-based reference (`test/gf8_exhaustive.py`):
+  65536/65536 pass, max 0.719 ULP (add) / 0.500 ULP (mul).
+- **GF20/24/32/64/128 mul** (`test/gen_gf_mul_fix.py`): the five shared a single
+  width bug -- `mant_product` declared `2M` bits instead of `2(M+1)`, truncating
+  the leading product bit, plus a rounding path that bumped the exponent without
+  incrementing the mantissa. All five rewritten with the verified algorithm and
+  cross-checked: exponent probe OK, and `test/gf_mul_sweep.py` runs 7200
+  finite-normal pairs/rung against an EXACT-RATIONAL reference (needed because
+  gf64/gf128 overflow IEEE double) -- max 0.500 ULP on every rung.
+
+`gf_arith_xcheck.py` now reports **7/9 correct** (gf8, gf16, gf20, gf24, gf32,
+gf64, gf128). Remaining: **gf4** (add) and **gf12** (add+mul).
 
 ## Per-rung verdict (mantissa=0 exponent probe: 1+1 and 2*1 must give exp = bias+1)
 
@@ -27,17 +34,17 @@ broken and are the next targets.
 | --- | :-: | :-: | --- |
 | gf4   | ❌ | ✅ | add exp wrong |
 | **gf8** | ✅ | ✅ | **FIXED 2026-06** -- 65536/65536 exhaustive, <=1 ULP |
-| gf12  | ❌ | ❌ | (was add+mul broken) |
+| gf12  | ❌ | ❌ | still broken (add+mul) -- next target |
 | **gf16** | ✅ | ✅ | the `[Verified]` reference |
-| gf20  | ✅ | ❌ | mul off-by-one (half) |
-| gf24  | ✅ | ❌ | mul off-by-one (half) |
-| gf32  | ✅ | ❌ | mul off-by-one: 1*1 -> 0.5, 2*1 -> 1.0 |
-| gf64  | ✅ | ❌ | mul off-by-one |
-| gf128 | ✅ | ❌ | mul off-by-one |
+| **gf20** | ✅ | ✅ | **mul FIXED 2026-06** -- sweep 0.5 ULP |
+| **gf24** | ✅ | ✅ | **mul FIXED 2026-06** -- sweep 0.5 ULP |
+| **gf32** | ✅ | ✅ | **mul FIXED 2026-06** (was 1*1 -> 0.5) |
+| **gf64** | ✅ | ✅ | **mul FIXED 2026-06** -- sweep 0.5 ULP |
+| **gf128**| ✅ | ✅ | **mul FIXED 2026-06** -- sweep 0.5 ULP |
 
 The original gf8 was the worst case (both broken): a fuller value-domain sweep
 showed add 134/256 and mul 148/256 sampled pairs wrong, results systematically
-~4x too small. The fix is described under "GF8 fix" below.
+~4x too small. The fixes are described under "GF8 fix" and "GF20-128 mul fix" below.
 
 ## Root cause (example: `src/gf8_mul.v`)
 
@@ -80,15 +87,30 @@ GF16 is right.
   numeric value, not the RTL's bit slicing. Specials (NaN / +-Inf / +-0 / the
   e0m0=zero "0.125 hole" / round-to-Inf at the top binade) are all checked.
 
+## GF20-128 mul fix (2026-06, done)
+
+All five units shared one bug: `mant_product` was declared `2M` bits wide instead
+of `2*(M+1)`, so the leading bit of the `(M+1)x(M+1)` significand product (at index
+`2M+1` or `2M`) was truncated and the normalize indices were all 2 too low; the
+`carry_out` path also bumped the exponent on rounding without incrementing the
+mantissa. Net effect: products came out ~half magnitude (gf32 `1.0*1.0 -> 0.5`).
+
+`test/gen_gf_mul_fix.py` regenerates all five with the verified gf16/gf8 algorithm:
+full `2(M+1)`-bit product; normalize `prod[2M+1] -> exp+1` else stay; mantissa = the
+`M` bits below the leading 1; round-to-nearest ties-to-zero with guard/round/sticky.
+The special-value prologue and constants are preserved verbatim (their conformance
+is a separate question). Verified by the exponent probe + `test/gf_mul_sweep.py`
+(7200 finite-normal pairs/rung vs an exact-rational reference; max 0.5 ULP each).
+
 ## Recommended fix (remaining rungs)
 
 1. Use GF16 / the new GF8 as templates (GF8 is the right template for the small
    rungs: it adds proper guard/sticky rounding that a 4-bit mantissa needs).
-2. Fix one rung at a time, re-running `test/gf_arith_xcheck.py` after each, plus --
-   for any rung <= 16 bits -- a full exhaustive value-domain sweep modeled on
-   `test/gf8_exhaustive.py`.
+2. Remaining: **gf4** (add) and **gf12** (add+mul). gf4 and gf12 are <= 12 bits, so
+   gf4 is exhaustively checkable and gf12 nearly so (2^24 mul pairs; sampled add).
+   Re-run `test/gf_arith_xcheck.py` after each.
 3. Treat `gf_arith_xcheck.py` as the regression gate; wire it into CI only once
-   all rungs pass (it currently exits non-zero = number of broken rungs; now 7).
+   all rungs pass (it currently exits non-zero = number of broken rungs; now 2).
 
 GF256 is excluded from the probe: its stored exponent bias is itself
 `[Open conjecture]` (does not reconcile with `2^(E-1)-1`), a separate issue.
