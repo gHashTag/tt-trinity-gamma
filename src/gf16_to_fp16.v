@@ -15,20 +15,22 @@ module gf16_to_fp16 (
     wire [5:0]  gf_exp = gf_in[14:9];
     wire [8:0]  gf_mant = gf_in[8:0];
 
-    localparam GF_BIAS  = 6'd31;
-    localparam GF_MAX   = 6'd63;
-    localparam FP_BIAS  = 5'd15;
-    localparam FP_MAX   = 5'd31;
+    localparam GF_MAX   = 6'd63;   // GF/FP bias folded into the gf_exp-16 below
 
     wire is_gf_zero    = (gf_exp == 6'd0) && (gf_mant == 9'd0);
     wire is_gf_inf     = (gf_exp == GF_MAX) && (gf_mant == 9'd0);
     wire is_gf_nan     = (gf_exp == GF_MAX) && (gf_mant != 9'd0);
 
-    reg [5:0]  unbiased_exp;
+    // FP16 biased exponent = (gf_exp - GF_BIAS) + FP_BIAS = gf_exp - 16. Signed so
+    // under/overflow are detected exactly (gf_exp is 1..62 on the normal path).
+    wire signed [7:0] fp_exp_b = $signed({2'b00, gf_exp}) - 8'sd16;
+
     reg [4:0]  fp_exp;
     reg [9:0]  fp_mant;
 
     always @(*) begin
+        fp_exp  = 5'd0;
+        fp_mant = 10'd0;
         if (is_gf_nan) begin
             // GF NaN → FP16 NaN
             fp_out = {sign, 5'h1F, 10'h1};
@@ -38,23 +40,21 @@ module gf16_to_fp16 (
         end else if (is_gf_zero) begin
             // GF zero → FP16 zero
             fp_out = {sign, 5'h0, 10'h0};
+        end else if (fp_exp_b >= 8'sd31) begin
+            // Overflow → FP16 inf  (was a wrap-prone 5-bit add before)
+            fp_out = {sign, 5'h1F, 10'h0};
+        end else if (fp_exp_b < 8'sd1) begin
+            // Underflow / value below FP16 min normal → flush to signed zero.
+            // (FP16 subnormals are not generated; this is an exact-zero flush, the
+            //  only inexactness in the converter, and it is below 2^-14.)
+            fp_out = {sign, 5'h0, 10'h0};
         end else begin
-            // Unbias GF exponent
-            unbiased_exp = gf_exp - GF_BIAS;
-
-            // Bias for FP16 and check range
-            if (unbiased_exp[5]) begin
-                // Negative exponent - subnormal or underflow
-                fp_exp = 5'd0;
-                fp_mant = {1'b0, gf_mant, 1'b0};  // Simplified subnormal
-            end else if (unbiased_exp[4:0] + FP_BIAS >= FP_MAX) begin
-                // Overflow
-                fp_out = {sign, 5'h1F, 10'h0};
-            end else begin
-                fp_exp = unbiased_exp[4:0] + FP_BIAS;
-                fp_mant = {gf_mant, 1'b0};  // Extend 9 bits to 10
-                fp_out = {sign, fp_exp, fp_mant};
-            end
+            // Normal: exponents down to 2^-14 (gf_exp >= 17) map to FP16 normals;
+            // the previous code wrongly routed every gf_exp < 31 to a latched,
+            // unassigned "subnormal" branch (LATCH inferred for fp_out).
+            fp_exp  = fp_exp_b[4:0];
+            fp_mant = {gf_mant, 1'b0};        // extend 9-bit mantissa to 10 bits
+            fp_out  = {sign, fp_exp, fp_mant};
         end
     end
 
@@ -87,6 +87,9 @@ module fp16_to_gf16 (
     reg [8:0]  gf_mant;
 
     always @(*) begin
+        unbiased_exp = 6'd0;          // default the intermediates so no latch is
+        gf_exp       = 6'd0;          // inferred on the nan/inf/zero paths
+        gf_mant      = 9'd0;
         if (is_fp_nan) begin
             // FP16 NaN → GF16 NaN
             gf_out = {sign, 6'd63, 9'h1};
