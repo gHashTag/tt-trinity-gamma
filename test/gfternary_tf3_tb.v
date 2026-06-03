@@ -46,6 +46,24 @@ module gfternary_tf3_tb;
         end
     endtask
 
+    // --- TF3 encode (FP32 -> TF3, round-to-nearest) -----------------------
+    reg  [31:0] tx;  wire [7:0] tc;
+    fp32_to_tf3 u_te (.fp_in(tx), .tf3_out(tc));
+    task chk_te(input [31:0] val, input [7:0] exp);
+        begin tx = val; #1;
+            if (tc !== exp) begin
+                $display("FAIL TF3-enc %08h: got %02h exp %02h", val, tc, exp);
+                errors = errors + 1;
+            end
+        end
+    endtask
+
+    // --- TF3 round-trip: encode(decode(b)) == b for all finite/Inf codes ---
+    reg  [7:0]  rb;  wire [31:0] rfp;  wire [7:0] rb2;
+    tf3_to_fp32 u_rd (.tf3_in(rb), .fp_out(rfp));
+    fp32_to_tf3 u_re (.fp_in(rfp), .tf3_out(rb2));
+    integer k;
+
     initial begin
         // GFTernary decode: {0, +phi, -phi, reserved->qNaN}
         chk_g(2'b00, 32'h00000000);
@@ -79,8 +97,32 @@ module gfternary_tf3_tb;
         chk_t(8'h79, 32'h7FC00000);   // e7 m1 = NaN
         chk_t(8'h78, 32'h7FC00000);   // 0x78 (spec "INF") is actually NaN
 
+        // TF3 encode golden (round-to-nearest)
+        chk_te(32'h00000000, 8'h00);  // +0
+        chk_te(32'h80000000, 8'h80);  // -0
+        chk_te(32'h3F800000, 8'h30);  // 1.0  -> e3 m0
+        chk_te(32'h40400000, 8'h48);  // 3.0  -> e4 m8
+        chk_te(32'h3F000000, 8'h20);  // 0.5  -> e2 m0
+        chk_te(32'h41700000, 8'h6E);  // 15.0 -> e6 m14
+        chk_te(32'h42C80000, 8'h6F);  // 100  -> saturate max finite
+        chk_te(32'hC0400000, 8'hC8);  // -3.0
+        chk_te(32'h7F800000, 8'h70);  // +Inf
+        chk_te(32'hFF800000, 8'hF0);  // -Inf
+
+        // TF3 round-trip: encode(decode(b)) == b for all finite/Inf codes
+        // (E==7,M!=0 are NaN; their payload canonicalizes, so skip).
+        for (k = 0; k < 256; k = k + 1) begin
+            rb = k[7:0]; #1;
+            if (!(rb[6:4] == 3'b111 && rb[3:0] != 4'd0)) begin
+                if (rb2 !== rb) begin
+                    $display("FAIL TF3 round-trip %02h -> %02h", rb, rb2);
+                    errors = errors + 1;
+                end
+            end
+        end
+
         if (errors == 0)
-            $display("ALL PASS: GFTernary + TF3 decode/encode (golden vectors)");
+            $display("ALL PASS: GFTernary + TF3 decode/encode + round-trip");
         else
             $display("FAIL: %0d mismatch(es)", errors);
         $finish;

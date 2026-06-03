@@ -49,3 +49,49 @@ module tf3_to_fp32 (
             fp_out = {sign, fp_exp, mant, 19'd0};
     end
 endmodule
+
+// ---------------------------------------------------------------------------
+// Encode: FP32 -> TF3, round-to-nearest (ties up). This is the CORRECT inverse
+// of the decode formula above -- supplied here because the spec's tf3_from_f32
+// is inconsistent with tf3_to_f32 (see header). Round-trip is exact:
+// fp32_to_tf3(tf3_to_fp32(b)) == b for every finite/Inf canonical code (NaN
+// payloads canonicalize). Overflow saturates to max finite (0x6F/0xEF);
+// underflow rounds to +/-0.
+// ---------------------------------------------------------------------------
+module fp32_to_tf3 (
+    input  wire [31:0] fp_in,
+    output reg  [7:0]  tf3_out
+);
+    wire        sign = fp_in[31];
+    wire [7:0]  fexp = fp_in[30:23];
+    wire [22:0] fman = fp_in[22:0];
+
+    wire signed [9:0] E  = $signed({2'b0, fexp}) - 10'sd127;  // unbiased fp32 exp
+    wire signed [9:0] te = E + 10'sd3;                        // target TF3 exp
+    wire [4:0] mrnd = {1'b0, fman[22:19]} + fman[18];         // round top 4 (ties up), 0..16
+
+    reg signed [9:0] e_adj;
+    reg [4:0]        m_adj;
+
+    always @(*) begin
+        e_adj = te;
+        m_adj = mrnd;
+        if (m_adj == 5'd16) begin m_adj = 5'd0; e_adj = te + 10'sd1; end  // mantissa carry
+
+        if (fexp == 8'hFF)
+            tf3_out = (fman == 23'd0) ? {sign, 3'b111, 4'd0}      // +/-Inf
+                                      : {sign, 3'b111, 4'd1};     // NaN
+        else if (fexp == 8'd0 && fman == 23'd0)
+            tf3_out = {sign, 7'd0};                              // +/-0
+        else if (e_adj < 0)
+            tf3_out = {sign, 7'd0};                              // underflow -> +/-0
+        else if (e_adj > 6)
+            tf3_out = {sign, 3'b110, 4'd15};                     // saturate max finite
+        else if (e_adj == 0 && m_adj == 0)
+            tf3_out = {sign, 3'b000, 4'd1};                      // avoid aliasing to zero
+        else
+            tf3_out = {sign, e_adj[2:0], m_adj[3:0]};
+    end
+
+    wire _unused = &{1'b0, fman[17:0]};
+endmodule
