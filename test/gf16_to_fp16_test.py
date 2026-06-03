@@ -5,7 +5,7 @@
 # every gf_exp<31 to a broken "subnormal" branch. Fixed to map representable
 # exponents (down to FP16 min normal 2^-14) to FP16 normals and flush smaller
 # magnitudes to signed zero. Reference below encodes the same policy; exit 0 iff
-# all 65536 match (a passing exhaustive run also proves no latch remains).
+# all 65536 match (a passing exhaustive run also confirms no latch remains).
 import os, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
