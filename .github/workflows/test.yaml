@@ -102,3 +102,25 @@ jobs:
 
       - name: gf16_popcount / gf16_popcount16 ternary inner product (4000 vectors each)
         run: python3 test/gf16_popcount_verify.py
+
+  instantiated-audit:
+    name: Instantiated-subsystem conformance audit
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install IVerilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog python3
+
+      - name: blake3_anchor RECEIPT signer (shipped == no-XOR model; v2 == real BLAKE3-G)
+        run: python3 test/blake3_anchor_verify.py
+
+      - name: Receipt/identity/nonce path (crc32, lucas_rom, hwrng_lfsr, cassini_post)
+        run: python3 test/receipt_path_audit.py
+
+      - name: Control/datapath fabric (router, mesh, multi_tile_receipt)
+        run: python3 test/fabric_audit.py
+
+      - name: Instantiated leaf blocks (phi_pll_div, wishbone_full, wb_status_reg, alu9)
+        run: python3 test/leaf_audit.py
