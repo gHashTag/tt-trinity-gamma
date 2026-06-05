@@ -89,3 +89,16 @@ jobs:
 
       - name: No new 'field one bit too narrow' defects (value-overflow / out-of-range select)
         run: python3 test/width_gate.py
+
+  vsa-functional:
+    name: VSA ternary-matmul functional check
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install IVerilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog python3
+
+      - name: gf16_popcount / gf16_popcount16 ternary inner product (4000 vectors each)
+        run: python3 test/gf16_popcount_verify.py
