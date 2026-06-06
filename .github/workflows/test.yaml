@@ -124,3 +124,6 @@ jobs:
 
       - name: Instantiated leaf blocks (phi_pll_div, wishbone_full, wb_status_reg, alu9)
         run: python3 test/leaf_audit.py
+
+      - name: Shared neuromorphic/mesh blocks (d2d_holo_mesh, nca, holo_lut_pe, cortex)
+        run: python3 test/shared_blocks_audit.py
