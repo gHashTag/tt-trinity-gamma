@@ -36,15 +36,19 @@ module TriNetFormats {
     };
 
     // ========================================================================
-    // 2. GoldenFloat Extended Family (GF64, GF128, GF256)
+    // 2. GoldenFloat Extended Family (GF64, GF128, GF256, GF512, GF1024)
     // ========================================================================
     //
-    // Formula: exp/mant ≈ 1/φ ≈ 0.618
-    // Using phi_split: exp = round((N-1)/φ²), mant = N - 1 - exp
+    // Formula (normative; t27 SSOT FORMAT-SPEC-001 v1.2):
+    //     exp = round((N-1)/phi^2)
+    //     mant = N - 1 - exp
+    //     bias = 2^(exp-1) - 1
     //
-    // GF64:  64 bits  → exp=24, mant=39 (ratio=0.615, φ_dist=0.003)
-    // GF128: 128 bits → exp=48, mant=79 (ratio=0.608, φ_dist=0.010)
-    // GF256: 256 bits → exp=97, mant=158 (ratio=0.614, φ_dist=0.004)
+    // GF64:   64   bits -> exp=24,  mant=39   (ratio=0.615,  phi_dist=0.003)
+    // GF128:  128  bits -> exp=49,  mant=78   (ratio=0.628,  phi_dist=0.010)  [rule-fix; was 48,79]
+    // GF256:  256  bits -> exp=97,  mant=158  (ratio=0.614,  phi_dist=0.004)
+    // GF512:  512  bits -> exp=195, mant=316  (ratio=0.617,  phi_dist=0.0009) [NEW Conj]
+    // GF1024: 1024 bits -> exp=391, mant=632  (ratio=0.619,  phi_dist=0.0006) [NEW Conj]
 
     pub struct GF64Format {
         bits       : u8 = 64,
@@ -60,22 +64,52 @@ module TriNetFormats {
     pub struct GF128Format {
         bits       : u8 = 128,
         sign_bits  : u8 = 1,
-        exp_bits   : u8 = 48,
-        mant_bits  : u8 = 79,
-        exp_bias   : u64 = 140737488355327,  // 2^(48-1) - 1
-        phi_ratio  : f64 = 48.0 / 79.0,
-        phi_dist   : f64 = abs(48.0/79.0 - sacred_physics::PHI_INV),
+        exp_bits   : u8 = 49,
+        mant_bits  : u8 = 78,
+        exp_bias   : u64 = 281474976710655,  // 2^(49-1) - 1
+        phi_ratio  : f64 = 49.0 / 78.0,
+        phi_dist   : f64 = abs(49.0/78.0 - sacred_physics::PHI_INV),
         is_primary : bool = false,
     }
 
     pub struct GF256Format {
-        bits       : u8 = 256,
+        bits       : u16 = 256,
         sign_bits  : u8 = 1,
         exp_bits   : u8 = 97,
         mant_bits  : u8 = 158,
-        exp_bias   : u128 = 0x7FFFFFFFFFFFFFFF,  // 2^(97-1) - 1
+        exp_bias   : u128 = 79228162514264337593543950335,  // 2^96 - 1
         phi_ratio  : f64 = 97.0 / 158.0,
         phi_dist   : f64 = abs(97.0/158.0 - sacred_physics::PHI_INV),
+        is_primary : bool = false,
+    }
+
+    // GF512 / GF1024 are rule-derived spec-only rungs (NO RTL, NO silicon).
+    // Field widths exceed u8 (GF512 mant=316; GF1024 exp=391, mant=632);
+    // tracked symbolically with u16 fields. Bias = 2^(exp-1) - 1 grows past
+    // u128; represented as the closed-form expression at audit time only.
+    // STATUS: [Open conjecture] -- extrapolation of the closed rule beyond
+    //         the GF256 demonstrated band. Owned by t27 SSOT (gf512.t27,
+    //         gf1024.t27); included here for cross-format-routing awareness
+    //         when D2D paths may carry the wider symbols.
+    pub struct GF512Format {
+        bits       : u16 = 512,
+        sign_bits  : u8 = 1,
+        exp_bits   : u16 = 195,
+        mant_bits  : u16 = 316,
+        // exp_bias = 2^194 - 1; does not fit u128. See t27 specs/numeric/gf512.t27.
+        phi_ratio  : f64 = 195.0 / 316.0,
+        phi_dist   : f64 = abs(195.0/316.0 - sacred_physics::PHI_INV),
+        is_primary : bool = false,
+    }
+
+    pub struct GF1024Format {
+        bits       : u16 = 1024,
+        sign_bits  : u8 = 1,
+        exp_bits   : u16 = 391,
+        mant_bits  : u16 = 632,
+        // exp_bias = 2^390 - 1; does not fit any fixed-width int. See t27.
+        phi_ratio  : f64 = 391.0 / 632.0,
+        phi_dist   : f64 = abs(391.0/632.0 - sacred_physics::PHI_INV),
         is_primary : bool = false,
     }
 
@@ -364,13 +398,13 @@ module TriNetFormats {
             category = .goldenfloat,
             bits = 128,
             sign_bits = 1,
-            exp_bits = 48,
-            mant_bits = 79,
-            exp_bias = 140737488355327,
-            phi_ratio = 0.608,
+            exp_bits = 49,
+            mant_bits = 78,
+            exp_bias = 281474976710655,
+            phi_ratio = 0.628,
             phi_dist = 0.010,
             memory_ratio = 4.0,
-            use_case = "Ultra-high precision, cryptography",
+            use_case = "Ultra-high precision, cryptography (rule-derived; was 48,79 pre-v1.2)",
         },
         FormatDescriptor{
             name = "GF256",
@@ -379,11 +413,37 @@ module TriNetFormats {
             sign_bits = 1,
             exp_bits = 97,
             mant_bits = 158,
-            exp_bias = 0x7FFFFFFFFFFFFFFF,
+            exp_bias = 0,  // 2^96 - 1; does not fit FormatDescriptor.exp_bias width. See GF256Format struct above.
             phi_ratio = 0.614,
             phi_dist = 0.004,
             memory_ratio = 8.0,
             use_case = "Maximum precision, physics simulations",
+        },
+        FormatDescriptor{
+            name = "GF512",
+            category = .goldenfloat,
+            bits = 512,
+            sign_bits = 1,
+            exp_bits = 195,
+            mant_bits = 316,
+            exp_bias = 0,  // 2^194 - 1; tracked symbolically in t27 SSOT. [Open conjecture]
+            phi_ratio = 0.617,
+            phi_dist = 0.0009,
+            memory_ratio = 16.0,
+            use_case = "Ultra-wide phi-aligned (rule extrapolation, NO RTL)",
+        },
+        FormatDescriptor{
+            name = "GF1024",
+            category = .goldenfloat,
+            bits = 1024,
+            sign_bits = 1,
+            exp_bits = 391,
+            mant_bits = 632,
+            exp_bias = 0,  // 2^390 - 1; tracked symbolically in t27 SSOT. [Open conjecture]
+            phi_ratio = 0.619,
+            phi_dist = 0.0006,
+            memory_ratio = 32.0,
+            use_case = "Limit-of-ladder phi-aligned (rule extrapolation, NO RTL)",
         },
         // IEEE 754 formats
         FormatDescriptor{
