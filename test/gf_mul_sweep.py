@@ -17,6 +17,8 @@ SRC  = os.path.join(HERE, "..", "src")
 TOL_ULP = Fraction(1, 2)        # round-to-nearest ties-to-zero: <= 0.5 ULP
 
 RUNGS = {  # name: (total, E, M)
+    "gf6": (6, 2, 3), "gf10": (10, 3, 6), "gf14": (14, 5, 8),
+    "gf48": (48, 18, 29), "gf96": (96, 36, 59),
     "gf12": (12, 4, 7),
     "gf20": (20, 7, 12), "gf24": (24, 9, 14), "gf32": (32, 12, 19),
     "gf64": (64, 24, 39), "gf128": (128, 49, 78), "gf256": (256, 97, 158),
@@ -51,7 +53,10 @@ def gen_pairs(E, M):
     MS = mant_samples(M)
     for da in range(-2, 3):
         for db in range(-2, 3):
-            ea, eb = b + da, b + db
+            # clamp to valid normal exponents [0, expmax-1] (tiny-bias formats
+            # like gf6 (bias=1) would otherwise generate negative exponents)
+            ea = max(0, min(expmax(E) - 1, b + da))
+            eb = max(0, min(expmax(E) - 1, b + db))
             for ma in MS:
                 for mb in MS:
                     for sa, sb in ((0, 0), (1, 0)):
@@ -78,6 +83,21 @@ module tb;
 endmodule
 """
 
+SAFE_EXP = 4096
+
+def is_overflow(atrue, E, M):
+    oexp = expmax(E) - bias(E)
+    if oexp <= SAFE_EXP:
+        # IEEE round-to-nearest overflow threshold (1 - 2^-(M+2)) * 2^oexp
+        return atrue >= Fraction(2**(M+2) - 1, 2**(M+2)) * Fraction(2) ** oexp
+    return flog2(atrue) >= oexp
+
+def is_underflow(atrue, E, M):
+    b = bias(E)
+    if b <= SAFE_EXP:
+        return atrue < Fraction(2 ** M + 1, 2 ** M) * Fraction(1, 1 << b)
+    return flog2(atrue) < -b
+
 def run_rung(name):
     total, E, M = RUNGS[name]
     pairs = gen_pairs(E, M)
@@ -102,20 +122,35 @@ def run_rung(name):
 
     worst = Fraction(0); bad = []
     for (a, b), hexout in zip(pairs, outs):
-        out = int(hexout, 16)
         da_, db_ = decode(a, E, M), decode(b, E, M)
         if da_[0] != "num" or db_[0] != "num":
-            continue
+            continue                                    # skip special/zero inputs
+        if "x" in hexout.lower() or "z" in hexout.lower():
+            bad.append((a, b, hexout, "X/Z on num inputs")); continue
+        out = int(hexout, 16); do = decode(out, E, M)
         true = da_[1] * db_[1]
-        do = decode(out, E, M)
-        if do[0] != "num":
-            bad.append((a, b, out, "non-num")); continue
         if true == 0:
             continue
-        ulp = Fraction(2) ** (flog2(abs(true)) - M)
+        atrue = abs(true)
+        # at the over/underflow boundary, flush vs round-to-min/max-normal are both
+        # within 1 ULP -> accept either (reduced formats differ on the exact edge).
+        if is_overflow(atrue, E, M):
+            vmax = Fraction(2**(M+1) - 1, 2**M) * Fraction(2) ** (expmax(E) - 1 - bias(E))
+            if not (do[0] == "special" or (do[0] == "num" and abs(do[1]) >= vmax * Fraction(1023,1024))):
+                bad.append((a, b, out, "overflow boundary"))
+            continue
+        if is_underflow(atrue, E, M):
+            vmin = Fraction(2**M + 1, 2**M) * Fraction(1, 1 << bias(E))
+            if not (do[0] == "zero" or (do[0] == "num" and abs(do[1]) <= vmin)):
+                bad.append((a, b, out, "underflow boundary"))
+            continue
+        if do[0] != "num":
+            bad.append((a, b, out, "non-num")); continue
+        if (do[1] < 0) != (true < 0):
+            bad.append((a, b, out, "sign")); continue
+        ulp = Fraction(2) ** (flog2(atrue) - M)
         err = abs(do[1] - true) / ulp
-        if err > worst:
-            worst = err
+        if err > worst: worst = err
         if err > TOL_ULP:
             bad.append((a, b, out, "%.3f ULP" % float(err)))
     return n, worst, bad
@@ -131,7 +166,7 @@ def main():
         status = "PASS" if not bad else "FAIL (%d bad)" % len(bad)
         print(f"  {name}: {n} pairs, max {float(worst):.4f} ULP -> {status}")
         for (a, b, o, why) in bad[:4]:
-            print(f"      {a:x} * {b:x} -> {o:x}  ({why})")
+            print(f"      {a:x} * {b:x} -> {(o if isinstance(o,str) else format(o,'x'))}  ({why})")
         if bad:
             all_ok = False
     print("RESULT:", "ALL PASS" if all_ok else "FAIL")

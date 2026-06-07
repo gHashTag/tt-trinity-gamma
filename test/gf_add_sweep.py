@@ -21,6 +21,8 @@ SRC  = os.path.join(HERE, "..", "src")
 TOL_ULP = Fraction(1)            # faithful rounding (G=3 guard bits -> <1 ULP)
 
 RUNGS = {  # name: (total, E, M)  -- all the regenerated (GRS) add units
+    "gf6": (6, 2, 3), "gf10": (10, 3, 6), "gf14": (14, 5, 8),
+    "gf48": (48, 18, 29), "gf96": (96, 36, 59),
     "gf8": (8, 3, 4), "gf12": (12, 4, 7), "gf20": (20, 7, 12),
     "gf24": (24, 9, 14), "gf32": (32, 12, 19), "gf64": (64, 24, 39),
     "gf128": (128, 49, 78), "gf256": (256, 97, 158),
@@ -52,7 +54,9 @@ SAFE_EXP = 4096
 def is_overflow(atrue, E, M):
     oexp = emax(E) - bias(E)                            # = 2^(E-1)
     if oexp <= SAFE_EXP:
-        return atrue >= Fraction(2) ** oexp
+        # IEEE round-to-nearest overflow threshold: (2 - 2^-(M+1)) * 2^(oexp-1)
+        # = (1 - 2^-(M+2)) * 2^oexp; values >= this round to Inf (not 2^oexp).
+        return atrue >= Fraction(2**(M+2) - 1, 2**(M+2)) * Fraction(2) ** oexp
     return flog2(atrue) >= oexp
 
 def is_underflow(atrue, E, M):
