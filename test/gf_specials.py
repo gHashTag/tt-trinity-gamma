@@ -16,7 +16,7 @@ SRC  = os.path.join(HERE, "..", "src")
 RUNGS = {  # name: (total, E, M)
     "gf4": (4, 1, 2), "gf8": (8, 3, 4), "gf12": (12, 4, 7), "gf16": (16, 6, 9),
     "gf20": (20, 7, 12), "gf24": (24, 9, 14), "gf32": (32, 12, 19),
-    "gf64": (64, 24, 39), "gf128": (128, 48, 79), "gf256": (256, 97, 158),
+    "gf64": (64, 24, 39), "gf128": (128, 49, 78), "gf256": (256, 97, 158),
 }
 # gf16 is the silicon-[Verified] rung and is left untouched (source must match the
 # fabricated die). Its overflow cases here are INFORMATIONAL only: gf16_mul flushes

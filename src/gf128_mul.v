@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: Apache-2.0
 // t27/rtl_gen/gf128_mul.v
-// GoldenFloat128 Multiplication Unit -- [S(1) | E(48) | M(79)], bias 2^(E-1)-1.
-// value = (-1)^S (1 + M/2^79) 2^(E-bias).
+// GoldenFloat128 Multiplication Unit -- [S(1) | E(49) | M(78)], bias 2^(E-1)-1.
+// value = (-1)^S (1 + M/2^78) 2^(E-bias).
 //
 // Rewritten 2026-06 (test/gen_gf_mul_fix.py). The previous version declared
-// mant_product 2 bits too narrow (158 bits, not 160), truncating the leading
+// mant_product 2 bits too narrow (156 bits, not 158), truncating the leading
 // bit of the (M+1)x(M+1) product, and bumped the exponent on rounding without
 // incrementing the mantissa -- products came out ~half magnitude (1.0*1.0 -> 0.5).
-// This version uses the verified gf16_mul/gf8_mul algorithm: full 160-bit product,
-// normalize (prod[159] -> exp+1 else stay), mantissa = the 79 bits below the leading
+// This version uses the verified gf16_mul/gf8_mul algorithm: full 158-bit product,
+// normalize (prod[157] -> exp+1 else stay), mantissa = the 78 bits below the leading
 // 1, round-to-nearest ties-to-zero (guard & (round | sticky)). Cross-checked by
 // test/gf_arith_xcheck.py and test/gf_mul_sweep.py. Special-value encodings are
 // preserved from the original unit (their conformance is a separate question).
@@ -20,31 +20,31 @@ module gf128_mul (
     output reg  [127:0] result
 );
 
-    localparam [47:0] EXP_MAX = 281474976710655;
-    localparam signed [49:0] BIAS_S    = 50'sd140737488355327;
-    localparam signed [49:0] EXP_MAX_S = 50'sd281474976710655;
+    localparam [48:0] EXP_MAX = 562949953421311;
+    localparam signed [50:0] BIAS_S    = 51'sd281474976710655;
+    localparam signed [50:0] EXP_MAX_S = 51'sd562949953421311;
 
     wire             sign_a = a[127];
-    wire [47:0]   exp_a  = a[126:79];
-    wire [78:0]   mant_a = a[78:0];
+    wire [48:0]   exp_a  = a[126:78];
+    wire [77:0]   mant_a = a[77:0];
     wire             sign_b = b[127];
-    wire [47:0]   exp_b  = b[126:79];
-    wire [78:0]   mant_b = b[78:0];
+    wire [48:0]   exp_b  = b[126:78];
+    wire [77:0]   mant_b = b[77:0];
 
-    wire is_zero_a = (exp_a == 48'd0) && (mant_a == 79'd0);
-    wire is_zero_b = (exp_b == 48'd0) && (mant_b == 79'd0);
-    wire is_inf_a  = (exp_a == EXP_MAX) && (mant_a == 79'd0);
-    wire is_inf_b  = (exp_b == EXP_MAX) && (mant_b == 79'd0);
-    wire is_nan_a  = (exp_a == EXP_MAX) && (mant_a != 79'd0);
-    wire is_nan_b  = (exp_b == EXP_MAX) && (mant_b != 79'd0);
+    wire is_zero_a = (exp_a == 49'd0) && (mant_a == 78'd0);
+    wire is_zero_b = (exp_b == 49'd0) && (mant_b == 78'd0);
+    wire is_inf_a  = (exp_a == EXP_MAX) && (mant_a == 78'd0);
+    wire is_inf_b  = (exp_b == EXP_MAX) && (mant_b == 78'd0);
+    wire is_nan_a  = (exp_a == EXP_MAX) && (mant_a != 78'd0);
+    wire is_nan_b  = (exp_b == EXP_MAX) && (mant_b != 78'd0);
 
     wire result_sign = sign_a ^ sign_b;
 
-    wire [159:0] full_prod = {1'b1, mant_a} * {1'b1, mant_b};  // 160-bit
+    wire [157:0] full_prod = {1'b1, mant_a} * {1'b1, mant_b};  // 158-bit
 
-    reg signed [49:0] raw_exp, final_exp;
-    reg [78:0] mant_out, final_mant;
-    reg [79:0]  mant_rounded;            // M+1 bits, catches mantissa overflow
+    reg signed [50:0] raw_exp, final_exp;
+    reg [77:0] mant_out, final_mant;
+    reg [78:0]  mant_rounded;            // M+1 bits, catches mantissa overflow
     reg           guard, round_b, sticky;
 
     always @(*) begin
@@ -52,29 +52,29 @@ module gf128_mul (
         mant_rounded = 0; guard = 0; round_b = 0; sticky = 0;
 
         if (is_nan_a || is_nan_b)
-            result = 128'hFFFFFFFFFFFF80000000000000000001;
+            result = 128'hFFFFFFFFFFFFC0000000000000000001;
         else if (is_inf_a && is_zero_b)
-            result = 128'hFFFFFFFFFFFF80000000000000000001;
+            result = 128'hFFFFFFFFFFFFC0000000000000000001;
         else if (is_inf_b && is_zero_a)
-            result = 128'hFFFFFFFFFFFF80000000000000000001;
+            result = 128'hFFFFFFFFFFFFC0000000000000000001;
         else if (is_inf_a || is_inf_b)
-            result = result_sign ? 128'hFFFFFFFFFFFF80000000000000000000 : 128'h7FFFFFFFFFFF80000000000000000000;
+            result = result_sign ? 128'hFFFFFFFFFFFFC0000000000000000000 : 128'h7FFFFFFFFFFFC0000000000000000000;
         else if (is_zero_a || is_zero_b)
             result = 128'h0;
         else begin
             raw_exp = $signed({2'b00, exp_a}) + $signed({2'b00, exp_b}) - BIAS_S;
 
-            if (full_prod[159]) begin                 // product in [2,4) -> exp+1
+            if (full_prod[157]) begin                 // product in [2,4) -> exp+1
                 raw_exp  = raw_exp + 1;
-                mant_out = full_prod[158:80];
-                guard    = full_prod[79];
-                round_b  = full_prod[78];
-                sticky   = |full_prod[77:0];
-            end else begin                              // product in [1,2)
-                mant_out = full_prod[157:79];
+                mant_out = full_prod[156:79];
                 guard    = full_prod[78];
                 round_b  = full_prod[77];
                 sticky   = |full_prod[76:0];
+            end else begin                              // product in [1,2)
+                mant_out = full_prod[155:78];
+                guard    = full_prod[77];
+                round_b  = full_prod[76];
+                sticky   = |full_prod[75:0];
             end
 
             if (guard && (round_b || sticky))
@@ -82,22 +82,22 @@ module gf128_mul (
             else
                 mant_rounded = {1'b0, mant_out};
 
-            if (mant_rounded[79]) begin               // mantissa overflow
+            if (mant_rounded[78]) begin               // mantissa overflow
                 final_exp  = raw_exp + 1;
                 final_mant = 0;
             end else begin
                 final_exp  = raw_exp;
-                final_mant = mant_rounded[78:0];
+                final_mant = mant_rounded[77:0];
             end
 
             if (final_exp < 0)
                 result = 128'h0;                        // underflow
             else if (final_exp >= EXP_MAX_S)
-                result = result_sign ? 128'hFFFFFFFFFFFF80000000000000000000 : 128'h7FFFFFFFFFFF80000000000000000000;  // overflow
-            else if (final_exp == 0 && final_mant == 79'd0)
+                result = result_sign ? 128'hFFFFFFFFFFFFC0000000000000000000 : 128'h7FFFFFFFFFFFC0000000000000000000;  // overflow
+            else if (final_exp == 0 && final_mant == 78'd0)
                 result = 128'h0;                        // exp0/mant0 is the zero code
             else
-                result = {result_sign, final_exp[47:0], final_mant};
+                result = {result_sign, final_exp[48:0], final_mant};
         end
     end
 

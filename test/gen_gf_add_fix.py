@@ -26,7 +26,7 @@ RUNGS = {
     "gf24": (24, 9, 14),
     "gf32": (32, 12, 19),
     "gf64": (64, 24, 39),
-    "gf128": (128, 48, 79),
+    "gf128": (128, 49, 78),
     "gf256": (256, 97, 158),
 }
 # NB: gf16_add is intentionally NOT regenerated -- it is the silicon-[Verified]
