@@ -122,6 +122,9 @@ jobs:
       - name: blake3_anchor_v4 full compression (cv/counter/flags == reference compress())
         run: python3 test/blake3_anchor_v4_verify.py
 
+      - name: blake3_hash_chunk single-chunk hash (== official BLAKE3 vectors, <=1024B)
+        run: python3 test/blake3_hash_chunk_verify.py
+
       - name: Receipt/identity/nonce path (crc32, lucas_rom, hwrng_lfsr, cassini_post)
         run: python3 test/receipt_path_audit.py
 
