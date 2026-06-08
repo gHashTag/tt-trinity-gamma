@@ -9,7 +9,7 @@
 module fbb_active_path (
     input  wire        clk,
     input  wire        rst_n,
-    input  wire [3:0]   opcode,         // Must be 0xF2 for FBB
+    input  wire [7:0]   opcode,         // 0xF2 = FBB (full 8-bit)
     input  wire [15:0]  path_id,        // Active path identifier
     input  wire        fbb_enable,     // Global FBB enable
     input  wire [7:0]   leakage_mon,    // Leakage current monitor
@@ -62,7 +62,7 @@ module fbb_active_path (
             avg_leakage <= 8'd0;
         end else begin
             // Check for opcode 0xF2
-            if (opcode == 4'h2) begin  // Lower nibble of 0xF2
+            if (opcode == 8'hF2) begin
                 if (!fbb_enabled && fbb_enable) begin
                     fbb_enabled <= 1'b1;
                     fbb_state <= 2'd1;  // Enter active state
@@ -98,7 +98,7 @@ module fbb_active_path (
                 2'd0: begin
                     // Disabled state
                     fbb_level <= FBB_OFF;
-                    if (fbb_enable && opcode == 4'h2)
+                    if (fbb_enable && opcode == 8'hF2)
                         fbb_state <= 2'd1;
                 end
 

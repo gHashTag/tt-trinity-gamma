@@ -7,7 +7,7 @@
 module sparse_skip (
     input  wire        clk,
     input  wire        rst_n,
-    input  wire [3:0]   opcode,         // Must be 0xE1 for SPARSE_SKIP
+    input  wire [7:0]   opcode,         // 0xE1 = SPARSE_SKIP (full 8-bit)
     input  wire [15:0]  sparse_mask,    // Bitmask of sparse inputs (1 = zero)
     input  wire [15:0]  compute_mask,   // Active compute lanes
     input  wire [7:0]   threshold,      // Sparsity threshold (0-255)
@@ -34,7 +34,7 @@ module sparse_skip (
             skip_enabled <= 1'b0;
         end else begin
             // Check for opcode 0xE1
-            if (opcode == 4'd1)
+            if (opcode == 8'hE1)
                 skip_enabled <= 1'b1;
 
             if (skip_enabled) begin

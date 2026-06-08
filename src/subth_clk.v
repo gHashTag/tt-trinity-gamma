@@ -7,7 +7,7 @@
 module subth_clk (
     input  wire        clk_in,         // Main clock input
     input  wire        rst_n,
-    input  wire [3:0]   opcode,         // Must be 0xE5 for SUBTH_CLK
+    input  wire [7:0]   opcode,         // 0xE5 = SUBTH_CLK (full 8-bit)
     input  wire [2:0]   divider,        // Clock divider (0=1x, 1=2x, 2=4x, 3=8x)
     input  wire        enable_gate,    // Enable clock gating
     input  wire [7:0]   duty_cycle,     // Duty cycle (50-200, 100=50%)
@@ -37,7 +37,7 @@ module subth_clk (
             cycle_counter <= cycle_counter + 1;
 
             // Check for opcode 0xE5
-            if (opcode == 4'd5) begin
+            if (opcode == 8'hE5) begin
                 gate_active <= enable_gate;
 
                 // Update frequency based on divider
