@@ -116,6 +116,9 @@ jobs:
       - name: blake3_anchor RECEIPT signer (shipped == no-XOR model; v2 == real BLAKE3-G)
         run: python3 test/blake3_anchor_verify.py
 
+      - name: blake3_anchor_v3 Wave-5 full-round (7 rounds + permutation == real BLAKE3-G)
+        run: python3 test/blake3_anchor_v3_verify.py
+
       - name: Receipt/identity/nonce path (crc32, lucas_rom, hwrng_lfsr, cassini_post)
         run: python3 test/receipt_path_audit.py
 
