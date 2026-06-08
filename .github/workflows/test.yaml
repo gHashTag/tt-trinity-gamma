@@ -125,6 +125,9 @@ jobs:
       - name: blake3_hash_chunk single-chunk hash (== official BLAKE3 vectors, <=1024B)
         run: python3 test/blake3_hash_chunk_verify.py
 
+      - name: blake3_hash multi-chunk tree (vs blake3 package, <=4096B)
+        run: pip3 install --break-system-packages blake3 2>/dev/null || true; python3 test/blake3_hash_verify.py
+
       - name: Receipt/identity/nonce path (crc32, lucas_rom, hwrng_lfsr, cassini_post)
         run: python3 test/receipt_path_audit.py
 
