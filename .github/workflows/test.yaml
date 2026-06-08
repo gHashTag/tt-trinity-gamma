@@ -130,3 +130,6 @@ jobs:
 
       - name: Shared neuromorphic/mesh blocks (d2d_holo_mesh, nca, holo_lut_pe, cortex)
         run: python3 test/shared_blocks_audit.py
+
+      - name: Power/sparsity waves (sparse_skip correct; stoch_round defect + v2 unbiased)
+        run: python3 test/power_waves_audit.py
