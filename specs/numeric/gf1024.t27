@@ -1,0 +1,97 @@
+// SPDX-License-Identifier: Apache-2.0
+; gf1024.t27 -- GoldenFloat1024 Specification (rule-derived, conjecture rung)
+; GF1024: 1024-bit float with 1 sign + 391 exponent + 632 mantissa
+; Bit layout: [S(1) E(391) M(632)] = [1023:1023][1022:632][631:0]
+; phi^2 + 1/phi^2 = 3 | TRINITY
+;
+; Normative source: t27 SSOT FORMAT-SPEC-001 v1.2
+;     e = round((N - 1) / phi^2)
+;     m = N - 1 - e
+;     bias = 2^(e - 1) - 1
+;
+; Anchored to frozen silicon GF16 = 1+6+9 (tt-trinity-gamma/src/gf16_v2_mul.v).
+; Audit chain: claim-audit-lab CASE-09; corona ROM tracks at oracle level.
+;
+; Cross-reference:
+;   - tri_net_formats.t27 (this repo) -- format registry
+;   - gHashTag/t27 specs/numeric/gf1024.t27 -- normative SSOT
+;   - tt-trinity-corona tools/gen_rom.py -- ROM record (deferred to v2 schema)
+
+module triformat-gf1024;
+
+// ============================================================================
+// Constants (rule-derived)
+// ============================================================================
+
+pub const SIGN_BITS : u16 = 1;
+pub const EXP_BITS  : u16 = 391;
+pub const MANT_BITS : u16 = 632;
+pub const TOTAL_BITS: u16 = 1024;
+
+pub const SIGN_SHIFT : u16 = 1023;
+pub const EXP_SHIFT  : u16 = 632;
+pub const MANT_SHIFT : u16 = 0;
+
+// ratio = 391 / 632 = 0.6186708...
+// phi_inv = 1/phi = 0.6180339887...
+// phi_distance = abs(0.6186708 - 0.6180339) = 0.0006368
+pub const PHI_RATIO  : f64 = 0.6186708860759494;
+pub const PHI_DIST   : f64 = 0.0006368974;
+
+// Exponent bias = 2^(391-1) - 1 = 2^390 - 1 (symbolic; bignum at runtime)
+
+pub const IS_PRIMARY : bool = false;
+pub const STATUS     : string = "ST_CONJECTURE";
+pub const ON_DIE     : bool = false;
+pub const PHI_FLAG   : bool = true;
+pub const D2D_FLAG   : bool = true;
+
+// ============================================================================
+// Format metadata for registry
+// ============================================================================
+
+pub struct GF1024Format {
+    name            : string = "GF1024",
+    bits            : u16    = 1024,
+    sign_bits       : u16    = 1,
+    exp_bits        : u16    = 391,
+    mant_bits       : u16    = 632,
+    exp_mant_ratio  : f64    = 0.6186708860759494,
+    phi_distance    : f64    = 0.0006368974,
+    is_primary      : bool   = false,
+    rule_derived    : bool   = true,
+    silicon_anchor  : string = "gf16_v2_mul.v (1+6+9)",
+}
+
+// ============================================================================
+// Invariants
+// ============================================================================
+
+invariant gf1024_bits_total
+    assert SIGN_BITS + EXP_BITS + MANT_BITS == 1024
+
+invariant gf1024_rule_e
+    // e = round((N-1)/phi^2) with N=1024, phi^2 = 2.6180339887...
+    // (1024-1)/phi^2 = 1023 / 2.6180339887 = 390.756... -> round = 391
+    assert EXP_BITS == 391
+
+invariant gf1024_rule_m
+    assert MANT_BITS == TOTAL_BITS - 1 - EXP_BITS
+
+invariant gf1024_status_conjecture
+    assert STATUS == "ST_CONJECTURE"
+
+// ============================================================================
+// Cross-reference notes (non-normative)
+// ============================================================================
+//
+// Encoding/decoding kernels for GF1024 are NOT implemented in this file.
+// Rationale: mantissa 632 bits and exponent 391 bits exceed native widths.
+// A bignum-backed runtime will be supplied alongside production use.
+//
+// For algorithmic intent and 50-digit mpmath audit vectors, see:
+//     gHashTag/claim-audit-lab cases/CASE-09/gf_ladder_extended.md
+//     gHashTag/t27 specs/numeric/gf1024.t27
+//     gHashTag/tt-trinity-corona specs/corona/corona_oracle.t27
+//
+// arXiv reference: 2606.05017 (GoldenFloat cs.AR, 2026-06-03)
