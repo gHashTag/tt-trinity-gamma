@@ -4,7 +4,7 @@
 //
 // Implements hard-wired K_UNKNOWN forcing per DARPA CLARA TA1.4.
 // t27 spec: gHashTag/t27/specs/ar/restraint.t27
-// CROWN47 reference: §3.4 Gap 4 (CROWN47_DARPA_DRONE_ANALYSIS.md)
+// CROWN47 reference: §3.4 Gap 4 (CROWN47_DARPA_ANALYSIS.md)
 //
 // Triggers force_unknown = 1 when ANY of:
 //   (1) phi_drift > 16'd164   (0.5% in Q1.15 ≈ 163.84 → threshold 164)
