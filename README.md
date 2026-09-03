@@ -133,9 +133,9 @@ TRI-NET competes on **verifiability/$**, not TOPS/$. Performance reference: ~1 G
 
 ---
 
-**Largest chip of the TRI-1 Triad.** 32 tiles (8×4) of SkyWater SKY130A silicon — the world's first open-PDK neuromorphic chip with **8 cortical columns**, **20-PE GF16 mesh**, **24 SUPER-CROWN modules**, **D2D holographic mesh**, and the full **Crown47 ROM** encoding 47 fundamental constants of physics.
+**Largest design of the TRI-1 Triad.** 32 tiles (8×4) targeting SkyWater SKY130A — an open-PDK neuromorphic design with **8 cortical columns**, **20-PE GF16 mesh**, **24 SUPER-CROWN modules**, **D2D holographic mesh**, and the full **Crown47 ROM** encoding 47 fundamental constants of physics.
 
-> *"The first chip where physics is the layout."*
+> *"A design where physics is the layout."*
 
 ---
 
