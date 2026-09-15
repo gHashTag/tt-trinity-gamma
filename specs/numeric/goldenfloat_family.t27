@@ -118,10 +118,10 @@ module GoldenFloatFamily {
             name = "GF128",
             bits = 128,
             sign_bits = 1,
-            exp_bits = 48,
-            mant_bits = 79,
-            exp_mant_ratio = 0.6075949367088608,
-            phi_distance = abs(0.6075949367088608 - PHI_RATIO_TARGET),
+            exp_bits = 49,                                  // rule-fix: was 48 (CASE-09 normative)
+            mant_bits = 78,                                 // rule-fix: was 79
+            exp_mant_ratio = 0.6282051282051282,
+            phi_distance = abs(0.6282051282051282 - PHI_RATIO_TARGET),
             is_primary = false,
         },
         GoldenFloatFormat{
@@ -132,6 +132,30 @@ module GoldenFloatFamily {
             mant_bits = 158,
             exp_mant_ratio = 0.6139240506329114,
             phi_distance = abs(0.6139240506329114 - PHI_RATIO_TARGET),
+            is_primary = false,
+        },
+        // ---- Extended rungs (rule-derived, conjecture) ----
+        // GF512 and GF1024 derive from e = round((N-1)/phi^2), m = N-1-e.
+        // Anchored at frozen silicon GF16 = 1+6+9. Status: ST_CONJECTURE.
+        // See gf512.t27 and gf1024.t27 (same directory) for full specs.
+        GoldenFloatFormat{
+            name = "GF512",
+            bits = 512,
+            sign_bits = 1,
+            exp_bits = 195,
+            mant_bits = 316,
+            exp_mant_ratio = 0.6170886075949367,
+            phi_distance = abs(0.6170886075949367 - PHI_RATIO_TARGET),
+            is_primary = false,
+        },
+        GoldenFloatFormat{
+            name = "GF1024",
+            bits = 1024,
+            sign_bits = 1,
+            exp_bits = 391,
+            mant_bits = 632,
+            exp_mant_ratio = 0.6186708860759494,
+            phi_distance = abs(0.6186708860759494 - PHI_RATIO_TARGET),
             is_primary = false,
         },
     ];
@@ -282,9 +306,9 @@ module GoldenFloatFamily {
         given primary = get_primary_format()
         then primary.name == "GF16" and primary.is_primary == true
 
-    test gffamily_family_size_10
+    test gffamily_family_size_12
         given size = GOLDEN_FLOAT_FAMILY.len()
-        then size == 10
+        then size == 12  // extended: GF4..GF256 + GF512, GF1024 (rule-derived)
 
     test gffamily_phi_ratio_target_is_phi_inverse
         given target = PHI_RATIO_TARGET
@@ -386,13 +410,19 @@ module GoldenFloatFamily {
         assert PHI_RATIO_TARGET < 1.0
 
     invariant gffamily_family_size_constant
-        assert GOLDEN_FLOAT_FAMILY.len() == 10
+        assert GOLDEN_FLOAT_FAMILY.len() == 12
 
     invariant gffamily_gf4_at_index_0
         assert GOLDEN_FLOAT_FAMILY[0].name == "GF4"
 
     invariant gffamily_gf256_at_index_9
         assert GOLDEN_FLOAT_FAMILY[9].name == "GF256"
+
+    invariant gffamily_gf512_at_index_10
+        assert GOLDEN_FLOAT_FAMILY[10].name == "GF512"
+
+    invariant gffamily_gf1024_at_index_11
+        assert GOLDEN_FLOAT_FAMILY[11].name == "GF1024"
 
     invariant gffamily_gf128_at_index_8
         assert GOLDEN_FLOAT_FAMILY[8].name == "GF128"

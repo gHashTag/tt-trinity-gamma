@@ -1,0 +1,103 @@
+// SPDX-License-Identifier: Apache-2.0
+; gf512.t27 -- GoldenFloat512 Specification (rule-derived, conjecture rung)
+; GF512: 512-bit float with 1 sign + 195 exponent + 316 mantissa
+; Bit layout: [S(1) E(195) M(316)] = [511:511][510:316][315:0]
+; phi^2 + 1/phi^2 = 3 | TRINITY
+;
+; Normative source: t27 SSOT FORMAT-SPEC-001 v1.2
+;     e = round((N - 1) / phi^2)
+;     m = N - 1 - e
+;     bias = 2^(e - 1) - 1
+;
+; Anchored to frozen silicon GF16 = 1+6+9 (tt-trinity-gamma/src/gf16_v2_mul.v).
+; Audit chain: claim-audit-lab CASE-09; corona ROM tracks at oracle level
+; (specs/corona/corona_oracle.t27 GF_LADDER_EXTENDED) because GF512 exceeds
+; the 80-bit ROM record (FIELD_TOTAL_BITS u8 cannot hold 512).
+;
+; Cross-reference:
+;   - tri_net_formats.t27 (this repo) -- format registry
+;   - gHashTag/t27 specs/numeric/gf512.t27 -- normative SSOT
+;   - tt-trinity-corona tools/gen_rom.py -- ROM record (deferred to v2 schema)
+
+module triformat-gf512;
+
+// ============================================================================
+// Constants (rule-derived)
+// ============================================================================
+
+pub const SIGN_BITS : u16 = 1;
+pub const EXP_BITS  : u16 = 195;
+pub const MANT_BITS : u16 = 316;
+pub const TOTAL_BITS: u16 = 512;
+
+pub const SIGN_SHIFT : u16 = 511;
+pub const EXP_SHIFT  : u16 = 316;
+pub const MANT_SHIFT : u16 = 0;
+
+// ratio = 195 / 316 = 0.6170886...
+// phi_inv = 1/phi = 0.6180339887...
+// phi_distance = abs(0.6170886 - 0.6180339) = 0.0009453
+pub const PHI_RATIO  : f64 = 0.6170886075949367;
+pub const PHI_DIST   : f64 = 0.0009453811;
+
+// Exponent bias = 2^(195-1) - 1 = 2^194 - 1 (exceeds u64; tracked symbolically)
+// Numeric form deferred to bignum runtime; see t27 SSOT FORMAT-SPEC-001 v1.2.
+
+pub const IS_PRIMARY : bool = false;
+pub const STATUS     : string = "ST_CONJECTURE";
+pub const ON_DIE     : bool = false;
+pub const PHI_FLAG   : bool = true;
+pub const D2D_FLAG   : bool = true;
+
+// ============================================================================
+// Format metadata for registry
+// ============================================================================
+
+pub struct GF512Format {
+    name            : string = "GF512",
+    bits            : u16    = 512,
+    sign_bits       : u16    = 1,
+    exp_bits        : u16    = 195,
+    mant_bits       : u16    = 316,
+    exp_mant_ratio  : f64    = 0.6170886075949367,
+    phi_distance    : f64    = 0.0009453811,
+    is_primary      : bool   = false,
+    rule_derived    : bool   = true,
+    silicon_anchor  : string = "gf16_v2_mul.v (1+6+9)",
+}
+
+// ============================================================================
+// Invariants
+// ============================================================================
+
+invariant gf512_bits_total
+    assert SIGN_BITS + EXP_BITS + MANT_BITS == 512
+
+invariant gf512_rule_e
+    // e = round((N-1)/phi^2) with N=512, phi^2 = 2.6180339887...
+    // (512-1)/phi^2 = 511 / 2.6180339887 = 195.182... -> round = 195
+    assert EXP_BITS == 195
+
+invariant gf512_rule_m
+    assert MANT_BITS == TOTAL_BITS - 1 - EXP_BITS
+
+invariant gf512_status_conjecture
+    // GF512 is in the conjecture rung of the GoldenFloat ladder.
+    // Frozen silicon anchor lives at GF16; extended rungs await ARITH 2027 audit.
+    assert STATUS == "ST_CONJECTURE"
+
+// ============================================================================
+// Cross-reference notes (non-normative)
+// ============================================================================
+//
+// Encoding/decoding kernels for GF512 are NOT implemented in this file.
+// Rationale: GF512 fields exceed native integer widths in Zig 0.15
+// (mantissa 316 bits, exponent 195 bits). A bignum-backed runtime will be
+// supplied alongside any production deployment.
+//
+// For algorithmic intent and 50-digit mpmath audit vectors, see:
+//     gHashTag/claim-audit-lab cases/CASE-09/gf_ladder_extended.md
+//     gHashTag/t27 specs/numeric/gf512.t27
+//     gHashTag/tt-trinity-corona specs/corona/corona_oracle.t27
+//
+// arXiv reference: 2606.05017 (GoldenFloat cs.AR, 2026-06-03)
