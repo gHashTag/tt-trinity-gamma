@@ -3,7 +3,7 @@
 ## Overview
 
 Complete format specification for TRI-NET neural accelerator covering:
-- GoldenFloat family (GF4-GF256) — phi-optimized floating point
+- GoldenFloat family (GF4-GF256, plus rule-derived GF512/GF1024) — phi-optimized floating point
 - IEEE 754 standard formats (fp32, fp16)
 - Brain Float format (bf16)
 - FP8 variants (e4m3, e5m2)
@@ -24,8 +24,10 @@ Complete format specification for TRI-NET neural accelerator covering:
 | GF24   | 24   | 9   | 14   | 0.643 | 0.025        | Financial calculations |
 | GF32   | 32   | 12  | 19   | 0.632 | 0.014        | Near-IEEE precision |
 | GF64   | 64   | 24  | 39   | 0.615 | 0.003        | **EXTENDED** scientific computing |
-| GF128  | 128  | 48  | 79   | 0.608 | 0.010        | Ultra-high precision |
+| GF128  | 128  | 49  | 78   | 0.628 | 0.010        | Ultra-high precision (rule-aligned; was 48/79) |
 | GF256  | 256  | 97  | 158  | 0.614 | 0.004        | Maximum precision |
+| GF512  | 512  | 195 | 316  | 0.617 | 0.0009       | Extended conjecture rung |
+| GF1024 | 1024 | 391 | 632  | 0.619 | 0.0006       | Extended conjecture rung |
 
 ### Phi-Optimization Formula
 
